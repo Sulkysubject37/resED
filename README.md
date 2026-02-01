@@ -18,6 +18,14 @@ The system is composed of four strictly governed layers:
 *   **Phase 2 (RLCS)**: Sensors and Control Surface logic. (Complete)
 *   **Phase 3 (resTR)**: Residual Transformer logic. (Complete)
 *   **Phase 4 (Integration)**: Full system wiring and governance. (Complete)
+*   **Phase 5 (Validation)**: Stress testing and observability figures. (Complete)
+
+## Validation Results
+
+System behavior under stress is documented in [docs/phase5_system_validation.md](docs/phase5_system_validation.md).
+Key figures:
+- `docs/figures/figure1_stress_observability.png`: Sensor sensitivity to drift.
+- `docs/figures/figure2_resed_on_off.png`: Governance intervention vs. ungoverned execution.
 
 ## Usage
 
