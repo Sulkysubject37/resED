@@ -1,51 +1,42 @@
-# resED
+# resED: Reliability-First Encoder-Decoder
 
-**resED** is a system-level encoder–decoder architecture designed for robustness,
-reliability, and interpretability under distribution shift.
-
-Rather than treating reliability as a learned property, resED introduces a
-deterministic **Representation-Level Control Surface (RLCS)** between the encoder
-and decoder. This intermediate system monitors latent representations and governs
-downstream behavior using explicit signals.
-
-## Core Idea
-
-Encoders and decoders often fail silently under noise, drift, or domain shift.
-resED addresses this by inserting a control layer that:
-
-- Observes latent representations
-- Measures population consistency, temporal stability, and cross-view agreement
-- Produces deterministic control signals:
-  - PROCEED
-  - DEFER
-  - ABSTAIN
-
-The decoder never acts blindly.
+**resED** is a modular encoder-transformer-decoder system derived from the **resLik / RLCS** paradigm. It prioritizes reliability and control over raw generation capability.
 
 ## Architecture
-Encoder → Latent Representation → RLCS → Decoder
-The RLCS layer is model-agnostic and does not require retraining.
 
-## Repository Structure
+The system is composed of four strictly governed layers:
 
-- `resed/` — Core Python package
-- `resed/encoders/` — Encoder implementations
-- `resed/decoders/` — Decoder implementations
-- `resed/rlcs/` — Sensors and control logic
-- `resed/system/` — Enc–Res–Dec wiring
-- `experiments/` — Demonstrations and simulations
-- `docs/` — Architecture and theory
-- `tests/` — Unit and system tests
-
-## Design Principles
-
-- System correctness over optimization
-- Deterministic behavior
-- No gradient dependence
-- Clear separation between sensing and acting
+1.  **resENC (Encoder)**: Deterministic projection to latent space with a statistical side-channel.
+2.  **RLCS (Governance)**: A statistical control surface that guards the latent representation. It emits signals (`PROCEED`, `DEFER`, `ABSTAIN`) based on Population, Temporal, and Agreement consistency.
+3.  **resTR (Transformer)**: A residual-only, externally gated refinement module. It never executes "blindly"; its depth and influence are modulated by RLCS.
+4.  **resDEC (Decoder)**: A deterministic decoder that accepts control signals to gate or suppress output.
 
 ## Status
 
-This repository defines the reference architecture for resED.
-Implementations are intentionally minimal and explicit.
+*   **Phase 0 (Core)**: Utilities and scaffolding. (Complete)
+*   **Phase 1 (Components)**: `resENC` and `resDEC` implemented. (Complete)
+*   **Phase 2 (RLCS)**: Sensors and Control Surface logic. (Complete)
+*   **Phase 3 (resTR)**: Residual Transformer logic. (Complete)
+*   **Phase 4 (Integration)**: Full system wiring and governance. (Complete)
 
+## Usage
+
+```python
+from resed.system.resed_block import ResEdBlock
+
+# Initialize system
+block = ResEdBlock(d_in=128, d_z=64, d_out=10)
+
+# Run inference
+# The system automatically runs RLCS checks.
+outputs, diagnostics = block.forward(input_data)
+
+# Check diagnostics
+print(diagnostics['population_consistency'])
+```
+
+## Philosophy
+
+*   **No Unchecked Latents**: Every representation is statistically validated before decoding.
+*   **Reference as Truth**: Reliability is measured against a fixed reference population, not a learned discriminator.
+*   **Deterministic Control**: The control surface uses fixed math, not black-box policies.
