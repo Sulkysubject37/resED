@@ -11,26 +11,28 @@ The resED system is validated by observing how the RLCS governance layer respond
 **Location**: `docs/figures/figure1_stress_observability.png`
 
 ### Description
-This figure demonstrates the sensitivity of RLCS sensors (ResLik and TCS) to a **gradual latent drift**.
-
-*   **Population Distance (ResLik)**: Tracks the deviation of the latent representation from the reference population. As drift increases, the score rises monotonically.
-*   **Temporal Consistency (TCS)**: Monitors the rate of change between steps. Drastic or cumulative shifts lead to a collapse in consistency.
+This figure demonstrates the sensitivity of RLCS sensors (ResLik and TCS) to a **Gradual Drift** failure mode.
+*   **Fault Parameters**: Drift Rate = 0.2 per step.
+*   **Panel 1 (ResLik)**: Tracks the Population Distance ($D$). The red dashed line indicates the safety threshold ($	au_D = 3.0$). The plot is annotated to show exactly where the drift causes the system to enter the **ABSTAIN** (Unsafe) region.
+*   **Panel 2 (TCS)**: Tracks the Temporal Consistency Score ($T$). The score drops as the drift accelerates relative to the previous state, crossing the **DEFER** threshold ($	au_T = 0.5$).
 
 ### Conclusion
-Representation-level failures are reliably observable through statistical distance metrics before they reach the decoding stage.
+Representation-level failures are reliably observable through statistical distance metrics. The sensors provide clear, monotonic signals that cross predefined safety thresholds before the representation degenerates completely.
 
 ## Figure 2: resED OFF vs resED ON
 
 **Location**: `docs/figures/figure2_resed_on_off.png`
 
 ### Description
-This figure compares the behavior of an ungoverned system (resED OFF) vs. the RLCS-governed system (resED ON) during a **sudden distribution shift** (at batch index 25).
-
-*   **resED OFF**: Continues to decode anomalous representations, producing high-variance or potentially nonsensical outputs (visualized by output norm).
-*   **resED ON**: Detects the shift via the ResLik sensor, escalates the control signal from `PROCEED` to `ABSTAIN`, and successfully suppresses the decoder output (norm goes to 0).
+This figure compares the behavior of an ungoverned system (resED OFF) vs. the RLCS-governed system (resED ON) during a **Sudden Distribution Shift**.
+*   **Fault Parameters**: Magnitude = 10.0, Injected at Index = 25.
+*   **Panel 1 (Output)**:
+    *   **OFF (Gray Dashed)**: The decoder continues to process the corrupted latent, resulting in a high-norm output (Hallucination/Noise).
+    *   **ON (Green Solid)**: Immediately upon fault injection, the output norm drops to 0. The system successfully suppresses the invalid generation.
+*   **Panel 2 (Control Signal)**: Traces the decision logic. At Index 25, the signal strictly transitions from `PROCEED` to `ABSTAIN`.
 
 ### Conclusion
-RLCS governance successfully intervenes in the system execution path, preventing generation from OOD latents without requiring learned error-detection parameters.
+RLCS governance successfully intervenes in the system execution path. The comparison proves that the system's robustness is a property of the governance layer, not the decoder's inherent tolerance.
 
 ## Explicit Non-Claims
 
