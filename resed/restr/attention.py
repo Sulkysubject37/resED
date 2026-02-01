@@ -25,10 +25,7 @@ class MinimalMHSA:
         self.n_heads = n_heads
         self.d_head = d_model // n_heads
         
-        # Initialize deterministic weights (placeholders)
-        # In a real scenario, these would be loaded.
-        # Here we initialize with identity-like structure or small randoms for determinism.
-        # Using specific seed for determinism.
+        # Initialize deterministic weights
         rng = np.random.default_rng(42)
         scale = 1.0 / np.sqrt(d_model)
         
@@ -42,21 +39,26 @@ class MinimalMHSA:
         Compute Self-Attention: Softmax(QK^T / sqrt(d_k))V
         
         Args:
-            z: Input tensor (batch, seq_len, d_model) or (seq_len, d_model).
-               Assuming (batch, seq_len, d_model) for consistency.
+            z: Input tensor (batch, seq_len, d_model) or (batch, d_model).
                
         Returns:
-            Output tensor (batch, seq_len, d_model).
+            Output tensor matching input shape.
         """
-        if z.ndim == 2:
-            z = z[np.newaxis, :, :]
+        input_ndim = z.ndim
+        
+        if input_ndim == 2:
+            # Assume (batch, d_model) -> (batch, 1, d_model)
+            # We treat samples as independent sequences of length 1.
+            z_in = z[:, np.newaxis, :]
+        else:
+            z_in = z
             
-        batch, seq_len, d = z.shape
+        batch, seq_len, d = z_in.shape
         
         # Linear Projections
-        Q = np.dot(z, self.W_q)
-        K = np.dot(z, self.W_k)
-        V = np.dot(z, self.W_v)
+        Q = np.dot(z_in, self.W_q)
+        K = np.dot(z_in, self.W_k)
+        V = np.dot(z_in, self.W_v)
         
         # Split Heads
         # (batch, seq_len, n_heads, d_head)
@@ -65,10 +67,10 @@ class MinimalMHSA:
         V = V.reshape(batch, seq_len, self.n_heads, self.d_head).transpose(0, 2, 1, 3)
         
         # Scaled Dot-Product Attention
+        # (batch, n_heads, seq_len, seq_len)
         scores = np.matmul(Q, K.transpose(0, 1, 3, 2)) / np.sqrt(self.d_head)
         
         # Softmax
-        # Stable softmax
         scores_max = np.max(scores, axis=-1, keepdims=True)
         exp_scores = np.exp(scores - scores_max)
         attn_weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
@@ -83,4 +85,9 @@ class MinimalMHSA:
         # Output Projection
         output = np.dot(attn_out, self.W_o)
         
+        # Restore dimensionality
+        if input_ndim == 2:
+            # (batch, 1, d_model) -> (batch, d_model)
+            output = output.reshape(batch, self.d_model)
+            
         return output
