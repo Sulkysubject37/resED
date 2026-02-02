@@ -19,6 +19,16 @@ The system is composed of four strictly governed layers:
 *   **Phase 3 (resTR)**: Residual Transformer logic. (Complete)
 *   **Phase 4 (Integration)**: Full system wiring and governance. (Complete)
 *   **Phase 5 (Validation)**: Stress testing and observability figures. (Complete)
+*   **Phase 6 (Formalization)**: System contracts and governance semantics. (Complete)
+
+## System Formalization (Phase 6)
+
+The system is now formally specified. Please refer to the following documents for semantic definitions:
+
+*   **[System Contract](docs/phase6_system_contract.md)**: Input/Output scope and detectable failures.
+*   **[Governance Semantics](docs/phase6_governance_semantics.md)**: Formal meaning of `PROCEED`, `DEFER`, `ABSTAIN`.
+*   **[Interface Contracts](docs/phase6_interface_contracts.md)**: Module boundary definitions.
+*   **[Claims and Non-Claims](docs/phase6_claims_and_nonclaims.md)**: Explicit boundaries of system capability.
 
 ## Validation Results
 
