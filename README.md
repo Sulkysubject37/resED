@@ -20,6 +20,15 @@ The system is composed of four strictly governed layers:
 *   **Phase 4 (Integration)**: Full system wiring and governance. (Complete)
 *   **Phase 5 (Validation)**: Stress testing and observability figures. (Complete)
 *   **Phase 6 (Formalization)**: System contracts and governance semantics. (Complete)
+*   **Phase 7-A (Benchmarks)**: Benchmark representation extraction. (Complete)
+
+## Phase 7-A: Benchmark Representation Extraction
+
+Standardized latent embeddings have been extracted for system stress testing.
+*   **Source**: CIFAR-10 (Validation Subset).
+*   **Encoder**: ResNet-50 (RSB A1 weights).
+*   **Location**: `experiments/benchmarks/`
+*   **Details**: See [docs/phase7a_benchmark_data.md](docs/phase7a_benchmark_data.md).
 
 ## System Formalization (Phase 6)
 
@@ -52,9 +61,3 @@ outputs, diagnostics = block.forward(input_data)
 # Check diagnostics
 print(diagnostics['population_consistency'])
 ```
-
-## Philosophy
-
-*   **No Unchecked Latents**: Every representation is statistically validated before decoding.
-*   **Reference as Truth**: Reliability is measured against a fixed reference population, not a learned discriminator.
-*   **Deterministic Control**: The control surface uses fixed math, not black-box policies.
