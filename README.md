@@ -21,14 +21,14 @@ The system is composed of four strictly governed layers:
 *   **Phase 5 (Validation)**: Stress testing and observability figures. (Complete)
 *   **Phase 6 (Formalization)**: System contracts and governance semantics. (Complete)
 *   **Phase 7-A (Benchmarks)**: Benchmark representation extraction. (Complete)
+*   **Phase 7-B (Stress Testing)**: Validation on real-world ResNet-50 embeddings. (Complete)
 
-## Phase 7-A: Benchmark Representation Extraction
+## Phase 7-B: Real-World Stress Testing
 
-Standardized latent embeddings have been extracted for system stress testing.
-*   **Source**: CIFAR-10 (Validation Subset).
-*   **Encoder**: ResNet-50 (RSB A1 weights).
-*   **Location**: `experiments/benchmarks/`
-*   **Details**: See [docs/phase7a_benchmark_data.md](docs/phase7a_benchmark_data.md).
+The system has been validated using standardized ResNet-50 embeddings (CIFAR-10) under controlled perturbation.
+*   **Clean Baseline**: `docs/figures/figure0_clean_reference.pdf`
+*   **Stress Response**: `docs/figures/figure3_rlcs_stress_response.pdf`
+*   **Report**: [docs/phase7b_benchmark_validation.md](docs/phase7b_benchmark_validation.md)
 
 ## System Formalization (Phase 6)
 
@@ -38,13 +38,6 @@ The system is now formally specified. Please refer to the following documents fo
 *   **[Governance Semantics](docs/phase6_governance_semantics.md)**: Formal meaning of `PROCEED`, `DEFER`, `ABSTAIN`.
 *   **[Interface Contracts](docs/phase6_interface_contracts.md)**: Module boundary definitions.
 *   **[Claims and Non-Claims](docs/phase6_claims_and_nonclaims.md)**: Explicit boundaries of system capability.
-
-## Validation Results
-
-System behavior under stress is documented in [docs/phase5_system_validation.md](docs/phase5_system_validation.md).
-Key figures:
-- `docs/figures/figure1_stress_observability.png`: Sensor sensitivity to drift.
-- `docs/figures/figure2_resed_on_off.png`: Governance intervention vs. ungoverned execution.
 
 ## Usage
 
