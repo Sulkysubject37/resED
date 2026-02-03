@@ -29,7 +29,7 @@ The system is composed of four strictly governed layers:
 
 ## Phase 9: Formal Calibration
 
-We introduced a quantile-based calibration layer to normalize RLCS diagnostics.
+We introduced a reference-conditioned calibration layer (quantile-estimated, Z-score mapped) to normalize RLCS diagnostics.
 *   **Problem**: High-dimensional embeddings triggered false positives due to distance scaling.
 *   **Solution**: Mapping raw scores to Z-scores relative to a reference distribution.
 *   **Result**: 99.6% acceptance of clean biological data, 100% rejection of noise.
