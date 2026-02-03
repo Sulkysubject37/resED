@@ -23,13 +23,14 @@ The system is composed of four strictly governed layers:
 *   **Phase 7-A (Benchmarks)**: Benchmark representation extraction (Vision). (Complete)
 *   **Phase 7-B (Stress Testing)**: Validation on real-world ResNet-50 embeddings. (Complete)
 *   **Phase 8-A (Bio Benchmarks)**: Biological embedding extraction (Bioteque). (Complete)
+*   **Phase 8-B (Bio Evaluation)**: RLCS evaluation on biological embeddings. (Complete)
 
-## Phase 8-A: Biological Embedding Extraction
+## Phase 8: Biological Validation
 
-We have integrated real-world biological embeddings to validate RLCS generalization.
-*   **Source**: Bioteque (IRB Barcelona).
-*   **Data**: Gene embeddings (`GEN-_dph-GEN`).
-*   **Details**: [docs/phase8a_biological_embedding_extraction.md](docs/phase8a_biological_embedding_extraction.md).
+We have validated RLCS on real-world biological embeddings (Bioteque Genes).
+*   **Extraction**: [docs/phase8a_biological_embedding_extraction.md](docs/phase8a_biological_embedding_extraction.md)
+*   **Evaluation**: [docs/phase8b_rlcs_biological_evaluation.md](docs/phase8b_rlcs_biological_evaluation.md)
+*   **Key Result**: RLCS correctly identifies clean biological data as safe and rejects perturbed/drifted variants without retraining.
 
 ## Usage
 
