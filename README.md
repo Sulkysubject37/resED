@@ -20,24 +20,16 @@ The system is composed of four strictly governed layers:
 *   **Phase 4 (Integration)**: Full system wiring and governance. (Complete)
 *   **Phase 5 (Validation)**: Stress testing and observability figures. (Complete)
 *   **Phase 6 (Formalization)**: System contracts and governance semantics. (Complete)
-*   **Phase 7-A (Benchmarks)**: Benchmark representation extraction. (Complete)
+*   **Phase 7-A (Benchmarks)**: Benchmark representation extraction (Vision). (Complete)
 *   **Phase 7-B (Stress Testing)**: Validation on real-world ResNet-50 embeddings. (Complete)
+*   **Phase 8-A (Bio Benchmarks)**: Biological embedding extraction (Bioteque). (Complete)
 
-## Phase 7-B: Real-World Stress Testing
+## Phase 8-A: Biological Embedding Extraction
 
-The system has been validated using standardized ResNet-50 embeddings (CIFAR-10) under controlled perturbation.
-*   **Clean Baseline**: `docs/figures/figure0_clean_reference.pdf`
-*   **Stress Response**: `docs/figures/figure3_rlcs_stress_response.pdf`
-*   **Report**: [docs/phase7b_benchmark_validation.md](docs/phase7b_benchmark_validation.md)
-
-## System Formalization (Phase 6)
-
-The system is now formally specified. Please refer to the following documents for semantic definitions:
-
-*   **[System Contract](docs/phase6_system_contract.md)**: Input/Output scope and detectable failures.
-*   **[Governance Semantics](docs/phase6_governance_semantics.md)**: Formal meaning of `PROCEED`, `DEFER`, `ABSTAIN`.
-*   **[Interface Contracts](docs/phase6_interface_contracts.md)**: Module boundary definitions.
-*   **[Claims and Non-Claims](docs/phase6_claims_and_nonclaims.md)**: Explicit boundaries of system capability.
+We have integrated real-world biological embeddings to validate RLCS generalization.
+*   **Source**: Bioteque (IRB Barcelona).
+*   **Data**: Gene embeddings (`GEN-_dph-GEN`).
+*   **Details**: [docs/phase8a_biological_embedding_extraction.md](docs/phase8a_biological_embedding_extraction.md).
 
 ## Usage
 
