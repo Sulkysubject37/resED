@@ -28,13 +28,14 @@ class RlcsGovernance:
         """
         self.attenuation_factor = attenuation_factor
 
-    def diagnose(self, z: np.ndarray, s: np.ndarray, **kwargs) -> tuple[list[RlcsSignal], dict]:
+    def diagnose(self, z: np.ndarray, s: np.ndarray, calibrator=None, **kwargs) -> tuple[list[RlcsSignal], dict]:
         """
         Run RLCS diagnostics and compute signals.
         
         Args:
             z: Latent batch.
             s: Statistics batch.
+            calibrator: Optional RlcsCalibrator for score normalization.
             **kwargs: Context (mu, sigma, z_prime).
             
         Returns:
@@ -42,7 +43,7 @@ class RlcsGovernance:
             diagnostics: Dictionary of scores.
         """
         diagnostics = {}
-        signals = rlcs_control(z, s, diagnostics=diagnostics, **kwargs)
+        signals = rlcs_control(z, s, diagnostics=diagnostics, calibrator=calibrator, **kwargs)
         return signals, diagnostics
 
     def route(self, signal: RlcsSignal, nominal_alpha: float, nominal_beta: float) -> tuple[float, float]:
