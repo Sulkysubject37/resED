@@ -10,3 +10,8 @@ experiments/benchmarks/*.npy
 experiments/benchmarks/*.json
 experiments/benchmarks/*.pth
 experiments/benchmarks/data/
+experiments/benchmarks/bioteque/*.tar
+experiments/benchmarks/bioteque/*.tar.gz
+experiments/benchmarks/bioteque/*.npz
+experiments/benchmarks/bioteque/*.json
+experiments/benchmarks/bioteque/omnipath/
