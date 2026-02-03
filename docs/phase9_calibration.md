@@ -36,9 +36,38 @@ The Control Surface logic remains unchanged; it simply operates on calibrated Z-
 2.  **Determinism**: The calibration depends only on the fixed reference set.
 3.  **Domain Transfer**: By normalizing the score distribution, the same control thresholds (TAU=3.0) become applicable across domains with vastly different intrinsic geometries (e.g., Vision vs. Biology).
 
-## 4. Validation Results
-*   **Clean Data**: 99.6% PROCEED (Restored from 0%).
-*   **Noise (sigma=0.6)**: 100% ABSTAIN (Safety preserved).
-*   **Shock**: 100% detection of outliers.
+## 4. Final Biological Validation
 
-The system now correctly accepts valid high-dimensional biological data while rejecting corruptions.
+
+
+We re-evaluated the system on the Bioteque gene embeddings (128-dim) with the calibration layer enabled.
+
+
+
+### Calibrated Sensor Response
+
+**Figure**: `docs/figures/figure5_bioteque_calibrated_sensor_response.pdf`
+
+By mapping raw Euclidean distances to Z-scores, the "Clean" data distribution is now centered at $Z \approx 0$. This aligns the biological manifold with the global system threshold $\tau_D=3.0$.
+
+
+
+### Calibrated Control Distribution
+
+**Figure**: `docs/figures/figure5_bioteque_calibrated_control_distribution.pdf`
+
+*   **Clean Data**: 99.6% **PROCEED**. The "conservative collapse" observed in Phase 8 is resolved.
+
+*   **Fault Detection**: Despite the shift in baseline, safety is preserved.
+
+    *   **Noise (0.6)**: 100% **ABSTAIN**.
+
+    *   **Shock (5x)**: Granular detection of outliers (ABSTAIN signals for shocked samples).
+
+    *   **Drift/Dropout**: Graded escalation to ABSTAIN as the distribution deviates from the reference.
+
+
+
+## 5. Conclusion
+
+The reference-conditioned calibration layer (quantile-estimated, Z-score mapped) successfully decouples the **governance logic** (thresholds) from the **data geometry** (dimensionality). This allows resED to operate as a unified system across diverse embedding domains (Vision, Biology, Synthetic) without per-task threshold tuning.
