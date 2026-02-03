@@ -13,27 +13,19 @@ The system is composed of four strictly governed layers:
 
 ## Status
 
-*   **Phase 0 (Core)**: Utilities and scaffolding. (Complete)
-*   **Phase 1 (Components)**: `resENC` and `resDEC` implemented. (Complete)
-*   **Phase 2 (RLCS)**: Sensors and Control Surface logic. (Complete)
-*   **Phase 3 (resTR)**: Residual Transformer logic. (Complete)
-*   **Phase 4 (Integration)**: Full system wiring and governance. (Complete)
-*   **Phase 5 (Validation)**: Stress testing and observability figures. (Complete)
-*   **Phase 6 (Formalization)**: System contracts and governance semantics. (Complete)
-*   **Phase 7-A (Benchmarks)**: Benchmark representation extraction (Vision). (Complete)
-*   **Phase 7-B (Stress Testing)**: Validation on real-world ResNet-50 embeddings. (Complete)
-*   **Phase 8-A (Bio Benchmarks)**: Biological embedding extraction (Bioteque). (Complete)
-*   **Phase 8-B (Bio Evaluation)**: RLCS evaluation on biological embeddings. (Complete)
-*   **Phase 8-C (Recalibration)**: Reference recalibration evaluation. (Complete)
-*   **Phase 9 (Calibration)**: Formal risk calibration layer. (Complete)
+*   **Phases 0–6 (Core)**: Implementation, Integration, and Formal Contracts. (Complete)
+*   **Phase 7 (Benchmarks)**: Vision (ResNet-50) Benchmarks. (Complete)
+*   **Phase 8 (Bio)**: Biological (Bioteque) Benchmarks. (Complete)
+*   **Phase 9 (Calibration)**: Reference-conditioned risk calibration. (Complete)
+*   **Phase 10 (Bounds)**: Empirical failure envelopes and formal system bounds. (Complete)
 
-## Phase 9: Formal Calibration
+## Phase 10: Component Analysis & System Bounds
 
-We introduced a reference-conditioned calibration layer (quantile-estimated, Z-score mapped) to normalize RLCS diagnostics.
-*   **Problem**: High-dimensional embeddings triggered false positives due to distance scaling.
-*   **Solution**: Mapping raw scores to Z-scores relative to a reference distribution.
-*   **Result**: 99.6% acceptance of clean biological data, 100% rejection of noise.
-*   **Docs**: [docs/phase9_calibration.md](docs/phase9_calibration.md).
+We have empirically characterized the intrinsic failure modes of every component and formalized them into system-level bounds.
+*   **Failure Envelopes**: Characterized resENC stability, resTR sensitivity, and resDEC volatility.
+*   **Formal Bounds**: Derived observability guarantees linking latent stress to RLCS diagnostics.
+*   **Key Finding**: System reliability is an emergent property of governance, not component robustness.
+*   **Docs**: [docs/phase10a_component_stress_testing.md](docs/phase10a_component_stress_testing.md), [docs/phase10b_formal_bounds.md](docs/phase10b_formal_bounds.md).
 
 ## Usage
 
