@@ -25,14 +25,15 @@ The system is composed of four strictly governed layers:
 *   **Phase 8-A (Bio Benchmarks)**: Biological embedding extraction (Bioteque). (Complete)
 *   **Phase 8-B (Bio Evaluation)**: RLCS evaluation on biological embeddings. (Complete)
 *   **Phase 8-C (Recalibration)**: Reference recalibration evaluation. (Complete)
+*   **Phase 9 (Calibration)**: Formal risk calibration layer. (Complete)
 
-## Phase 8: Biological Validation
+## Phase 9: Formal Calibration
 
-We have validated RLCS on real-world biological embeddings (Bioteque Genes).
-*   **Extraction**: [docs/phase8a_biological_embedding_extraction.md](docs/phase8a_biological_embedding_extraction.md)
-*   **Evaluation**: [docs/phase8b_rlcs_biological_evaluation.md](docs/phase8b_rlcs_biological_evaluation.md)
-*   **Recalibration**: [docs/phase8c_reference_recalibration.md](docs/phase8c_reference_recalibration.md)
-*   **Key Result**: The system exhibits structural conservatism on high-dimensional data, defaulting to `ABSTAIN` due to geometric scaling ($\sqrt{d}$) rather than reference misalignment.
+We introduced a quantile-based calibration layer to normalize RLCS diagnostics.
+*   **Problem**: High-dimensional embeddings triggered false positives due to distance scaling.
+*   **Solution**: Mapping raw scores to Z-scores relative to a reference distribution.
+*   **Result**: 99.6% acceptance of clean biological data, 100% rejection of noise.
+*   **Docs**: [docs/phase9_calibration.md](docs/phase9_calibration.md).
 
 ## Usage
 
