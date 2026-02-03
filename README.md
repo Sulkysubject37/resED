@@ -24,13 +24,15 @@ The system is composed of four strictly governed layers:
 *   **Phase 7-B (Stress Testing)**: Validation on real-world ResNet-50 embeddings. (Complete)
 *   **Phase 8-A (Bio Benchmarks)**: Biological embedding extraction (Bioteque). (Complete)
 *   **Phase 8-B (Bio Evaluation)**: RLCS evaluation on biological embeddings. (Complete)
+*   **Phase 8-C (Recalibration)**: Reference recalibration evaluation. (Complete)
 
 ## Phase 8: Biological Validation
 
 We have validated RLCS on real-world biological embeddings (Bioteque Genes).
 *   **Extraction**: [docs/phase8a_biological_embedding_extraction.md](docs/phase8a_biological_embedding_extraction.md)
 *   **Evaluation**: [docs/phase8b_rlcs_biological_evaluation.md](docs/phase8b_rlcs_biological_evaluation.md)
-*   **Key Result**: RLCS correctly identifies clean biological data as safe and rejects perturbed/drifted variants without retraining.
+*   **Recalibration**: [docs/phase8c_reference_recalibration.md](docs/phase8c_reference_recalibration.md)
+*   **Key Result**: The system exhibits structural conservatism on high-dimensional data, defaulting to `ABSTAIN` due to geometric scaling ($\sqrt{d}$) rather than reference misalignment.
 
 ## Usage
 
