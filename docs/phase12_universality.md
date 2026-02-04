@@ -46,5 +46,14 @@ RLCS governance is **structurally universal** but **metric-sensitive**.
 *   It works across all architectures for **Distributional Shifts** (Drift) that alter the direction of the latent vector.
 *   For architectures with internal normalization (Transformers), RLCS cannot detect pure **Magnitude Anomalies** using Euclidean distance alone.
 
-## 4. Final Verdict
-RLCS is a valid governance layer for diverse architectures, provided the encoder preserves the statistical evidence of the failure mode. For normalized architectures, RLCS remains effective against concept drift but may require auxiliary magnitude sensors (detecting pre-norm stats) to catch pure shock events.
+## 5. Inference
+
+The Phase 12 validation reveals a critical boundary condition for representation-level governance:
+
+1.  **Metric-Architecture Alignment**: RLCS relies on the latent space geometry reflecting the input stress.
+    *   **Linear/ReLU Models (resENC, VAE)**: Input stress (noise/shock) propagates linearly to latent magnitude ($||z|| \uparrow$). RLCS detects this robustly.
+    *   **Normalized Models (Transformer)**: LayerNorm constrains the latent vector to a fixed manifold (hypersphere). Input magnitude stress is normalized away. RLCS detects *directional* shifts (Drift) but misses pure *magnitude* violations.
+
+2.  **Universality is Conditional**: The claim "Reliability is a System Property" holds, but the "System" must include the *Encoder's preservation of error*. If an encoder suppresses the error signal (via normalization) before the governor sees it, the system cannot govern it.
+
+**Recommendation**: For normalized architectures, RLCS should be augmented with a pre-normalization magnitude sensor, or the encoder should expose the normalization statistics as part of the side-channel ($S$).
