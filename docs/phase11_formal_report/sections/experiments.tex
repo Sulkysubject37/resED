@@ -1,35 +1,39 @@
-\section{Experimental Protocol}
+\section{Experimental Design}
 
-We conducted a multi-phase validation campaign to characterize system behavior under stress.
+We evaluate the resED architecture through a series of stress tests and domain-transfer experiments. Our validation strategy is designed to test the limits of the system's observability and the effectiveness of its governance layer across diverse latent manifolds.
 
-\subsection{Phase 5: System Stress Testing}
-We subjected the integrated system to deterministic perturbations:
+\subsection{Objective I: Observability of Representation Failure}
+We first test the hypothesis that system-level failures are detectable at the representation level before they manifest as output errors.
 \begin{itemize}
-    \item \textbf{Gradual Drift}: Linear interpolation from clean state to a shifted mean.
-    \item \textbf{Sudden Shock}: High-magnitude noise injection at a single time step.
+    \item \textbf{Setup}: We utilize a synthetic manifold with known statistics.
+    \item \textbf{Perturbations}: We inject two deterministic failure modes:
+    \begin{enumerate}
+        \item \textit{Gradual Drift}: A slow, monotonic shift in the input mean, simulating aging sensors or environmental shifts.
+        \item \textit{Sudden Shock}: A large-magnitude point perturbation, simulating localized corruption or adversarial noise.
+    \end{enumerate}
+    \item \textbf{Metrics}: We track the ResLik and TCS response curves to measure signal-to-noise ratio and detection latency.
 \end{itemize}
-Objective: Validate that RLCS sensors respond monotonically to latent stress and that the control surface effectively gates decoder output.
 
-\subsection{Phase 7: Vision Benchmarks (ResNet-50)}
-We extracted embeddings from the CIFAR-10 validation set using a pre-trained ResNet-50 backbone. This established a baseline for RLCS behavior on standard, low-dimensional computer vision data.
-
-\subsection{Phase 8: Biological Benchmarks (Bioteque)}
-We extracted gene embeddings (128 dimensions) from the Bioteque resource (Metapath: \texttt{GEN-\_dph-GEN}).
+\subsection{Objective II: Governance Efficacy and Suppression}
+We measure the system's ability to mitigate errors via the "circuit-breaker" logic.
 \begin{itemize}
-    \item \textbf{Condition A (Uncalibrated)}: Evaluation using scalar thresholds derived from synthetic data.
-    \item \textbf{Condition B (Recalibrated)}: Evaluation using reference statistics recomputed from the biological population.
+    \item \textbf{Setup}: A comparative run with RLCS governance enabled (\textit{resED ON}) versus disabled (\textit{resED OFF}).
+    \item \textbf{Metric}: Decoder output variance and norm during shift events.
+    \item \textbf{Expectation}: The ungoverned system will produce high-variance, unpredictable outputs ("hallucinations"), while the governed system will maintain a zero-norm output during violations.
 \end{itemize}
-Objective: Test cross-domain generalization and identify scaling laws.
 
-\subsection{Phase 9: Calibration Validation}
-We introduced the formal calibration layer and re-evaluated the biological embeddings.
-Objective: Verify that calibration restores the system's ability to \texttt{PROCEED} on clean high-dimensional data while maintaining safety (100% \texttt{ABSTAIN}) on corrupted data.
-
-\subsection{Phase 10: Component Failure Envelopes}
-We isolated each component (\texttt{resENC}, \texttt{resTR}, \texttt{resDEC}) and applied rigorous stress tests:
+\subsection{Objective III: High-Dimensional Domain Transfer}
+We evaluate the generalization of RLCS to biological data, which typically exhibits higher dimensionality and different covariance structures than vision or synthetic data.
 \begin{itemize}
-    \item \textbf{Encoder}: Input noise $\sigma \in [0.01, 0.3]$. Measured Latent L2 distortion.
-    \item \textbf{Transformer}: Token corruption ($N \in \{1, 5\}$). Measured Attention Entropy.
-    \item \textbf{Decoder}: Latent noise. Measured Output Divergence.
+    \item \textbf{Dataset}: Biological gene embeddings from the Bioteque resource (128-dimensional vectors).
+    \item \textbf{Challenge}: Test if the scalar thresholds calibrated on synthetic data suffer from "dimensionality collapse" (universal rejection).
+    \item \textbf{Solution}: Compare uncalibrated ResLik scores against our Z-score mapped calibration layer.
 \end{itemize}
-Objective: Define the empirical operational bounds of each component.
+
+\subsection{Objective IV: Component Sensitivity Characterization}
+Finally, we isolate each component to define its failure envelope.
+\begin{itemize}
+    \item \textbf{Encoder Stability}: Measuring the L2 distortion of representations under increasing input noise.
+    \item \textbf{Transformer Sensitivity}: Measuring the collapse of attention entropy when specific tokens in a sequence are corrupted.
+    \item \textbf{Decoder Volatility}: Quantifying the sensitivity ratio (\(\Delta y / \Delta z\)) to establish how latent errors propagate to the final output.
+\end{itemize}

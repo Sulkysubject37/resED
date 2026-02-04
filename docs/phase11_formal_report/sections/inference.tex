@@ -1,19 +1,23 @@
-\section{Interpretation \& Inference}
+\section{Interpretation and Synthesis}
 
-\subsection{Reliability as a System Property}
-Our results confirm the central hypothesis: **components are not robust in isolation**.
-*   The Encoder (\text{resENC}) propagates input noise directly into the latent space.
-*   The Decoder (\text{resDEC}) amplifies latent errors linearly.
-*   The Transformer (\text{resTR}) can suffer attention collapse under severe corruption.
+\subsection{Defending the System Property Claim}
+The central thesis of this work is that \textbf{reliability is a system property, not a component property}. Our empirical results support this through three key observations:
+\begin{enumerate}
+    \item \textbf{Individual Volatility}: Components like resENC and resTR are not inherently "safe." They function correctly within narrow regimes but propagate or amplify errors once input assumptions are violated.
+    \item \textbf{Emergent Safety}: The system's ability to "refuse" to generate is not programmed into the decoder, nor is it a feature of the encoder. It is an emergent outcome of the interaction between the statistical sensors (observability) and the control surface (governance).
+    \item \textbf{Structural Generalization}: By utilizing structural calibration (Z-mapping), we show that reliability logic remains valid even when the data geometry changes radically (e.g., from vision to biology).
+\end{enumerate}
 
-However, the **System** is robust. The RLCS layer successfully intercepts these failure modes at the representation level. By converting opaque component states into observable risk scores, the system maintains a safety envelope that individual models cannot enforce on their own.
+\subsection{Transparency vs. Robustness}
+Conventional research often pursues "robust models" that attempt to generalize to all possible corner cases. resED takes the opposite approach: it assumes components \textit{will} fail and prioritizes **transparency**. By converting opaque latent states into explicit risk coordinates, we enable a system that is predictable and auditable, even when its constituent models are black boxes.
 
-\subsection{The Role of Calibration}
-The "failure" of the uncalibrated system on biological data (Phase 8) was a crucial finding. It demonstrated that "distance" is relative to dimensionality. The Phase 9 Calibration Layer solves this not by tuning thresholds, but by normalizing the \textit{semantics} of the signal. This proves that a generic governance architecture can generalize across domains (Vision $\to$ Biology) given a reference-conditioned calibration step.
+\section{Limitations and Non-Claims}
+To maintain scientific rigor, we explicitly define the boundaries of the resED system:
+\begin{itemize}
+    \item \textbf{Accuracy vs. Reliability}: resED does not fix incorrect encodings. It only identifies and blocks them. It is a "fail-safe" system, not an "error-correcting" system.
+    \item \textbf{Adversarial Bounds}: While we have tested stochastic noise and structured shifts, we make no formal claims regarding robustness against optimized adversarial attacks designed to hide in the manifold's high-probability regions.
+    \item \textbf{Semantic Blindness}: The system is semantically agnostic. It judges representations by their statistical "typicality," not their content.
+\end{itemize}
 
-\subsection{Conclusion}
-We define the reliable system $\mathcal{R}$ not as a model that never makes mistakes, but as a system where the operational envelope $\mathcal{O}$ is strictly bounded by governance:
-\begin{equation}
-\mathcal{R}_{system} \subseteq \mathcal{O}(z)
-\end{equation}
-The resED architecture empirically satisfies this definition.
+\section{Conclusion}
+We have presented resED, a governed encoder-decoder framework that enforces reliability through representation-level control. By implementing a modular architecture consisting of deterministic encoding, statistical sensing, and gated refinement, we have demonstrated a system capable of detecting and mitigating latent failure across diverse domains. Our findings suggest that for safety-critical applications, the engineering of the governance layer is as important as the optimization of the generative backbone.

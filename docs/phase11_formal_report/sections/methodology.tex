@@ -1,81 +1,62 @@
 \section{Methodology}
 
-The resED architecture decouples generation from governance. It consists of four distinct, mathematically defined modules: a deterministic encoder (resENC), a statistical control surface (RLCS), a residual transformer (resTR), and a gated decoder (resDEC).
+The resED architecture is a modular, governed generative framework designed to enforce representation-level reliability. Unlike conventional encoder-decoder systems that rely on the implicit robustness of learned parameters, resED externalizes reliability logic into a deterministic control surface. This section details the mathematical and structural definitions of each component and the governance logic that orchestrates their interaction.
 
-\subsection{Encoder (resENC)}
-The encoder maps input $x \in \mathbb{R}^{d_{in}}$ to a latent representation $z \in \mathbb{R}^{d_z}$. It operates deterministically:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/architecture_diagram.pdf}
+    \caption{Architectural overview of the resED system. The primary generative pipeline (top) is governed by a parallel RLCS loop (bottom). The system transitions from high-dimensional inputs to latent representations, which are statistically validated before being refined and decoded. Governance signals modulate the transformer's refinement strength and gate the decoder's execution, implementing a deterministic circuit-breaker mechanism.}
+    \label{fig:arch_main}
+\end{figure}
+
+\subsection{Deterministic Encoder (resENC)}
+The \texttt{resENC} module serves as the primary interface for feature extraction. A fundamental design choice in resED is the enforcement of strict determinism in the encoding process. By avoiding stochastic sampling—such as that used in Variational Autoencoders (VAEs)—we ensure that any observed variance in the latent space $\mathcal{Z}$ is a direct consequence of input-level perturbations or distribution shifts, rather than sampling noise.
+
+The encoder performs a projection $f_\theta: \mathcal{X} \to \mathcal{Z}$, where:
 \begin{equation}
-z = f_\theta(x)
+z = \phi(XW + b)
 \end{equation}
-The stability of the encoder is characterized by its response to input perturbations $\epsilon$:
+Here, $\phi$ is a fixed nonlinearity (typically \texttt{tanh} to ensure a bounded latent space). The module is designed to address \textit{radial variance inflation}, a common failure mode where out-of-distribution (OOD) samples are mapped to valid directions but extreme magnitudes. To enable observability, \texttt{resENC} exposes a statistical side-channel $S$ for every encoded sample $z_i$:
 \begin{equation}
-\Delta z = f_\theta(x + \epsilon) - f_\theta(x)
-\end{equation}
-We strictly monitor the angular stability of the representation, defined as:
-\begin{equation}
-\cos(z, z') = \frac{z \cdot z'}{\|z\|\|z'\|}
+S_i = [\|z_i\|_2, \text{var}(z_i), \text{entropy}(z_i), \text{sparsity}(z_i)]
 \end{equation}
 
 \subsection{Representation-Level Control Surface (RLCS)}
-The RLCS is the governance core. It evaluates $z$ against a reference population statistics set $\Omega = \{\mu, \sigma\}$.
+The RLCS is the autonomous governance core of the system. It monitors the latent flow and emits control signals based on statistical invariants. This approach provides a transparent alternative to learned "safety classifiers," which often suffer from the same black-box failure modes as the models they intend to monitor.
 
 \subsubsection{Population Consistency (ResLik)}
-The Residual Likelihood (ResLik) sensor measures the Mahalanobis-like distance of $z$ from the population center $\mu$:
+The ResLik sensor establishes a "trust manifold" based on a clean reference population $\mathcal{P}_{ref}$. It computes the standardized distance of each new representation $z$ from the historical mean $\mu$:
 \begin{equation}
-D(z) = \frac{\|z - \mu\|_2}{\sigma}
+D(z) = \frac{\|z - \mu\|_2}{\sigma + \epsilon}
 \end{equation}
-where $\mu = \mathbb{E}[z]$ and $\sigma = \sqrt{\mathbb{V}[z]}$ are derived from the clean reference set.
-To prevent hypersensitivity to minor noise, we apply dead-zone gating:
-\begin{equation}
-\tilde{D}(z) =
-\begin{cases}
-0 & D(z) < \tau \\
-D(z) & \text{otherwise}
-\end{cases}
-\end{equation}
+where $\mu$ and $\sigma$ are the centroid and spread of $\mathcal{P}_{ref}$, respectively. A high $D(z)$ indicates a statistical anomaly (the "Stranger" problem), triggering an immediate escalation in the governance state.
 
 \subsubsection{Temporal Consistency Sensor (TCS)}
-For sequential data, TCS measures trajectory smoothness:
+For data with temporal or sequential dependencies, the system enforces trajectory smoothness. TCS monitors the rate of change between consecutive representations:
 \begin{equation}
-T(z_t, z_{t-1}) = \|z_t - z_{t-1}\|_2
+T(z_t, z_{t-1}) = \exp(-\|z_t - z_{t-1}\|_2)
 \end{equation}
+A collapse in $T$ indicates either a sensor malfunction or an unphysical jump in the underlying state (the "Jitter" problem).
 
-\subsubsection{Agreement Sensor}
-When multiple views $z^{(1)}, z^{(2)}$ are available, we measure consensus:
+\subsubsection{Calibration and Normalization}
+A major challenge in deploying RLCS across diverse domains (e.g., Vision vs. Biology) is the scaling of distance metrics with dimensionality. In a 128-dimensional space, the expected Euclidean distance is naturally larger than in a 10-dimensional space. To maintain a universal threshold logic, we utilize a **reference-conditioned calibration layer**. This layer maps raw diagnostics to Z-scores using an empirical quantile-matching process:
 \begin{equation}
-A(z^{(1)}, z^{(2)}) = \frac{z^{(1)} \cdot z^{(2)}}{\|z^{(1)}\|\|z^{(2)}\|}
+\hat{D}(z) = \Phi^{-1}(P(D \le D_{raw} | \mathcal{P}_{ref}))
 \end{equation}
+where $\Phi^{-1}$ is the inverse standard normal CDF. This normalization ensures that a threshold of $3.0$ always represents a "3-sigma" rarity relative to the trusted domain.
 
-\subsection{Calibration Layer}
-To normalize trust scores across domains (e.g., Vision vs. Biology) with differing intrinsic dimensionalities, we apply a reference-conditioned calibration. This maps raw diagnostics to standard normal Z-scores:
+\subsection{Gated Residual Transformer (resTR)}
+The \texttt{resTR} module provides optional refinement of the latent representation. Crucially, it is architected as a \textit{strictly residual} component:
 \begin{equation}
-\hat{D}(z) = \frac{D(z) - \mu_D}{\sigma_D}
+z_{out} = z_{in} + \text{Refinement}(z_{in})
 \end{equation}
-Acceptance is defined by a quantile bound $q_\alpha$:
-\begin{equation}
-\hat{D}(z) \le q_\alpha
-\end{equation}
-This calibration is explicitly \textit{reference-conditioned}, meaning $\mu_D$ and $\sigma_D$ are statistics of the diagnostic scores on the reference set, not learned parameters.
+The magnitude of this refinement is externally modulated by the RLCS signal $\pi$. If the system is in an \texttt{ABSTAIN} or \texttt{DEFER} state, the refinement scalars $(\alpha, \beta)$ are set to zero, causing the transformer to act as an identity function. This design prevents the refinement process from amplifying errors in already unstable representations.
 
-\subsection{Governance Logic}
-The control surface maps calibrated sensors to a discrete decision $\pi$:
-\begin{equation}
-\text{Decision}(z) =
-\begin{cases}
-\text{ABSTAIN} & \exists s_i > \tau_i^{\text{hard}} \\
-\text{DEFER} & \exists s_i > \tau_i^{\text{soft}} \\
-\text{PROCEED} & \text{otherwise}
-\end{cases}
-\end{equation}
-The decision logic follows a conservative hierarchy: $\text{ABSTAIN} > \text{DEFER} > \text{PROCEED}$.
-
-\subsection{Decoder (resDEC)}
-The decoder maps the (potentially refined) latent $z$ back to output space $y$:
-\begin{equation}
-y = g_\phi(z)
-\end{equation}
-Its sensitivity to latent noise is formalized as:
-\begin{equation}
-S = \frac{\|\Delta y\|}{\|\Delta z\|}
-\end{equation}
-Crucially, the decoder execution is gated by the RLCS decision. If $\text{Decision}(z) = \text{ABSTAIN}$, the decoder output is suppressed ($y = \varnothing$).
+\subsection{Controlled Decoder (resDEC)}
+The final stage of the pipeline is the \texttt{resDEC} module, which maps validated latents to the output space $y = g_\phi(z)$. The decoder is "governance-aware"; it does not execute autonomously. Instead, it observes the signal $\pi$ and implements the following semantics:
+\begin{itemize}
+    \item \textbf{PROCEED}: Normal high-fidelity decoding.
+    \item \textbf{DOWNWEIGHT}: Scaled amplitude output for marginal confidence cases.
+    \item \textbf{DEFER / ABSTAIN}: Total output suppression ($y = \varnothing$).
+\end{itemize}
+This "circuit-breaker" logic ensures that the system prefers \textit{silence over hallucination}, a critical requirement for high-stakes biological and safety-critical applications.
