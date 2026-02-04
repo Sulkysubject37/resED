@@ -1,0 +1,81 @@
+\section{Methodology}
+
+The resED architecture decouples generation from governance. It consists of four distinct, mathematically defined modules: a deterministic encoder (resENC), a statistical control surface (RLCS), a residual transformer (resTR), and a gated decoder (resDEC).
+
+\subsection{Encoder (resENC)}
+The encoder maps input $x \in \mathbb{R}^{d_{in}}$ to a latent representation $z \in \mathbb{R}^{d_z}$. It operates deterministically:
+\begin{equation}
+z = f_\theta(x)
+\end{equation}
+The stability of the encoder is characterized by its response to input perturbations $\epsilon$:
+\begin{equation}
+\Delta z = f_\theta(x + \epsilon) - f_\theta(x)
+\end{equation}
+We strictly monitor the angular stability of the representation, defined as:
+\begin{equation}
+\cos(z, z') = \frac{z \cdot z'}{\|z\|\|z'\|}
+\end{equation}
+
+\subsection{Representation-Level Control Surface (RLCS)}
+The RLCS is the governance core. It evaluates $z$ against a reference population statistics set $\Omega = \{\mu, \sigma\}$.
+
+\subsubsection{Population Consistency (ResLik)}
+The Residual Likelihood (ResLik) sensor measures the Mahalanobis-like distance of $z$ from the population center $\mu$:
+\begin{equation}
+D(z) = \frac{\|z - \mu\|_2}{\sigma}
+\end{equation}
+where $\mu = \mathbb{E}[z]$ and $\sigma = \sqrt{\mathbb{V}[z]}$ are derived from the clean reference set.
+To prevent hypersensitivity to minor noise, we apply dead-zone gating:
+\begin{equation}
+\tilde{D}(z) =
+\begin{cases}
+0 & D(z) < \tau \\
+D(z) & \text{otherwise}
+\end{cases}
+\end{equation}
+
+\subsubsection{Temporal Consistency Sensor (TCS)}
+For sequential data, TCS measures trajectory smoothness:
+\begin{equation}
+T(z_t, z_{t-1}) = \|z_t - z_{t-1}\|_2
+\end{equation}
+
+\subsubsection{Agreement Sensor}
+When multiple views $z^{(1)}, z^{(2)}$ are available, we measure consensus:
+\begin{equation}
+A(z^{(1)}, z^{(2)}) = \frac{z^{(1)} \cdot z^{(2)}}{\|z^{(1)}\|\|z^{(2)}\|}
+\end{equation}
+
+\subsection{Calibration Layer}
+To normalize trust scores across domains (e.g., Vision vs. Biology) with differing intrinsic dimensionalities, we apply a reference-conditioned calibration. This maps raw diagnostics to standard normal Z-scores:
+\begin{equation}
+\hat{D}(z) = \frac{D(z) - \mu_D}{\sigma_D}
+\end{equation}
+Acceptance is defined by a quantile bound $q_\alpha$:
+\begin{equation}
+\hat{D}(z) \le q_\alpha
+\end{equation}
+This calibration is explicitly \textit{reference-conditioned}, meaning $\mu_D$ and $\sigma_D$ are statistics of the diagnostic scores on the reference set, not learned parameters.
+
+\subsection{Governance Logic}
+The control surface maps calibrated sensors to a discrete decision $\pi$:
+\begin{equation}
+\text{Decision}(z) =
+\begin{cases}
+\text{ABSTAIN} & \exists s_i > \tau_i^{\text{hard}} \\
+\text{DEFER} & \exists s_i > \tau_i^{\text{soft}} \\
+\text{PROCEED} & \text{otherwise}
+\end{cases}
+\end{equation}
+The decision logic follows a conservative hierarchy: $\text{ABSTAIN} > \text{DEFER} > \text{PROCEED}$.
+
+\subsection{Decoder (resDEC)}
+The decoder maps the (potentially refined) latent $z$ back to output space $y$:
+\begin{equation}
+y = g_\phi(z)
+\end{equation}
+Its sensitivity to latent noise is formalized as:
+\begin{equation}
+S = \frac{\|\Delta y\|}{\|\Delta z\|}
+\end{equation}
+Crucially, the decoder execution is gated by the RLCS decision. If $\text{Decision}(z) = \text{ABSTAIN}$, the decoder output is suppressed ($y = \varnothing$).

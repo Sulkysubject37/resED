@@ -1,0 +1,59 @@
+\section{Results}
+
+\subsection{System Observability (Phase 5)}
+Figure \ref{fig:stress_obs} demonstrates the RLCS sensor response to gradual drift. The Population Consistency (ResLik) score rises monotonically with drift intensity, crossing the safety threshold (\tau_D) before the representation degenerates completely.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/figure1_stress_observability.png}
+    \caption{RLCS Sensor Observability. ResLik and TCS scores track latent drift, triggering ABSTAIN and DEFER signals respectively.}
+    \label{fig:stress_obs}
+\end{figure}
+
+Figure \ref{fig:on_off} contrasts the system behavior with and without governance. Under sudden shock, the ungoverned system hallucinates high-variance output, while the RLCS-governed system suppresses output immediately.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/figure2_resed_on_off.png}
+    \caption{System Response. Governance prevents hallucination by suppressing output during shock events.}
+    \label{fig:on_off}
+\end{figure}
+
+\subsection{Biological Generalization & Calibration (Phase 8 & 9)}
+Initial evaluation on biological embeddings (Phase 8) resulted in 100% \texttt{ABSTAIN} even on clean data due to the high dimensionality (d=128) inflating Euclidean distances.
+Figure \ref{fig:bio_calib} shows the result after applying the Phase 9 calibration layer. The clean distribution is normalized to Z \approx 0, allowing the system to \texttt{PROCEED} (99.6% acceptance), while noise (\sigma=0.6) is correctly rejected (100% \texttt{ABSTAIN}).
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \includegraphics[width=\linewidth]{figures/figure5_bioteque_calibrated_sensor_response.pdf}
+        \caption{Calibrated Sensor Response}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+        \includegraphics[width=\linewidth]{figures/figure5_bioteque_calibrated_control_distribution.pdf}
+        \caption{Control Distribution}
+    \end{subfigure}
+    \caption{Biological Validation. Calibration restores utility on high-dimensional data without compromising safety.}
+    \label{fig:bio_calib}
+\end{figure}
+
+\subsection{Component Failure Envelopes (Phase 10)}
+We empirically characterized the failure modes of individual components.
+\begin{itemize}
+    \item \textbf{Encoder}: Latent variance inflates linearly with input noise (Figure \ref{fig:enc_stab}).
+    \item \textbf{Transformer}: High token corruption causes attention collapse (Entropy drops, Concentration spikes) (Figure \ref{fig:tr_sens}).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/figure_component_resenc_stability.pdf}
+    \caption{Encoder Stability. Latent distortion scales with input noise.}
+    \label{fig:enc_stab}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/figure_component_restr_sensitivity.pdf}
+    \caption{Transformer Sensitivity. Attention entropy collapses under heavy corruption.}
+    \label{fig:tr_sens}
+\end{figure}

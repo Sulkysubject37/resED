@@ -1,0 +1,35 @@
+\section{Experimental Protocol}
+
+We conducted a multi-phase validation campaign to characterize system behavior under stress.
+
+\subsection{Phase 5: System Stress Testing}
+We subjected the integrated system to deterministic perturbations:
+\begin{itemize}
+    \item \textbf{Gradual Drift}: Linear interpolation from clean state to a shifted mean.
+    \item \textbf{Sudden Shock}: High-magnitude noise injection at a single time step.
+\end{itemize}
+Objective: Validate that RLCS sensors respond monotonically to latent stress and that the control surface effectively gates decoder output.
+
+\subsection{Phase 7: Vision Benchmarks (ResNet-50)}
+We extracted embeddings from the CIFAR-10 validation set using a pre-trained ResNet-50 backbone. This established a baseline for RLCS behavior on standard, low-dimensional computer vision data.
+
+\subsection{Phase 8: Biological Benchmarks (Bioteque)}
+We extracted gene embeddings (128 dimensions) from the Bioteque resource (Metapath: \texttt{GEN-\_dph-GEN}).
+\begin{itemize}
+    \item \textbf{Condition A (Uncalibrated)}: Evaluation using scalar thresholds derived from synthetic data.
+    \item \textbf{Condition B (Recalibrated)}: Evaluation using reference statistics recomputed from the biological population.
+\end{itemize}
+Objective: Test cross-domain generalization and identify scaling laws.
+
+\subsection{Phase 9: Calibration Validation}
+We introduced the formal calibration layer and re-evaluated the biological embeddings.
+Objective: Verify that calibration restores the system's ability to \texttt{PROCEED} on clean high-dimensional data while maintaining safety (100% \texttt{ABSTAIN}) on corrupted data.
+
+\subsection{Phase 10: Component Failure Envelopes}
+We isolated each component (\texttt{resENC}, \texttt{resTR}, \texttt{resDEC}) and applied rigorous stress tests:
+\begin{itemize}
+    \item \textbf{Encoder}: Input noise $\sigma \in [0.01, 0.3]$. Measured Latent L2 distortion.
+    \item \textbf{Transformer}: Token corruption ($N \in \{1, 5\}$). Measured Attention Entropy.
+    \item \textbf{Decoder}: Latent noise. Measured Output Divergence.
+\end{itemize}
+Objective: Define the empirical operational bounds of each component.

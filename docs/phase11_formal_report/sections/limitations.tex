@@ -1,0 +1,20 @@
+\section{Limitations \& Scope}
+
+\subsection{Non-Claims}
+We explicitly state what this system does \textbf{not} do:
+\begin{enumerate}
+    \item \textbf{Accuracy Improvement}: The governance layer does not fix the encoder's errors; it only detects them.
+    \item \textbf{Adversarial Robustness}: We have not verified the system against adversarial attacks designed to minimize statistical distance while maximizing semantic error.
+    \item \textbf{Semantic Correctness}: A statistically "typical" representation of nonsense will pass the governance checks.
+\end{enumerate}
+
+\subsection{Operational Constraints}
+*   **Reference Dependency**: The system requires a stable, representative reference population. Distribution shift in the reference data itself requires recalibration.
+*   **Threshold Sensitivity**: While calibration normalizes the scale, the choice of $\tau=3.0$ remains a heuristic balancing safety and utility.
+
+\subsection{Future Scope}
+Future work should investigate:
+*   Dimension-aware threshold scaling laws.
+*   Integration of semantic consistency checks (e.g., cycle consistency).
+*   Online recalibration for drifting data streams.
+

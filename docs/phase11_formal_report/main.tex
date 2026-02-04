@@ -1,0 +1,35 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\geometry{margin=1in}
+
+\title{\textbf{Reliability is a System Property:}\\Formal Methodology and Empirical Validation of the resED Architecture}
+\author{resED Technical Report}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report formalizes the methodology, experimental protocol, and results of the \textbf{resED} (Reliability-First Encoder-Decoder) project. We demonstrate that component-level reliability is unattainable in high-dimensional generative models due to intrinsic volatility. Instead, reliability must be engineered as a \textit{system property} through external governance. We define the mathematical foundations of the Representation-Level Control Surface (RLCS), present empirical failure envelopes for core components, and verify the system's ability to detect and mitigate failure modes across synthetic, vision, and biological domains without retraining.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\input{sections/methodology}
+\input{sections/experiments}
+\input{sections/results}
+\input{sections/inference}
+\input{sections/limitations}
+
+\end{document}

@@ -1,0 +1,19 @@
+\section{Interpretation \& Inference}
+
+\subsection{Reliability as a System Property}
+Our results confirm the central hypothesis: **components are not robust in isolation**.
+*   The Encoder (\text{resENC}) propagates input noise directly into the latent space.
+*   The Decoder (\text{resDEC}) amplifies latent errors linearly.
+*   The Transformer (\text{resTR}) can suffer attention collapse under severe corruption.
+
+However, the **System** is robust. The RLCS layer successfully intercepts these failure modes at the representation level. By converting opaque component states into observable risk scores, the system maintains a safety envelope that individual models cannot enforce on their own.
+
+\subsection{The Role of Calibration}
+The "failure" of the uncalibrated system on biological data (Phase 8) was a crucial finding. It demonstrated that "distance" is relative to dimensionality. The Phase 9 Calibration Layer solves this not by tuning thresholds, but by normalizing the \textit{semantics} of the signal. This proves that a generic governance architecture can generalize across domains (Vision $\to$ Biology) given a reference-conditioned calibration step.
+
+\subsection{Conclusion}
+We define the reliable system $\mathcal{R}$ not as a model that never makes mistakes, but as a system where the operational envelope $\mathcal{O}$ is strictly bounded by governance:
+\begin{equation}
+\mathcal{R}_{system} \subseteq \mathcal{O}(z)
+\end{equation}
+The resED architecture empirically satisfies this definition.
