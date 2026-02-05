@@ -40,7 +40,7 @@ T(z_t, z_{t-1}) = \exp(-\|z_t - z_{t-1}\|_2)
 A collapse in $T$ suggests that the underlying generative process has drifted from its temporal manifold. This sensor acts as a temporal low-pass filter for trust, preventing the system from reacting to transient spikes that lack historical continuity.
 
 \subsubsection{Reference-Conditioned Calibration Layer}
-A major challenge in deploying RLCS across diverse domains (e.g., Vision vs. Biology) is the scaling of distance metrics with dimensionality. In a 128-dimensional space, Euclidean distance naturally scales with $\sqrt{d}$. To maintain universal thresholds, we utilize a **reference-conditioned calibration layer**. This layer maps raw diagnostics to Z-scores using empirical quantile-matching:
+A major challenge in deploying RLCS across diverse domains (e.g., Vision vs. Biology) is the scaling of distance metrics with dimensionality. In a 128-dimensional space, Euclidean distance naturally scales with $\sqrt{d}$. To maintain universal thresholds, we utilize a \textbf{reference-conditioned calibration layer}. This layer maps raw diagnostics to Z-scores using empirical quantile-matching:
 \begin{equation}
 \hat{D}(z) = \Phi^{-1}(P(D \le D_{raw} | \mathcal{P}_{ref}))
 \end{equation}
