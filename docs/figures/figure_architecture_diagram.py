@@ -90,6 +90,7 @@ def generate_diagram():
     draw_arrow((sig_x, sig_y + 0.7), (12.0, Y_MAIN), style="-|>", color='#b85450', ls='--') # To DEC
     
     plt.savefig("docs/phase11_formal_report/figures/architecture_diagram.pdf", bbox_inches='tight')
+    plt.savefig("docs/phase11_formal_report/figures/architecture_diagram.png", bbox_inches='tight', dpi=300)
     plt.close()
 
 if __name__ == "__main__":
