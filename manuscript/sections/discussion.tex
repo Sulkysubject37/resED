@@ -1,0 +1,45 @@
+\section{Discussion}
+
+Our investigation into representation-level governance leads us to reframe the problem of AI reliability. By moving beyond model-centric robustness and adopting a system-centric perspective, we expose a fundamental limitation in current deep learning evaluations: the conflation of \textit{correctness} with \textit{completeness}.
+
+\subsection{Reframing the EPR Questions for AI Systems}
+In 1935, Einstein, Podolsky, and Rosen (EPR) posed two distinct questions regarding physical theories \cite{epr1935}: (1) Is the theory correct? and (2) Is the description given by the theory complete? We propose that a rigorous definition of AI reliability requires translating these questions directly into the domain of computational systems.
+
+\subsubsection{Question 1: AI Correctness}
+The first question—\textit{"Is the model correct?"}—corresponds to the standard evaluation of task performance. Does the model $f_\theta(x)$ map inputs to outputs such that the loss $\mathcal{L}(y, \hat{y})$ is minimized?
+\begin{itemize}
+    \item This domain is governed by metrics such as accuracy, F1-score, BLEU, and perplexity.
+    \item Modern machine learning research overwhelmingly optimizes for this criterion.
+    \item An encoder-decoder or Transformer model can be highly "correct" by this definition—achieving state-of-the-art accuracy on in-distribution data—while remaining entirely opaque to its own failure modes.
+\end{itemize}
+
+\subsubsection{Question 2: AI Completeness}
+The second, often neglected question—\textit{"Is the system description complete?"}—asks whether the system exposes sufficient internal observables to determine \textit{when} its outputs should be trusted.
+\begin{itemize}
+    \item An end-to-end neural network is an incomplete system description. It produces a prediction but does not necessarily produce the physical or statistical evidence required to validate that prediction's provenance.
+    \item Internal failures (e.g., latent collapse, attention fixation) can occur without any externally visible signal until the final, potentially catastrophic, output is generated.
+    \item Proxies like softmax confidence or Bayesian uncertainty estimates attempt to patch this incompleteness, but they are themselves derived from the same potentially compromised internal state.
+\end{itemize}
+
+\textbf{Central Thesis:} A model can be correct (high accuracy) yet the system can be incomplete (unobservable failure). The resED architecture is designed not to enhance correctness, but to restore completeness.
+
+\subsection{System Completeness via Observability}
+The \textbf{Representation-Level Control Surface (RLCS)} serves as the mechanism for system completeness. By introducing non-parametric sensors (ResLik, TCS, Agreement) that operate orthogonally to the generative task, we create a set of "elements of reality" (to use EPR's terminology) that can be predicted with certainty without disturbing the system.
+
+Our results demonstrate that this observability is distinct from model performance. In Phase 10, we observed that components like \texttt{resENC} and \texttt{resTR} are intrinsically volatile; they amplify noise and suffer attention collapse. A "correctness-only" evaluation would view this as a model failure requiring retraining. A "completeness" perspective views this as a system state to be observed and managed. By surfacing these states as explicit risk scores, RLCS converts a silent failure into a governed decision (ABSTAIN).
+
+\subsection{Transparent Systems over Robust Components}
+The prevailing dogma in robust AI is to engineer components that do not fail—to use adversarial training or architectural priors to harden the model against all possible perturbations. Our findings suggest this is a Sisyphean task.
+\begin{itemize}
+    \item \textbf{Volatility is Inevitable}: As dimensionality increases, the volume of the input space expands exponentially, making it impossible to cover all failure modes during training.
+    \item \textbf{Governance is Scalable}: Instead of hardening the component, resED hardens the \textit{interface}. By enforcing a statistical contract at the latent bottleneck, we ensure that downstream components (like the decoder) are never exposed to inputs that violate the system's operational assumptions.
+\end{itemize}
+This shift—from robust components to governed systems—allows for the safe deployment of high-performance, black-box models (like Transformers) that would otherwise be considered too risky for safety-critical loops.
+
+\subsection{Universality and Architectural Limits}
+Our cross-architecture validation (Phase 12) confirmed that governance logic generalizes across model families (MLP, VAE) but identified a critical boundary condition: \textbf{Normalization Blindness}.
+Transformer architectures utilizing Layer Normalization project latent vectors onto a hypersphere, effectively erasing magnitude-based error signals. While RLCS successfully detects directional shifts (Drift) in Transformers, it is blind to pure magnitude shock if the encoder normalizes it away before the sensor layer.
+This is not a flaw in the governance paradigm but a precise characterization of its scope. It implies that "completeness" for normalized architectures requires sensors that tap into pre-normalization states, reinforcing the need for architectural transparency.
+
+\subsection{Conclusion: Toward Complete AI Systems}
+We conclude that reliability is an emergent property of a complete system description, not a statistical property of a trained model. By formally separating the generative pathway (Correctness) from the governance pathway (Completeness), architectures like resED provide a blueprint for AI systems that can fail safely, fail loudly, and fail visibly—prerequisites for trust in any engineering discipline.

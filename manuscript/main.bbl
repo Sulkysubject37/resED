@@ -5,6 +5,11 @@ Jimmy~Lei Ba, Jamie~Ryan Kiros, and Geoffrey~E Hinton.
 \newblock Layer normalization.
 \newblock {\em arXiv preprint arXiv:1607.06450}, 2016.
 
+\bibitem{epr1935}
+Albert Einstein, Boris Podolsky, and Nathan Rosen.
+\newblock Can quantum-mechanical description of physical reality be considered complete?
+\newblock {\em Physical Review}, 47:777--780, 1935.
+
 \bibitem{fernandez2022bioteque}
 Albert Fernandez-Torras, Miquel Duran-Frigola, Martino Bertoni, Mattia Locatelli, and Patrick Aloy.
 \newblock Integrating and formatting biomedical data as pre-calculated knowledge graph embeddings in the bioteque.
