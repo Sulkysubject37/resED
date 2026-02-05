@@ -1,26 +1,12 @@
-\section{Limitations and Non-Claims}
+\section{Limitations}
 
-To maintain scientific rigor, we explicitly define the operational boundaries of the resED architecture.
+While the resED framework offers a robust mechanism for system-level governance, it is subject to specific operational boundaries.
 
-\subsection{Transformer Normalization Blindness}
-Our cross-architecture experiments revealed a critical boundary condition for RLCS universality. While the system detects directional shifts (Drift) across all models, it exhibits reduced sensitivity to magnitude-based anomalies (Shock) in Transformer architectures. This is a direct consequence of \textbf{Layer Normalization} \cite{ba2016layernorm}, which projects latent vectors back to a fixed hypersphere, effectively hiding amplitude corruption. This does not invalidate the system claim but highlights that RLCS universality is \textit{conditional} on the encoder preserving the statistical evidence of the failure mode. For normalized architectures, auxiliary magnitude sensors (operating pre-normalization) would be required to restore full observability.
+\subsection{Architectural Blind Spots}
+Our cross-architecture validation identified a critical limitation in Transformer-based encoders utilizing Layer Normalization. Because LayerNorm projects latent vectors onto a fixed hypersphere, pure magnitude-based perturbations (Shock) are effectively normalized away before they reach the RLCS sensors. While the system remains sensitive to directional shifts (Drift), this "Normalization Blindness" means that for certain architectures, the RLCS must be augmented with pre-normalization sensors to maintain full observability.
 
-\subsection{Explicit Non-Claims}
-\begin{itemize}
-    \item \textbf{No Semantic Awareness}: The governance is purely statistical. A statistically "typical" representation of nonsense will result in \texttt{PROCEED}. The system guards the manifold, not the meaning.
-    \item \textbf{No Accuracy Improvement}: resED does not improve the fidelity of the encoder on in-distribution data; it only identifies and blocks out-of-distribution results. It is a "fail-safe" system, not an "error-correcting" system.
-    \item \textbf{No Adversarial Security}: We have not verified the system against optimized adversarial attacks designed to minimize statistical distance while maximizing semantic error. The system assumes a "non-hostile" environment where failures are stochastic or distributional, not targeted.
-\end{itemize}
+\subsection{Dependency on Failure Manifestation}
+The RLCS relies on the premise that semantic failure manifests as statistical anomaly in the latent space. While this holds for the stochastic and distributional failures tested (Noise, Drift, Shock), it may not hold for sophisticated adversarial attacks designed to minimize statistical distance while maximizing semantic error. The system guards the manifold, not the semantic meaning; a statistically "typical" representation of nonsense will theoretically result in a \texttt{PROCEED} decision, although such a vector is difficult to produce without violating the manifold constraints.
 
-\subsection{Operational Constraints}
-\begin{itemize}
-    \item \textbf{Reference Dependency}: The system is only as reliable as its reference statistics. If the world shifts (Concept Drift), the reference must be recalibrated. The system cannot distinguish between "valid new data" and "invalid drift" without an external update to its reference set.
-    \item \textbf{Threshold Sensitivity}: While calibration normalizes the scale, the choice of the safety quantile $q_\alpha$ remains a policy decision balancing safety (Type II error) and utility (Type I error).
-\end{itemize}
-
-\section{Conclusion}
-We have presented and validated \textbf{resED}, a generative architecture that fundamentally redefines reliability as a system-level property rather than a component-level attribute. By decoupling the generative pathway from the governance pathway, resED resolves the "opacity-control" paradox that plagues modern deep learning: the most powerful models are often the least inspectable.
-
-Our empirical findings across synthetic, vision, and biological domains demonstrate that while individual components (encoders, transformers) are intrinsically volatile and prone to linear error propagation or attention collapse, the governed system maintains a predictable safety envelope. The introduction of the Reference-Conditioned Calibration Layer proved to be the linchpin for domain generalization, enabling the system to apply a unified governance logic to 128-dimensional biological embeddings with the same precision as low-dimensional synthetic data. This structural calibration transforms raw geometric distances into a universal currency of risk, allowing safety thresholds to be defined semantically rather than heuristically.
-
-Ultimately, resED provides a blueprint for "Complete AI Systems" as defined by our EPR framework: systems that not only produce correct outputs but also expose the internal observables necessary to verify their own trustworthiness. In an era of increasingly powerful black-box foundation models, such architectural governance is not merely an optimization—it is a prerequisite for safe deployment in high-stakes environments.
+\subsection{Reference Dependency}
+The governance logic is strictly conditioned on the reference population $\mathcal{P}_{ref}$. If the operational environment undergoes valid concept drift (e.g., a new biological condition emerges), the system will correctly flag it as anomalous. Distinguishing between "invalid drift" (failure) and "valid drift" (discovery) requires an external update to the reference set. The system is conservative by design; it does not "learn" to accept new data online.

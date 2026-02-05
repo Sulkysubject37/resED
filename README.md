@@ -1,6 +1,8 @@
-# resED: Representation gated Encoder-Decoder
+# resED: Reliability is a System Property
 
-**resED** is a modular generative system derived from the **Representation-Level Control Surfaces (RLCS)** paradigm. It treats reliability as a managed system property rather than a learned model attribute.
+**resED** is a modular generative framework derived from the **Representation-Level Control Surfaces (RLCS)** paradigm. It treats reliability as a managed system property rather than a learned model attribute.
+
+**Status: IEEE Transactions on Neural Networks and Learning Systems (TNNLS) Regular Paper submission ready.**
 
 ## System Architecture
 
@@ -22,19 +24,20 @@ Individual deep learning modules are opaque and volatile. resED provides observa
 *   **Deterministic Control**: Purely functional control logic without learned safety discriminators.
 
 ## Documentation
-*   **[Full Scientific Manuscript](manuscript/main.pdf)**: Comprehensive report with formal methodology and empirical validation.
+*   **[Scientific Manuscript (IEEE TNNLS Format)](manuscript/main.pdf)**: Comprehensive report with formal methodology and empirical validation.
 *   **[Methodology](manuscript/sections/methodology.tex)**: Mathematical definitions.
-*   **[Failure Modes](docs/failure_modes.md)**: Taxonomy of detectable anomalies.
+*   **[System Architecture](manuscript/sections/system_architecture.tex)**: Structural overview.
 
-## Usage
-```python
-from resed.system.resed_block import ResEdBlock
+## Citation
+Please refer to [CITATION.cff](CITATION.cff) for authoritative metadata.
 
-# Initialize governed system
-block = ResEdBlock(d_in=128, d_z=64, d_out=10)
-
-# Governed Inference
-outputs, diagnostics = block.forward(input_data)
+```bibtex
+@article{arshad2026resed,
+  title={Reliability is a System Property: Formal Methodology and Empirical Validation of the resED Architecture},
+  author={Arshad, MD.},
+  year={2026},
+  journal={IEEE Transactions on Neural Networks and Learning Systems (Submitted)}
+}
 ```
 
 ## Explicit Non-Claims

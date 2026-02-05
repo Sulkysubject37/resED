@@ -1,0 +1,31 @@
+\section{Experimental Protocol}
+
+We designed an experimental campaign to validate the system-level reliability claims of the resED framework. The protocol is structured to systematically dismantle the assumption of component robustness and verify the efficacy of governance.
+
+\subsection{Datasets and Benchmarks}
+We utilized two distinct datasets to test domain generalization:
+\begin{itemize}
+    \item \textbf{Vision Benchmark (CIFAR-10)}: We extracted 2048-dimensional feature embeddings using a ResNet-50 pre-trained on ImageNet. This represents a standard, well-structured high-dimensional space.
+    \item \textbf{Biological Benchmark (Bioteque)}: We utilized 128-dimensional pre-calculated gene embeddings from the Bioteque resource \cite{fernandez2022bioteque} (specifically the \texttt{GEN-\_dph-GEN} metapath). This represents a complex, topology-rich manifold relevant to drug discovery.
+\end{itemize}
+
+\subsection{Perturbation Protocol}
+To stress-test the system, we injected deterministic perturbations into the input or latent space. These perturbations simulate common failure modes:
+\begin{enumerate}
+    \item \textbf{Gaussian Noise}: Additive white noise $\epsilon \sim \mathcal{N}(0, \sigma I)$ with varying intensity $\sigma \in [0.1, 10.0]$. This tests the encoder's stability and the governance layer's sensitivity to variance inflation.
+    \item \textbf{Sudden Shock}: A high-magnitude impulse ($\times 10$ scaling) applied to a random subset of samples at a specific time step. This simulates a sensor glitch or adversarial attack.
+    \item \textbf{Drift}: A gradual linear shift in the mean of the input distribution over time, simulating concept drift.
+\end{enumerate}
+
+\subsection{Evaluation Criteria}
+We evaluate the system based on two primary axes:
+\begin{itemize}
+    \item \textbf{Observability}: Can the RLCS sensors detecting the perturbation? We measure the monotonicity of the ResLik and TCS scores against perturbation intensity.
+    \item \textbf{Governance Efficacy}: Does the system successfully suppress invalid outputs? We measure the "Acceptance Rate" (fraction of samples labeled \texttt{PROCEED}) on clean data versus the "Rejection Rate" (fraction labeled \texttt{ABSTAIN}) on corrupted data. Ideally, Acceptance $\to 1.0$ for clean and Rejection $\to 1.0$ for noise.
+\end{itemize}
+
+\subsection{Calibration Procedure}
+For each domain, we reserve a "clean" split of the data (N=200 samples) to fit the Reference-Conditioned Calibration Layer. This process establishes the baseline $\mu$, $\sigma$, and the empirical quantile function. No task-specific fine-tuning of the encoder or decoder is performed; the governance layer adapts to the frozen model.
+
+\subsection{Scope and Exclusions}
+This study focuses on the *reliability* of the representation, not the *quality* of the generation. We do not evaluate the perceptual quality of decoded images (e.g., FID score) or the biological validity of generated genes, except to confirm that suppression ($\|y\|=0$) occurs when required. Our claim is that the system correctly *identifies* when generation should be attempted, not that it generates perfect samples.

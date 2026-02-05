@@ -1,0 +1,43 @@
+\section{System Architecture}
+
+The resED architecture is composed of distinct generative components gated by a transparent governance layer. This separation of concerns allows us to treat the generative modules as opaque, potentially unreliable engines, while the governance layer provides a verifiable safety guarantee.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/architecture_diagram.pdf}
+    \caption{Architectural overview of the resED system. The primary generative pipeline (top) is governed by a parallel RLCS loop (bottom). The system transitions from high-dimensional inputs to latent representations, which are statistically validated before being refined and decoded. Governance signals modulate the transformer's refinement strength and gate the decoder's execution, implementing a deterministic circuit-breaker mechanism.}
+    \label{fig:arch_main}
+\end{figure}
+
+\subsection{Opaque Generative Components}
+The generative pathway consists of three modules designed to be high-performance but potentially volatile.
+
+\subsubsection{Deterministic Encoder (resENC)}
+The \texttt{resENC} module serves as the primary interface for feature extraction. Unlike Variational Autoencoders (VAEs) that sample from a learned distribution, \texttt{resENC} performs a strict deterministic projection $f_\theta: \mathcal{X} \to \mathcal{Z}$:
+\begin{equation}
+z = \phi(XW + b)
+\end{equation}
+where $\phi$ is a bounded activation (e.g., \texttt{tanh}). This determinism is crucial for the governance layer to establish a stable reference manifold. By avoiding stochastic sampling, we ensure that any variance in $\mathcal{Z}$ is attributable to input properties rather than sampling noise. To aid observability, \texttt{resENC} exposes a statistical side-channel $S$:
+\begin{equation}
+S_i = [\|z_i\|_2, \text{var}(z_i), \text{entropy}(z_i), \text{sparsity}(z_i)]
+\end{equation}
+This side-channel provides metadata that the governance layer uses to cross-validate the representation.
+
+\subsubsection{Gated Residual Transformer (resTR)}
+The \texttt{resTR} module offers optional refinement of the latent representation. It is architected as a \textit{strictly residual} component:
+\begin{equation}
+z_{out} = z_{in} + \text{Refinement}(z_{in})
+\end{equation}
+The operation of this module is externally modulated by the governance signal. If the system enters a defensive state (\texttt{ABSTAIN}), the refinement is bypassed, preventing the transformer from amplifying errors in an already corrupted latent vector.
+
+\subsubsection{Controlled Decoder (resDEC)}
+The \texttt{resDEC} module maps validated latents to the output space $y = g_\phi(z)$. Crucially, this decoder is not autonomous. Its execution is strictly gated by the governance signal $\pi$:
+\begin{itemize}
+    \item \textbf{\texttt{PROCEED}}: Execute normal decoding.
+    \item \textbf{\texttt{DOWNWEIGHT}}: Scale output amplitude by $\gamma < 1$ for marginal confidence.
+    \item \textbf{\texttt{DEFER} / \texttt{ABSTAIN}}: Suppress output entirely ($y = \varnothing$).
+\end{itemize}
+This mechanism ensures that the system prefers \textit{silence over hallucination}, a critical property for high-stakes deployment.
+
+\subsection{Transparent Governance Layer}
+The governance layer, implemented via the Representation-Level Control Surface (RLCS), sits orthogonal to the generative path. It observes the latent state $z$ and the side-channel $S$ to derive a control signal $\pi$, which then dictates the behavior of \texttt{resTR} and \texttt{resDEC}. This topology ensures that safety is not a "feature" of the decoder but a constraint imposed upon it.

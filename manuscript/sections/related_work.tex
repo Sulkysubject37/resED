@@ -1,0 +1,17 @@
+\section{Related Work}
+
+The challenge of reliability in deep learning has been approached from multiple angles, primarily focusing on model robustness, uncertainty estimation, and out-of-distribution (OOD) detection. We classify these approaches and contrast them with the system-level governance proposed in this work.
+
+\subsection{Out-of-Distribution Detection}
+OOD detection methods aim to identify inputs that deviate from the training distribution. Techniques such as ODIN \cite{liang2018odin} and Mahalanobis distance scores \cite{lee2018mahalanobis} typically operate on the final softmax outputs or intermediate feature maps of a classifier. While effective for classification tasks, these methods treat reliability as a property of the \textit{prediction}. In generative tasks, where the output is a high-dimensional structured object (e.g., an image or graph), prediction-level metrics are often insufficient to capture subtle semantic corruptions. Furthermore, these methods are often post-hoc and do not actively govern the generation process.
+
+\subsection{Uncertainty Estimation and Calibration}
+Bayesian Neural Networks \cite{gal2016dropout} and Deep Ensembles \cite{lakshminarayanan2017ensembles} provide probabilistic estimates of model uncertainty. Post-hoc calibration methods, such as temperature scaling \cite{guo2017calibration}, align confidence scores with empirical accuracy. However, these approaches address \textit{model uncertainty} (epistemic) rather than \textit{system safety}. A well-calibrated model can still be "confidently wrong" when extrapolating to a regime it has not seen. More importantly, uncertainty estimates are internal to the model and can be corrupted by the same perturbations that affect the prediction itself.
+
+\subsection{Robust Training}
+Adversarial training \cite{madry2018towards} and distributionally robust optimization attempt to harden the model against specific classes of perturbations. While this improves worst-case performance within a defined perturbation ball, it does not guarantee behavior on unforeseen failure modes. This approach essentially engages in an "arms race" with the perturbation space. In contrast, our framework accepts that components will fail and focuses on containing that failure through external governance.
+
+\subsection{Architectural Normalization}
+Transformer architectures \cite{vaswani2017attention} utilize mechanisms like Layer Normalization \cite{ba2016layernorm} to stabilize training. While beneficial for optimization, we show that this normalization can inadvertently mask magnitude-based failure signals in the latent space, complicating OOD detection.
+
+\textbf{Distinction:} Unlike these methods, resED does not attempt to improve the model's internal robustness or estimation capability. Instead, it introduces an orthogonal governance layer that enforces statistical contracts on the latent representation, providing a deterministic safety guarantee independent of the model's training objective.

@@ -25,16 +25,6 @@ Chuan Guo, Geoff Pleiss, Yu~Sun, and Kilian~Q. Weinberger.
 \newblock On calibration of modern neural networks.
 \newblock In {\em ICML}, 2017.
 
-\bibitem{he2016resnet}
-Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
-\newblock Deep residual learning for image recognition.
-\newblock In {\em CVPR}, 2016.
-
-\bibitem{krizhevsky2009cifar}
-Alex Krizhevsky.
-\newblock Learning multiple layers of features from tiny images.
-\newblock 2009.
-
 \bibitem{lakshminarayanan2017ensembles}
 Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell.
 \newblock Simple and scalable predictive uncertainty estimation using deep ensembles.
@@ -54,5 +44,10 @@ Shiyu Liang, Yixuan Li, and R.~Srikant.
 Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian Vladu.
 \newblock Towards deep learning models resistant to adversarial attacks.
 \newblock In {\em ICLR}, 2018.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em NeurIPS}, 2017.
 
 \end{thebibliography}
