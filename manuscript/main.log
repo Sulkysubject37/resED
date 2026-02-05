@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.11)  5 FEB 2026 12:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.11)  5 FEB 2026 12:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -369,17 +369,76 @@ Overfull \hbox (17.73155pt too wide) in paragraph at lines 30--31
 \OT1/cmr/bx/n/10.95 Comparison: \OT1/cmr/m/n/10.95 We eval-u-ated clean ac-cep-tance rates un-der un-cal-i-brated ver-sus reference-conditioned
  []
 
-) (./sections/results.tex [6]) (./sections/inference.tex [7
+) (./sections/results.tex
+<figures/figure1_stress_observability.png, id=272, 873.0216pt x 747.9945pt>
+File: figures/figure1_stress_observability.png Graphic file (type png)
+<use figures/figure1_stress_observability.png>
+Package pdftex.def Info: figures/figure1_stress_observability.png  used on input line 10.
+(pdftex.def)             Requested size: 362.37569pt x 310.48041pt.
+ [6]
+<figures/figure2_resed_on_off.png, id=280, 875.1897pt x 747.9945pt>
+File: figures/figure2_resed_on_off.png Graphic file (type png)
+<use figures/figure2_resed_on_off.png>
+Package pdftex.def Info: figures/figure2_resed_on_off.png  used on input line 20.
+(pdftex.def)             Requested size: 362.37569pt x 309.7043pt.
+ [7
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.24 
+      <./figures/figure1_stress_observability.png>]
+<figures/figure5_bioteque_calibrated_sensor_response.pdf, id=289, 722.7pt x 433.62pt>
+File: figures/figure5_bioteque_calibrated_sensor_response.pdf Graphic file (type pdf)
+<use figures/figure5_bioteque_calibrated_sensor_response.pdf>
+Package pdftex.def Info: figures/figure5_bioteque_calibrated_sensor_response.pdf  used on input line 32.
+(pdftex.def)             Requested size: 217.42265pt x 130.45091pt.
+<figures/figure5_bioteque_calibrated_control_distribution.pdf, id=290, 722.7pt x 433.62pt>
+File: figures/figure5_bioteque_calibrated_control_distribution.pdf Graphic file (type pdf)
+<use figures/figure5_bioteque_calibrated_control_distribution.pdf>
+Package pdftex.def Info: figures/figure5_bioteque_calibrated_control_distribution.pdf  used on input line 38.
+(pdftex.def)             Requested size: 217.42265pt x 130.45091pt.
+ [8
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.61 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.61 
+      <./figures/figure2_resed_on_off.png> <./figures/figure5_bioteque_calibrated_sensor_response.pdf> <./figures/figure5_bioteque_calibrated_control_distribution.pdf>]
+<figures/figure_component_resenc_stability.pdf, id=404, 578.16pt x 433.62pt>
+File: figures/figure_component_resenc_stability.pdf Graphic file (type pdf)
+<use figures/figure_component_resenc_stability.pdf>
+Package pdftex.def Info: figures/figure_component_resenc_stability.pdf  used on input line 67.
+(pdftex.def)             Requested size: 271.7835pt x 203.8345pt.
+<figures/figure_component_restr_sensitivity.pdf, id=405, 578.16pt x 433.62pt>
+File: figures/figure_component_restr_sensitivity.pdf Graphic file (type pdf)
+<use figures/figure_component_restr_sensitivity.pdf>
+Package pdftex.def Info: figures/figure_component_restr_sensitivity.pdf  used on input line 74.
+(pdftex.def)             Requested size: 271.7835pt x 203.8345pt.
+ [9
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.16 \subsection
-                {Formal Synthesis}
+l.93 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.93 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.93 
+      <./figures/figure_component_resenc_stability.pdf> <./figures/figure_component_restr_sensitivity.pdf>]) (./sections/inference.tex) (./sections/limitations.tex [10
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.16 \subsection
-                {Formal Synthesis}]) (./sections/limitations.tex) [8] (./main.aux)
+l.7 
+    ]) [11] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-11-14>
@@ -388,18 +447,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 9349124B5F89B2E72875D818CAE295F6;6023.
  ) 
 Here is how much of TeX's memory you used:
- 10134 strings out of 469519
- 154973 string characters out of 5469170
- 574951 words of memory out of 5000000
- 38599 multiletter control sequences out of 15000+600000
+ 10191 strings out of 469519
+ 157493 string characters out of 5469170
+ 575522 words of memory out of 5000000
+ 38648 multiletter control sequences out of 15000+600000
  637548 words of font info for 76 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,12n,79p,910b,505s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </Users/sulky/Library/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (8 pages, 240363 bytes).
+Output written on main.pdf (11 pages, 453306 bytes).
 PDF statistics:
- 373 PDF objects out of 1000 (max. 8388607)
- 262 compressed objects within 3 object streams
- 52 named destinations out of 1000 (max. 500000)
- 230 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 598 PDF objects out of 1000 (max. 8388607)
+ 301 compressed objects within 4 object streams
+ 60 named destinations out of 1000 (max. 500000)
+ 260 words of extra memory for PDF output out of 10000 (max. 10000000)
 

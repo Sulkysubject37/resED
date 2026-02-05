@@ -13,16 +13,16 @@
 \contentsline {subsection}{\numberline {2.4}Objective IV: Component Sensitivity and Universality}{6}{subsection.2.4}%
 \contentsline {section}{\numberline {3}Results}{6}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Detection and Observability}{6}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Efficacy of Gated Decoding}{6}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Generalization via Calibration}{6}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Empirical Failure Envelopes}{7}{subsection.3.4}%
-\contentsline {section}{\numberline {4}Interpretation and Synthesis}{7}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Reliability as a System Property}{7}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Observability and Governance over Robustness}{7}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}The Role of Structural Calibration}{7}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Formal Synthesis}{8}{subsection.4.4}%
-\contentsline {section}{\numberline {5}Limitations and Non-Claims}{8}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Transformer Normalization Blindness}{8}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Explicit Non-Claims}{8}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Future Directions}{8}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Conclusion}{8}{section.6}%
+\contentsline {subsection}{\numberline {3.2}Efficacy of Gated Decoding}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Generalization via Calibration}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Empirical Failure Envelopes}{9}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Interpretation and Synthesis}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Reliability as a System Property}{10}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Observability and Governance over Robustness}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}The Role of Structural Calibration}{10}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Formal Synthesis}{10}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Limitations and Non-Claims}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Transformer Normalization Blindness}{11}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Explicit Non-Claims}{11}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Future Directions}{11}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Conclusion}{11}{section.6}%

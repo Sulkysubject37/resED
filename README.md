@@ -1,10 +1,10 @@
-# resED: Representation gated Encoder-Decoder Architecture
+# resED: Representation gated Encoder-Decoder
 
 **resED** is a modular generative system derived from the **Representation-Level Control Surfaces (RLCS)** paradigm. It treats reliability as a managed system property rather than a learned model attribute.
 
 ## System Architecture
 
-![Architecture](manuscript/figures/architecture_diagram.pdf)
+![Architecture](docs/phase11_formal_report/figures/architecture_diagram.png)
 
 The system consists of four governed layers:
 1.  **resENC (Encoder)**: Deterministic feature extraction with a statistical side-channel.
@@ -22,8 +22,8 @@ Individual deep learning modules are opaque and volatile. resED provides observa
 *   **Deterministic Control**: Purely functional control logic without learned safety discriminators.
 
 ## Documentation
-*   **[Full Manuscript](manuscript/main.pdf)**: Comprehensive scientific report with equations and empirical validation.
-*   **[Methodology](manuscript/sections/methodology.tex)**: Formal mathematical definitions.
+*   **[Full Scientific Manuscript](manuscript/main.pdf)**: Comprehensive report with formal methodology and empirical validation.
+*   **[Methodology](manuscript/sections/methodology.tex)**: Mathematical definitions.
 *   **[Failure Modes](docs/failure_modes.md)**: Taxonomy of detectable anomalies.
 
 ## Usage
