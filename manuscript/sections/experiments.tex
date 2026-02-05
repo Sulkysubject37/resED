@@ -1,0 +1,40 @@
+\section{Experimental Design}
+
+Our experimental campaign is designed to test the central hypothesis that reliability can be governed at the representation level across diverse model families and data domains. We structure our validation around four primary scientific questions.
+
+\subsection{Objective I: Observability of Representation Failure}
+\textbf{Hypothesis:} System-level failures such as drift and shock manifest as monotonic deviations in RLCS metrics before they cause observable output errors.
+\textbf{Setup:} We utilized the \texttt{resED} pipeline with synthetic latent manifolds where ground-truth statistics were known. We injected two deterministic failure modes:
+\begin{enumerate}
+    \item \textit{Gradual Drift}: A linear shift in the input mean, simulating environment change.
+    \item \textit{Sudden Shock}: A high-magnitude noise injection (\(\sigma=10.0\)) at a single index.
+\end{enumerate}
+\textbf{Metrics:} We monitored the ResLik (\(D\)) and TCS (\(T\)) response curves to establish detection sensitivity.
+
+\subsection{Objective II: Governance Efficacy and Suppression}
+\textbf{Hypothesis:} The governed system will suppress hallucinations that an ungoverned model would otherwise generate.
+\textbf{Setup:} We performed a comparative run between:
+\begin{itemize}
+    \item \textbf{resED OFF}: RLCS is bypassed; the decoder executes on corrupted latents.
+    \item \textbf{resED ON}: RLCS is active; the decoder is gated by control signals.
+\end{itemize}
+\textbf{Metrics:} We measured the output norm \(\left\|y\right\|\) and the transition timing of the \texttt{ABSTAIN} signal.
+
+\subsection{Objective III: High-Dimensional Domain Transfer}
+\textbf{Hypothesis:} Structural calibration (Z-mapping) allows the same governance logic to generalize from low-dimensional vision tasks to high-dimensional biological data.
+\textbf{Setup:}
+\begin{itemize}
+    \item \textbf{Vision Baseline}: CIFAR-10 embeddings extracted via a pre-trained ResNet-50.
+    \item \textbf{Biological Benchmark}: 128-dimensional gene embeddings from Bioteque (\texttt{GEN-\_dph-GEN} metapath).
+\end{itemize}
+\textbf{Comparison:} We evaluated clean acceptance rates under uncalibrated versus reference-conditioned calibration.
+
+\subsection{Objective IV: Component Sensitivity and Universality}
+\textbf{Hypothesis:} The RLCS framework is architecture-agnostic and remains effective across heterogeneous model families (MLP, VAE, and Transformer).
+\textbf{Setup:} We isolated each component to define its empirical failure envelope:
+\begin{itemize}
+    \item \textbf{resENC Stability}: Measured L2 distortion under input noise \(\sigma \in [0.01, 0.3]\).
+    \item \textbf{resTR Sensitivity}: Measured attention entropy collapse under token corruption (\(N \in \{1, 5\}\).
+    \item \textbf{resDEC Volatility}: Quantified the sensitivity ratio (\(\Delta y / \Delta z\)).
+\end{itemize}
+\textbf{Metrics:} We derived min/max envelopes for each component's response to stress.

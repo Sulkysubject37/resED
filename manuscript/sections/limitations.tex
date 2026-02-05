@@ -1,0 +1,19 @@
+\section{Limitations and Non-Claims}
+
+To maintain scientific rigor, we explicitly define the operational boundaries of the resED architecture.
+
+\subsection{Transformer Normalization Blindness}
+Our cross-architecture experiments revealed a critical boundary condition for RLCS universality. While the system detects directional shifts (Drift) across all models, it exhibits reduced sensitivity to magnitude-based anomalies (Shock) in Transformer architectures. This is a direct consequence of **Layer Normalization**, which projects latent vectors back to a fixed hypersphere, effectively hiding amplitude corruption. This does not invalidate the system claim but highlights that RLCS universality is \textit{conditional} on the encoder preserving the statistical evidence of the failure mode.
+
+\subsection{Explicit Non-Claims}
+\begin{itemize}
+    \item \textbf{No Semantic Awareness}: The governance is purely statistical. A statistically "typical" representation of nonsense will result in \texttt{PROCEED}.
+    \item \textbf{No Accuracy Improvement}: resED does not improve the fidelity of the encoder on in-distribution data; it only identifies and blocks out-of-distribution results.
+    \item \textbf{No Adversarial Security}: We have not verified the system against optimized adversarial attacks designed to minimize statistical distance while maximizing semantic error.
+\end{itemize}
+
+\subsection{Future Directions}
+Future work will focus on integrating pre-normalization sensors for Transformer-based encoders and developing dimension-aware threshold scaling laws to further automate the calibration process.
+
+\section{Conclusion}
+We have presented and validated \textbf{resED}, an architecture that transforms volatile generative components into a predictable, fail-safe system. By engineering reliability at the representation level, we provide a pathway for high-stakes deployment of deep learning models where silence is preferred over hallucination.

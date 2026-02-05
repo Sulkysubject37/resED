@@ -1,0 +1,49 @@
+\section{Results}
+
+Our findings demonstrate that representation-level observability provides a reliable substrate for system-level governance.
+
+\subsection{Detection and Observability}
+The RLCS sensors accurately capture input-level stress. As shown in \textbf{Figure 1}, both ResLik and TCS sensors track latent drift with high monotonicity. The ResLik score provides an early-warning signal, crossing the $\tau_D=3.0$ safety threshold well before the representation is completely corrupted. This confirms that latent geometry is a high-fidelity proxy for system risk.
+
+\subsection{Efficacy of Gated Decoding}
+\textbf{Figure 2} contrasts the behavior of the governed (\textit{resED ON}) and ungoverned (\textit{resED OFF}) systems. During a sudden shock event, the ungoverned decoder produces high-variance output (hallucinations). The governed system immediately suppresses these outputs, returning a zero norm. This proves that the system's robustness is an architectural property of the governance layer, not an intrinsic feature of the model components.
+
+\subsection{Generalization via Calibration}
+The biological validation experiments highlighted the dimensionality scaling issue. Initial runs on 128-dimensional embeddings resulted in universal rejection (100\% \texttt{ABSTAIN}). \textbf{Figure 3} shows how the Reference-Conditioned Calibration Layer restored utility. By mapping raw distances to reference-relative Z-scores, the clean acceptance rate increased to 99.6\%, while maintaining 100\% detection of high-magnitude noise.
+
+\begin{table}[H]
+\centering
+\caption{Governance Outcomes Across Domains (Acceptance Rate \%)}
+\label{tab:gov_outcomes}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Condition} & \textbf{Synthetic (64D)} & \textbf{Vision (2048D)} & \textbf{Biology (128D)} \\
+\midrule
+Clean (Uncalibrated) & 99.8\% & 0.0\%* & 0.0\%* \\
+Clean (Calibrated)   & 99.8\% & 99.7\% & 99.6\% \\
+Noise ($\sigma=0.6$) & 0.0\%  & 0.0\%  & 0.0\% \\
+Shock (5\%)          & 95.0\% & 95.0\% & 95.0\% \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize *Rejection due to dimensionality scaling mismatch.}
+\end{tabular}
+\end{table}
+
+\subsection{Empirical Failure Envelopes}
+Component stress testing revealed the intrinsic limits of the modules. As summarized in \textbf{Table \ref{tab:failure_envelopes}}, all components lack internal stability mechanisms.
+
+\begin{table}[H]
+\centering
+\caption{Summary of Component Failure Envelopes}
+\label{tab:failure_envelopes}
+\begin{tabular}{lll}
+\toprule
+\textbf{Component} & \textbf{Observed Failure Mode} & \textbf{Impact on Output} \\
+\midrule
+resENC & Variance Inflation ($\Delta \text{Var} \le 1.35$) & Radial Drift \\
+resTR  & Attention Collapse ($\text{Entropy} \to 2.02$) & Noise Fixation \\
+resDEC & Linear Error Propagation ($S \approx 0.18$) & Direct Hallucination \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These results, combined with the cross-architecture findings in \textbf{Figures 4 and 5}, establish that while individual models are volatile, their failure modes are monotonic and observable, enabling deterministic system control.
