@@ -26,7 +26,7 @@ The second, often neglected question—\textit{"Is the system description comple
 \subsection{System Completeness via Observability}
 The \textbf{Representation-Level Control Surface (RLCS)} serves as the mechanism for system completeness. By introducing non-parametric sensors (ResLik, TCS, Agreement) that operate orthogonally to the generative task, we create a set of "elements of reality" (to use EPR's terminology) that can be predicted with certainty without disturbing the system.
 
-Our results demonstrate that this observability is distinct from model performance. In Phase 10, we observed that components like \texttt{resENC} and \texttt{resTR} are intrinsically volatile; they amplify noise and suffer attention collapse. A "correctness-only" evaluation would view this as a model failure requiring retraining. A "completeness" perspective views this as a system state to be observed and managed. By surfacing these states as explicit risk scores, RLCS converts a silent failure into a governed decision (ABSTAIN).
+Our results demonstrate that this observability is distinct from model performance. In our component analysis, we observed that components like \texttt{resENC} and \texttt{resTR} are intrinsically volatile; they amplify noise and suffer attention collapse. A "correctness-only" evaluation would view this as a model failure requiring retraining. A "completeness" perspective views this as a system state to be observed and managed. By surfacing these states as explicit risk scores, RLCS converts a silent failure into a governed decision (ABSTAIN).
 
 \subsection{Transparent Systems over Robust Components}
 The prevailing dogma in robust AI is to engineer components that do not fail—to use adversarial training or architectural priors to harden the model against all possible perturbations. Our findings suggest this is a Sisyphean task.
@@ -37,7 +37,7 @@ The prevailing dogma in robust AI is to engineer components that do not fail—t
 This shift—from robust components to governed systems—allows for the safe deployment of high-performance, black-box models (like Transformers) that would otherwise be considered too risky for safety-critical loops.
 
 \subsection{Universality and Architectural Limits}
-Our cross-architecture validation (Phase 12) confirmed that governance logic generalizes across model families (MLP, VAE) but identified a critical boundary condition: \textbf{Normalization Blindness}.
+Our cross-architecture validation confirmed that governance logic generalizes across model families (MLP, VAE) but identified a critical boundary condition: \textbf{Normalization Blindness}.
 Transformer architectures utilizing Layer Normalization project latent vectors onto a hypersphere, effectively erasing magnitude-based error signals. While RLCS successfully detects directional shifts (Drift) in Transformers, it is blind to pure magnitude shock if the encoder normalizes it away before the sensor layer.
 This is not a flaw in the governance paradigm but a precise characterization of its scope. It implies that "completeness" for normalized architectures requires sensors that tap into pre-normalization states, reinforcing the need for architectural transparency.
 

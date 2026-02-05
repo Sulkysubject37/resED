@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software or manuscript, please cite it as below."
+authors:
+  - family-names: "Arshad"
+    given-names: "MD."
+    orcid: "https://orcid.org/0009-0005-7142-039X"
+    affiliation: "Department of Computer Science, Jamia Millia Islamia"
+title: "resED: Reliability is a System Property"
+version: 1.0.0
+date-released: 2026-02-04
+url: "https://github.com/Sulkysubject37/resED"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Arshad"
+    given-names: "MD."
+    orcid: "https://orcid.org/0009-0005-7142-039X"
+    affiliation: "Department of Computer Science, Jamia Millia Islamia"
+  title: "Reliability is a System Property: Formal Methodology and Empirical Validation of the resED Architecture"
+  year: 2026
+  month: 2
