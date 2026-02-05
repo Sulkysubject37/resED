@@ -9,9 +9,9 @@
 
 \geometry{margin=1in}
 
-\title{\textbf{resED: A Representation-Gated Encoder--Decoder Framework}\\ \large{Reliability as a System Property for Learned Models}}
+\title{\textbf{Reliability is a System Property}}
 
-\author{\textbf{MD. Arshad} \\
+\author{\textbf{MD. Arshad} \\ 
 Department of Computer Science, Jamia Millia Islamia \\
 ORCID: 0009-0005-7142-039X}
 
@@ -20,14 +20,16 @@ ORCID: 0009-0005-7142-039X}
 \begin{document}
 
 \maketitle
+\thispagestyle{empty}
+\newpage
 
+\setcounter{page}{2}
 \begin{abstract}
-The deployment of deep generative models in high-stakes domains is currently hindered by their intrinsic volatility and lack of failure observability. Conventional approaches to reliability often treat safety as a property of the model parameters, attempting to enforce robustness through adversarial training or post-hoc uncertainty estimation. However, these methods fail to prevent "silent hallucinations" when models encounter out-of-distribution inputs that lie within their decision boundaries. This manuscript introduces \textbf{resED} (Representation-Gated Encoder-Decoder), an architecture that redefines reliability as a managed \textit{system property} rather than a latent model attribute. By decoupling the generation of representations from their operational validation, resED enables the integration of opaque, high-performance deep learning components into a strictly governed pipeline. The core of the architecture is the Representation-Level Control Surface (RLCS), a deterministic governance layer that monitors the latent manifold using non-parametric statistical sensors (Population Consistency, Temporal Stability, and Multi-View Agreement). We further introduce a Reference-Conditioned Calibration Layer that normalizes these diagnostic signals into universal risk coordinates, enabling the system to generalize across domains with vastly different intrinsic geometries without manual threshold tuning. We validate the architecture through extensive stress testing on both computer vision (CIFAR-10) and high-dimensional biological embeddings (Bioteque). Results demonstrate that while individual components remain susceptible to noise-induced variance inflation and attention collapse, the governed system successfully intercepts 100\% of high-magnitude perturbations while maintaining a 99.6\% acceptance rate for valid biological data. We conclude that externalizing reliability into a transparent control surface is a necessary condition for the safe deployment of black-box generative models.
+The deployment of deep generative models in high-stakes domains is currently hindered by their intrinsic volatility and lack of failure observability. Conventional approaches to reliability often treat safety as a property of the model parameters, attempting to enforce robustness through adversarial training or post-hoc uncertainty estimation. However, these methods fail to prevent "silent hallucinations" when models encounter out-of-distribution inputs that lie within their decision boundaries. This manuscript introduces \textbf{resED} (Representation-Gated Encoder--Decoder), an architecture that redefines reliability as a managed \textit{system property} rather than a latent model attribute. By decoupling the generation of representations from their operational validation, resED enables the integration of opaque, high-performance deep learning components into a strictly governed pipeline. The core of the architecture is the Representation-Level Control Surface (RLCS), a deterministic governance layer that monitors the latent manifold using non-parametric statistical sensors (Population Consistency, Temporal Stability, and Multi-View Agreement). We further introduce a Reference-Conditioned Calibration Layer that normalizes these diagnostic signals into universal risk coordinates, enabling the system to generalize across domains with vastly different intrinsic geometries without manual threshold tuning. We validate the architecture through extensive stress testing on both computer vision (CIFAR-10) and high-dimensional biological embeddings (Bioteque). Results demonstrate that while individual components remain susceptible to noise-induced variance inflation and attention collapse, the governed system successfully intercepts 100\% of high-magnitude perturbations while maintaining a 99.6\% acceptance rate for valid biological data. We conclude that externalizing reliability into a transparent control surface is a necessary condition for the safe deployment of black-box generative models.
 
 \vspace{1em}
 \noindent\textbf{Keywords:} system reliability, representation learning, encoder--decoder models, out-of-distribution detection, governance, calibration
 \end{abstract}
-
 \newpage
 
 \input{sections/introduction}
