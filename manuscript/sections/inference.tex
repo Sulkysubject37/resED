@@ -3,19 +3,20 @@
 \subsection{Reliability as a System Property}
 The central thesis of this work is that reliability in generative models is an emergent property of the \textbf{system architecture}, not an intrinsic attribute of the model parameters. 
 \begin{enumerate}
-    \item \textbf{Opacity vs. Control}: Deep learning modules are opaque black boxes. By wrapping them in a transparent, deterministic control surface, we convert this opacity into observability. 
-    \item \textbf{Decoupled Validation}: Generation (Encoder/Decoder) and Validation (RLCS) are orthogonal. This prevents the "confidently wrong" syndrome common in robust-training methods, where models learn to satisfy the loss function without actually being safe.
+    \item \textbf{Opacity vs. Control}: Deep learning components (Encoders, Transformers) are opaque and prone to silent failure (hallucination). By wrapping them in a transparent, deterministic control surface (RLCS), we convert this opacity into observability. 
+    \item \textbf{Emergent Safety}: The system's ability to "refuse" (\texttt{ABSTAIN}) is an emergent property of the interaction between the ResLik sensor and the Gated Decoder. Neither component possesses this capability in isolation. The encoder cannot refuse to project, and the decoder cannot refuse to generate. Only the governed system can refuse.
+    \item \textbf{Structural Generalization}: By utilizing structural calibration (Z-mapping), we show that reliability logic remains valid even when the data geometry changes radically (e.g., from vision to biology). This suggests that "trust" is a topological property of the latent space, independent of the semantic domain.
 \end{enumerate}
 
 \subsection{Observability and Governance over Robustness}
-Conventional AI research focuses on increasing model robustness---making components fail less often. resED assumes components \textit{will} fail and focuses on making those failures \textbf{observable} and \textbf{governable}. This shift from "fixing the model" to "controlling the system" enables reliable deployment even when components are volatile.
+Conventional AI research focuses on increasing model robustness—making components fail less often. resED assumes components \textit{will} fail and focuses on making those failures \textbf{observable} and \textbf{governable}. This shift from "fixing the model" to "controlling the system" enables reliable deployment even when components are volatile. A governed volatile system is safer than an ungoverned robust system because the former fails loudly (suppression), while the latter fails silently (plausible hallucination).
 
 \subsection{The Role of Structural Calibration}
-The calibration layer proves that "trust" is a relative concept. A distance of 10.0 might be a massive outlier in a 2D space but perfectly normal in 100D. Reference-conditioned calibration provides the semantic bridge necessary for domain-agnostic reliability. It transforms geometric raw distances into a universal language of risk (Z-scores), allowing the system to operate consistently across Vision and Biology.
+The calibration experiments demonstrate that "trust" is relative to geometry. A distance of 10.0 might be a massive outlier in a 2D space but perfectly normal in 100D. Reference-conditioned calibration provides the semantic bridge necessary for domain-agnostic reliability. It transforms geometric raw distances into a universal language of risk (Z-scores), allowing the system to operate consistently across Vision and Biology.
 
 \subsection{Formal Synthesis}
 We define a reliable system $\mathcal{R}$ not as one that maximizes accuracy, but as one that bounds its operational envelope $\mathcal{O}$ within the validated support of its reference population $\mathcal{P}$:
 \begin{equation}
 \mathcal{R}_{system} \subseteq \mathcal{O}(z) \text{ s.t. } P(z | \mathcal{P}) > \tau
 \end{equation}
-The resED architecture empirically satisfies this definition by enforcing the inequality $\hat{D}(z) \le q_\alpha$ before any generation occurs.
+The resED architecture empirically satisfies this definition by enforcing the inequality $\hat{D}(z) \le q_\alpha$ before any generation occurs. This transforms the reliability problem from an unbounded optimization task ("minimize loss") to a bounded constraint satisfaction task ("stay within manifold").

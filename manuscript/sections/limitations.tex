@@ -3,17 +3,20 @@
 To maintain scientific rigor, we explicitly define the operational boundaries of the resED architecture.
 
 \subsection{Transformer Normalization Blindness}
-Our cross-architecture experiments revealed a critical boundary condition for RLCS universality. While the system detects directional shifts (Drift) across all models, it exhibits reduced sensitivity to magnitude-based anomalies (Shock) in Transformer architectures. This is a direct consequence of **Layer Normalization**, which projects latent vectors back to a fixed hypersphere, effectively hiding amplitude corruption. This does not invalidate the system claim but highlights that RLCS universality is \textit{conditional} on the encoder preserving the statistical evidence of the failure mode.
+Our cross-architecture experiments revealed a critical boundary condition for RLCS universality. While the system detects directional shifts (Drift) across all models, it exhibits reduced sensitivity to magnitude-based anomalies (Shock) in Transformer architectures. This is a direct consequence of \textbf{Layer Normalization} \cite{ba2016layernorm}, which projects latent vectors back to a fixed hypersphere, effectively hiding amplitude corruption. This does not invalidate the system claim but highlights that RLCS universality is \textit{conditional} on the encoder preserving the statistical evidence of the failure mode. For normalized architectures, auxiliary magnitude sensors (operating pre-normalization) would be required to restore full observability.
 
 \subsection{Explicit Non-Claims}
 \begin{itemize}
-    \item \textbf{No Semantic Awareness}: The governance is purely statistical. A statistically "typical" representation of nonsense will result in \texttt{PROCEED}.
-    \item \textbf{No Accuracy Improvement}: resED does not improve the fidelity of the encoder on in-distribution data; it only identifies and blocks out-of-distribution results.
-    \item \textbf{No Adversarial Security}: We have not verified the system against optimized adversarial attacks designed to minimize statistical distance while maximizing semantic error.
+    \item \textbf{No Semantic Awareness}: The governance is purely statistical. A statistically "typical" representation of nonsense will result in \texttt{PROCEED}. The system guards the manifold, not the meaning.
+    \item \textbf{No Accuracy Improvement}: resED does not improve the fidelity of the encoder on in-distribution data; it only identifies and blocks out-of-distribution results. It is a "fail-safe" system, not an "error-correcting" system.
+    \item \textbf{No Adversarial Security}: We have not verified the system against optimized adversarial attacks designed to minimize statistical distance while maximizing semantic error. The system assumes a "non-hostile" environment where failures are stochastic or distributional, not targeted.
 \end{itemize}
 
-\subsection{Future Directions}
-Future work will focus on integrating pre-normalization sensors for Transformer-based encoders and developing dimension-aware threshold scaling laws to further automate the calibration process.
+\subsection{Operational Constraints}
+\begin{itemize}
+    \item \textbf{Reference Dependency}: The system is only as reliable as its reference statistics. If the world shifts (Concept Drift), the reference must be recalibrated. The system cannot distinguish between "valid new data" and "invalid drift" without an external update to its reference set.
+    \item \textbf{Threshold Sensitivity}: While calibration normalizes the scale, the choice of the safety quantile $q_\alpha$ remains a policy decision balancing safety (Type II error) and utility (Type I error).
+\end{itemize}
 
 \section{Conclusion}
-We have presented and validated \textbf{resED}, an architecture that transforms volatile generative components into a predictable, fail-safe system. By engineering reliability at the representation level, we provide a pathway for high-stakes deployment of deep learning models where silence is preferred over hallucination.
+We have presented and validated \textbf{resED}, an architecture that transforms volatile generative components into a predictable, fail-safe system. By engineering reliability at the representation level, we provide a pathway for high-stakes deployment of deep learning models where silence is preferred over hallucination. We have shown that governance can be decoupled from generation, enabling a new class of verifiable AI systems.

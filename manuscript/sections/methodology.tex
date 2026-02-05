@@ -1,6 +1,6 @@
 \section{Methodology}
 
-The resED (\textit{Representation gated Encoder-Decoder}) architecture is a modular framework designed to enforce representation-level reliability. Unlike conventional encoder-decoder systems that rely on the implicit robustness of learned parameters, resED externalizes reliability logic into a deterministic control surface. This architectural choice is predicated on the principle that reliability should be a managed system property rather than a learned model attribute. By decoupling the generation of representations from their operational validation, the system ensures that downstream components---such as transformers and decoders---only process data that satisfies strict statistical invariants. This section details the mathematical and structural definitions of each component and the governance logic that orchestrates their interaction.
+The resED (\textit{Representation gated Encoder-Decoder}) architecture is a modular framework designed to enforce representation-level reliability. Unlike conventional encoder-decoder systems that rely on the implicit robustness of learned parameters, resED externalizes reliability logic into a deterministic control surface. This architectural choice is predicated on the principle that reliability should be a managed system property rather than a learned model attribute. By decoupling the generation of representations from their operational validation, the system ensures that downstream components—such as transformers and decoders—only process data that satisfies strict statistical invariants. This section details the mathematical and structural definitions of each component and the governance logic that orchestrates their interaction.
 
 \begin{figure}[H]
     \centering
@@ -10,7 +10,7 @@ The resED (\textit{Representation gated Encoder-Decoder}) architecture is a modu
 \end{figure}
 
 \subsection{Deterministic Encoder (resENC)}
-The \texttt{resENC} module serves as the primary interface for feature extraction. A fundamental design choice in resED is the enforcement of strict determinism in the encoding process. By avoiding stochastic sampling---such as that used in Variational Autoencoders (VAEs)---we ensure that any observed variance in the latent space $\mathcal{Z}$ is a direct consequence of input-level perturbations or distribution shifts, rather than sampling noise. This determinism is essential for the statistical sensors to establish a stable reference manifold.
+The \texttt{resENC} module serves as the primary interface for feature extraction. A fundamental design choice in resED is the enforcement of strict determinism in the encoding process. By avoiding stochastic sampling—such as that used in Variational Autoencoders (VAEs)—we ensure that any observed variance in the latent space $\mathcal{Z}$ is a direct consequence of input-level perturbations or distribution shifts, rather than sampling noise. This determinism is essential for the statistical sensors to establish a stable reference manifold against which new inputs can be judged.
 
 \textbf{Failure Mode Addressed:} The primary failure mode of deep encoders is \textit{radial variance inflation}. In high-dimensional spaces, out-of-distribution (OOD) samples are often mapped to valid angular directions but exhibit extreme magnitudes. \texttt{resENC} addresses this by explicitly exposing a statistical side-channel $S$ for every encoded sample $z_i$:
 \begin{equation}
@@ -20,38 +20,38 @@ The encoder performs a deterministic projection $f_\theta: \mathcal{X} \to \math
 \begin{equation}
 z = \phi(XW + b)
 \end{equation}
-where $\phi$ is a fixed activation (e.g., \texttt{tanh}) providing a bounded support. Contrast this with standard Variational Encoders, where the representation is a sample from $q(z|x)$; here, the representation is a fixed coordinate, making its deviation from the population mean $\mu$ a reliable proxy for input risk.
+where $\phi$ is a fixed activation (e.g., \texttt{tanh}) providing a bounded support. Contrast this with standard Variational Encoders, where the representation is a sample from $q(z|x)$; here, the representation is a fixed coordinate, making its deviation from the population mean $\mu$ a reliable proxy for input risk. By verifying the encoder's output statistics against the side-channel, the system can detect if the encoder has entered an unstable regime.
 
 \subsection{Representation-Level Control Surface (RLCS)}
-The RLCS is the autonomous governance core of the system. It monitors the latent flow and emits control signals based on statistical invariants. This approach provides a transparent alternative to learned "safety classifiers," which are themselves black-box models prone to silent failure and over-optimization.
+The RLCS is the autonomous governance core of the system. It monitors the latent flow and emits control signals based on statistical invariants. This approach provides a transparent alternative to learned "safety classifiers," which are themselves black-box models prone to silent failure and over-optimization. The RLCS operates on the principle of "Trust but Verify," treating every latent vector as a potential hazard until proven statistically typical.
 
 \subsubsection{Population Consistency (ResLik)}
 The ResLik sensor establishes a "trust manifold" based on a clean reference population $\mathcal{P}_{ref}$. It computes the standardized distance of each new representation $z$ from the historical centroid $\mu$:
 \begin{equation}
 D(z) = \frac{\|z - \mu\|_2}{\sigma + \epsilon}
 \end{equation}
-where $\mu = \mathbb{E}[z]$ and $\sigma = \sqrt{\mathbb{V}[z]}$. A high $D(z)$ indicates a statistical anomaly (the "Stranger" problem), triggering an immediate escalation in the governance state. This is more robust than a sigmoid-based discriminator because the distance metric is monotonic and unbounded, ensuring that extreme outliers remain detectable.
+where $\mu = \mathbb{E}[z]$ and $\sigma = \sqrt{\mathbb{V}[z]}$. A high $D(z)$ indicates a statistical anomaly (the "Stranger" problem), triggering an immediate escalation in the governance state. This is more robust than a sigmoid-based discriminator because the distance metric is monotonic and unbounded, ensuring that extreme outliers remain detectable even if they fall "far" from the decision boundary of a trained classifier.
 
 \subsubsection{Temporal Consistency Sensor (TCS)}
 For sequential data, rapid latent trajectory shifts indicate unphysical jumps or sensor noise (the "Jitter" problem). TCS monitors the rate of change between consecutive representations:
 \begin{equation}
 T(z_t, z_{t-1}) = \exp(-\|z_t - z_{t-1}\|_2)
 \end{equation}
-A collapse in $T$ suggests that the underlying generative process has drifted from its temporal manifold.
+A collapse in $T$ suggests that the underlying generative process has drifted from its temporal manifold. This sensor acts as a temporal low-pass filter for trust, preventing the system from reacting to transient spikes that lack historical continuity.
 
 \subsubsection{Reference-Conditioned Calibration Layer}
 A major challenge in deploying RLCS across diverse domains (e.g., Vision vs. Biology) is the scaling of distance metrics with dimensionality. In a 128-dimensional space, Euclidean distance naturally scales with $\sqrt{d}$. To maintain universal thresholds, we utilize a **reference-conditioned calibration layer**. This layer maps raw diagnostics to Z-scores using empirical quantile-matching:
 \begin{equation}
 \hat{D}(z) = \Phi^{-1}(P(D \le D_{raw} | \mathcal{P}_{ref}))
 \end{equation}
-where $\Phi^{-1}$ is the inverse standard normal CDF. This ensures that a threshold of $3.0$ always represents a "3-sigma" rarity relative to the trusted reference set, regardless of the intrinsic geometry of the embedding space.
+where $\Phi^{-1}$ is the inverse standard normal CDF. This ensures that a threshold of $3.0$ always represents a "3-sigma" rarity relative to the trusted reference set, regardless of the intrinsic geometry of the embedding space. This structural calibration allows the same governance logic to be ported from low-dimensional synthetic tasks to high-dimensional biological tasks without manual re-tuning.
 
 \subsection{Gated Residual Transformer (resTR)}
 The \texttt{resTR} module provides optional refinement of the latent representation. Crucially, it is architected as a \textit{strictly residual} component:
 \begin{equation}
-z_{out} = z_{in} + \alpha \cdot \text{MHSA}(z_{in}) + \beta \cdot \text{FFN}(z_{in})
+z_{out} = z_{in} + \text{Refinement}(z_{in})
 \end{equation}
-The scalars $(\alpha, \beta)$ are externally modulated by the RLCS signal $\pi$. If the system is in an \texttt{ABSTAIN} state, $\alpha=\beta=0$, and the transformer defaults to the identity function. This ensures that potentially corrupted latents are not amplified by attention mechanisms before being rejected.
+The scalars $(\alpha, \beta)$ are externally modulated by the RLCS signal $\pi$. If the system is in an \texttt{ABSTAIN} state, $\alpha=\beta=0$, and the transformer defaults to the identity function. This ensures that potentially corrupted latents are not amplified by attention mechanisms before being rejected. Standard transformers treat every layer as mandatory, which can lead to "attention collapse" on noisy inputs; resTR treats refinement as a privilege granted only to trusted data.
 
 \subsection{Controlled Decoder (resDEC)}
 The \texttt{resDEC} module maps validated latents to the output space $y = g_\phi(z)$. The decoder is "governance-aware"; its execution is strictly gated by $\pi$.
@@ -60,4 +60,4 @@ The \texttt{resDEC} module maps validated latents to the output space $y = g_\ph
     \item \textbf{DOWNWEIGHT}: Output scaled by $\gamma < 1$ for marginal confidence.
     \item \textbf{DEFER / ABSTAIN}: Total output suppression ($y = \varnothing$).
 \end{itemize}
-This "circuit-breaker" logic ensures the system prefers \textit{silence over hallucination}. In contrast to standard decoders that always produce a best-guess output, \texttt{resDEC} acknowledges the limits of its own training support.
+This "circuit-breaker" logic ensures the system prefers \textit{silence over hallucination}. In contrast to standard decoders that always produce a best-guess output, \texttt{resDEC} acknowledges the limits of its own training support and refuses to speculate when the input latent falls outside the verifiable safety envelope.
