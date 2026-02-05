@@ -1,0 +1,26 @@
+\section{Introduction}
+
+In the deployment of deep generative models, reliability is often treated as an attribute of the model parameters—something to be optimized via loss functions, adversarial training \cite{madry2018towards}, or calibrated via post-hoc scaling \cite{guo2017calibration}. This approach assumes that a model can be trained to be "safe" in isolation. However, empirical evidence suggests that high-dimensional neural networks are intrinsically volatile; they exhibit sensitivity to adversarial perturbations, distribution shifts, and concept drift that cannot be fully mitigated during training.
+
+We propose a fundamental shift in perspective: **Reliability is a system property, not a component property.** 
+
+\subsection{System Definition}
+We define a "system" not as a single end-to-end model, but as a composite of generators (encoders, decoders) and regulators (governance logic). Drawing inspiration from biological systems, which achieve robustness not through perfect components but through rigorous checkpointing and repair mechanisms (e.g., DNA damage response), we introduce the **resED** (Representation gated Encoder-Decoder) architecture. In this framework:
+\begin{itemize}
+    \item \textbf{Failure is Inevitable}: We assume components (encoders) will produce invalid representations.
+    \item \textbf{Components are Opaque}: We treat deep networks as black boxes whose internal confidence is untrustworthy.
+    \item \textbf{Governance is External}: Safety is enforced by a deterministic control surface that monitors the latent state, orthogonal to the learning process.
+\end{itemize}
+
+\subsection{The Limits of Model-Centric Reliability}
+Prior work has largely focused on making models robust or self-aware.
+\begin{itemize}
+    \item \textbf{Out-of-Distribution (OOD) Detection}: Methods like ODIN \cite{liang2018odin} and Mahalanobis distance scores \cite{lee2018mahalanobis} detect anomalies at prediction time. However, they typically operate on the final output or require access to classifier logits, treating reliability as a property of the prediction rather than the representation.
+    \item \textbf{Uncertainty Estimation}: Bayesian approximations \cite{gal2016dropout} and Deep Ensembles \cite{lakshminarayanan2017ensembles} provide confidence intervals. While valuable, these are probabilistic estimates of *model uncertainty*, not deterministic guarantees of *system safety*. A model can be "confidently wrong" on OOD data.
+    \item \textbf{Robust Training}: Adversarial training \cite{madry2018towards} attempts to harden the decision boundary. This prevents specific failure modes but does not provide a mechanism to manage failure when it inevitably occurs outside the training distribution.
+\end{itemize}
+
+\subsection{The RLCS Paradigm}
+The **Representation-Level Control Surface (RLCS)** introduces a distinct layer of governance. It does not attempt to "fix" the model or "predict" errors. Instead, it enforces a statistical contract on the latent representation itself. By defining a "trust manifold" based on a reference population (e.g., ImageNet \cite{he2016resnet}, Bioteque \cite{fernandez2022bioteque}), RLCS converts opaque latent vectors into observable risk scores.
+
+This manuscript formalizes the resED architecture, demonstrating that a deterministic governance layer can effectively suppress hallucinations and detect failures across diverse domains—from standard vision benchmarks like CIFAR-10 \cite{krizhevsky2009cifar} to high-dimensional biological embeddings—without retraining the underlying models. We show that while individual components (like Transformers \cite{vaswani2017attention}) may be blind to certain corruptions due to normalization \cite{ba2016layernorm}, the governed system remains reliable.
