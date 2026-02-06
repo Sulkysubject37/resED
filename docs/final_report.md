@@ -11,17 +11,16 @@ This revision systematically addresses the reviewer's critique regarding baselin
 *   **Empirical Verification**: Ran comparative benchmarks for varying intensities of Noise, Shock, and Drift.
     *   *Differentiation*: At low noise intensity ($\sigma=0.05$), Mahalanobis significantly outperforms RLCS (AUROC 0.98 vs 0.79), confirming that covariance estimation is necessary for subtle OOD detection.
     *   *Parity*: At operational noise levels ($\sigma \ge 0.1$) and for Drift, RLCS achieves parity (AUROC $\approx 1.0$).
-    *   *Advantage*: RLCS shows slight superiority in detecting low-magnitude Shock ($1.5\times$), suggesting Euclidean distance is a more direct proxy for magnitude inflation failure modes.
+*   **Circularity Test**: Demonstrated that valid but shifted populations trigger "Warning" states (Downweight/Defer) rather than binary rejection, validating the graded governance logic (Figure 7).
 *   **Architectural Scope**: Added a "Architectural Boundary Conditions" section explicitly documenting the "Normalization Blindness" of Transformers (LayerNorm) to magnitude-based shocks.
-*   **Formal Novelty**: Clarified that ResLik is a *standardized Euclidean* metric (scalar Mahalanobis), positioning RLCS as a "Safety Circuit Breaker" (catastrophic failure detection) rather than a precision OOD detector.
 
 ## 2. Resolved Criticisms
 | Reviewer Criticism | Resolution | Evidence |
 | :--- | :--- | :--- |
-| **Missing Baselines** | Added Mahalanobis & Euclidean benchmarks | `experiments/benchmarks/comparative_results.csv` |
+| **Missing Baselines** | Added Mahalanobis & Euclidean benchmarks | `comparative_results.csv` |
 | **Unclear Novelty** | Explicitly defined ResLik as standard metric; novelty is Governance | Methodology Section |
 | **Transformer Scope** | Defined "Normalization Blindness" boundary | Limitations Section |
-| **Data Realism** | Added "Shock" (Adversarial-like) perturbation | `run_comparative_benchmark.py` |
+| **Data Realism** | Added "Shock" perturbation and Circularity Test | `run_circularity_test.py` |
 
 ## 3. Remaining Limitations
 *   **Adversarial Completeness**: RLCS remains vulnerable to optimized attacks. This is now explicitly out-of-scope.

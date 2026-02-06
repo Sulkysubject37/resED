@@ -105,7 +105,7 @@ def generate_figure1():
     ax2.set_ylim(0, 1.1) # Fixed range for probability-like score
     
     # Global Title
-    fig.suptitle('Figure 1: RLCS Sensor Observability under Stress', fontsize=16, y=1.02)
+    plt.suptitle("Figure 2: RLCS Sensor Observability under Stress", fontsize=16)
     
     output_path = 'docs/figures/figure1_stress_observability.png'
     plt.savefig(output_path, bbox_inches='tight')

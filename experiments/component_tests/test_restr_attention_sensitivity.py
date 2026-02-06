@@ -149,7 +149,7 @@ def run_test():
     ax.plot(df["Severity"], df["Attn_Entropy"], marker='o', label="Entropy")
     ax.set_xlabel("Corrupted Tokens")
     ax.set_ylabel("Attention Entropy")
-    ax.set_title("resTR Sensitivity: Entropy vs Corruption")
+    ax.set_title("Figure 6: resTR Sensitivity: Entropy vs Corruption")
     ax.grid(alpha=0.3)
     
     ax2 = ax.twinx()

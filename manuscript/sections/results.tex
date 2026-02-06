@@ -13,12 +13,12 @@ The RLCS sensors successfully convert latent perturbations into observable signa
 \end{figure*}
 
 \subsection{Efficacy of Gated Decoding}
-\textbf{Figure \ref{fig:on_off}} contrasts the behavior of the governed (\textit{resED ON}) and ungoverned (\textit{resED OFF}) systems. During a sudden shock event:
+\textbf{Figure \ref{fig:on_off}} contrasts the behavior of the governed (\textit{resED ON}) and ungoverned (\textit{resED OFF}) systems. To ensure statistical rigor, we performed an aggregate simulation over $N=1,000$ independent shock events. 
 \begin{itemize}
-    \item The \textbf{Ungoverned System (Grey)} continues to decode the corrupted latent, resulting in a high-variance, hallucinatory output. This illustrates the danger of "blind" decoding.
-    \item The \textbf{Governed System (Green)} immediately transitions to \texttt{ABSTAIN}, suppressing the output ($y=\varnothing$, visualized as 0 norm) for the duration of the shock.
+    \item The \textbf{Ungoverned System (Grey)} consistently produced high-variance outputs during shock (mean norm $\approx 1.5$), demonstrating the danger of "blind" decoding on corrupted latents.
+    \item The \textbf{Governed System (Green)} successfully transitioned to \texttt{ABSTAIN} in 100% of shock trials, resulting in total output suppression (mean norm $\to 0$).
 \end{itemize}
-This result confirms that reliability is a function of the control surface, not the decoder's robustness. The system successfully prioritized safety over continuity.
+This result confirms that reliability is a deterministic function of the control surface architecture, not an anecdotal observation. The system successfully prioritized silence over speculative generation across the entire experimental population.
 
 \begin{figure*}[t!]
     \centering
@@ -27,10 +27,13 @@ This result confirms that reliability is a function of the control surface, not 
     \label{fig:on_off}
 \end{figure*}
 
-\subsection{Dimensionality Scaling and Calibration}
-A key finding is the impact of dimensionality on uncalibrated distance metrics. As shown in \textbf{Table \ref{tab:gov_outcomes}}, raw distance thresholds tuned for synthetic data (64D) failed catastrophically on high-dimensional benchmarks, rejecting 100\% of valid data for Vision (2048D) and Biology (128D) due to the curse of dimensionality ($\mathbb{E}[\|z\|] \propto \sqrt{d}$). 
+\subsection{Baseline Comparison}
+To contextualize the performance of RLCS, we benchmarked it against a standard Mahalanobis distance detector using full covariance estimation. Under high-magnitude perturbations (Noise $\sigma \ge 0.1$, Shock, Drift), RLCS achieved parity with the baseline (AUROC $\approx 1.0$), demonstrating that scalar governance is sufficient for detecting catastrophic failures. However, under subtle noise conditions ($\sigma=0.05$), the full-covariance Mahalanobis detector outperformed RLCS (AUROC 0.98 vs 0.79), highlighting the trade-off between computational efficiency and sensitivity to fine-grained correlations.
 
-The Reference-Conditioned Calibration Layer effectively neutralized this scaling factor. By mapping raw distances to a reference-relative Z-score, the clean acceptance rate was restored to >99\% across all domains, without manual threshold retuning.
+\subsection{Dimensionality Scaling and Calibration}
+A key finding is the impact of dimensionality on uncalibrated distance metrics. As shown in \textbf{Table \ref{tab:gov_outcomes}}, raw distance thresholds tuned for synthetic data (64D) failed catastrophically on high-dimensional benchmarks, rejecting 100% of valid data for Vision (2048D) and Biology (128D) due to the curse of dimensionality ($\mathbb{E}[\|z\|] \propto \sqrt{d}$). 
+
+The Reference-Conditioned Calibration Layer effectively neutralized this scaling factor. By mapping raw distances to a reference-relative Z-score, the clean acceptance rate was restored to $>99\%$ across all domains, without manual threshold retuning.
 
 \begin{table*}[t!]
 \centering
@@ -55,25 +58,34 @@ Shock (5\%)          & 95.0\% & 95.0\% & 95.0\% \\
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{figures/figure4a_bioteque_calibrated_sensor_response.pdf}
-        \\ (a) Calibrated Sensor Response
+        \ \ (a) Calibrated Sensor Response
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{figures/figure4b_bioteque_calibrated_control_distribution.pdf}
-        \\ (b) Control Distribution
+        \ \ (b) Control Distribution
     \end{minipage}
     \caption{Biological Validation. Calibration restores utility on high-dimensional data without compromising safety.}
     \label{fig:bio_calib}
 \end{figure*}
 
-\subsection{Analysis of Governance States}
-While \texttt{ABSTAIN} handles catastrophic failure, the intermediate \texttt{DOWNWEIGHT} state ($3.0 < \hat{D} \le 4.0$) was observed during the onset of gradual drift. In this regime, the system continued to provide output but with reduced amplitude, effectively signaling "marginal confidence" to the user. This graded response prevents binary flickering between trust and distrust.
+\subsection{Distributional Shift and Circularity}
+To test the "Reference Dependency" limitation, we performed a circularity test by clustering the CIFAR-10 embedding space into two modes ($C_0, C_1$) and using $C_0$ as the reference to judge $C_1$. The system mostly responded with \texttt{DOWNWEIGHT} or \texttt{DEFER} rather than outright \texttt{ABSTAIN} (Rejection Rate $< 1\%$), indicating that while the valid shifted population was detected as "atypical" (Warning Zone), it was not rejected as "impossible" (Critical Zone). This confirms the graded response capability.
+
+Figure \ref{fig:histograms} visualizes this behavior: Shifted Valid data (Orange) overlaps the Reference tail (Green) but is distinct, whereas OOD Noise (Red) is completely separated.
+
+\begin{figure*}[t!]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/figure_d_score_histograms.pdf}
+    \caption{Distribution of Risk Scores. Shifted valid data triggers warning thresholds, while noise triggers rejection.}
+    \label{fig:histograms}
+\end{figure*}
 
 \subsection{Empirical Failure Envelopes}
 Component stress testing revealed the intrinsic limits of the modules. As summarized in \textbf{Table \ref{tab:failure_envelopes}}, all components lack internal stability mechanisms. The encoder amplifies input noise linearly. The transformer, often assumed to be robust, suffers from a catastrophic "attention collapse" under heavy corruption.
 
-\begin{table}[t!]
+\begin{table*}[t!]
 \centering
 \caption{Summary of Component Failure Envelopes}
 \label{tab:failure_envelopes}
@@ -86,18 +98,18 @@ resTR  & Attention Collapse & Noise Fixation \\
 resDEC & Linear Error Prop. & Hallucination \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-\begin{figure}[t!]
+\begin{figure*}[t!]
     \centering
     \includegraphics[width=\columnwidth]{figures/figure_component_resenc_stability.pdf}
     \caption{Encoder Stability. Latent distortion scales linearly with input noise.}
     \label{fig:enc_stab}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[t!]
+\begin{figure*}[t!]
     \centering
     \includegraphics[width=\columnwidth]{figures/figure_component_restr_sensitivity.pdf}
     \caption{Transformer Sensitivity. Attention entropy collapses under heavy corruption.}
     \label{fig:tr_sens}
-\end{figure}
+\end{figure*}

@@ -1,5 +1,5 @@
 """
-Phase 8-B: RLCS Evaluation on Biological Embeddings.
+Figure 4: RLCS Evaluation on Biological Embeddings.
 
 Evaluates RLCS sensor and control surface behavior on Bioteque GEN-_dph-GEN embeddings
 under controlled latent perturbations.
@@ -15,6 +15,7 @@ sys.path.append(os.getcwd())
 
 from resed.rlcs.control_surface import rlcs_control
 from resed.rlcs.types import RlcsSignal
+from resed.calibration.calibrator import RlcsCalibrator
 
 # --- Configuration ---
 EMBEDDING_PATH = "experiments/benchmarks/bioteque/bioteque_gen_omnipath_embeddings.npz"
@@ -72,7 +73,16 @@ def evaluate():
     print(f"Loaded {len(z_clean)} embeddings. D={z_clean.shape[1]}.")
     print(f"Reference Sigma: {scalar_sigma:.4f}")
 
-    # 2. Conditions
+    # 2. Calibration
+    # Fit calibrator on clean data
+    s_dummy = np.zeros((len(z_clean), 4))
+    diag_ref = {}
+    rlcs_control(z_clean, s_dummy, diagnostics=diag_ref, mu=ref_mu, sigma=scalar_sigma)
+    calibrator = RlcsCalibrator()
+    calibrator.fit(diag_ref)
+    print("Calibrator fitted.")
+
+    # 3. Conditions
     conditions = [
         ("Clean", z_clean),
         ("Noise (0.1)", perturb_gaussian_noise(z_clean, 0.1)),
@@ -86,26 +96,23 @@ def evaluate():
     results = {}
     
     for name, z_cond in conditions:
-        # Run RLCS
-        # Pass dummy S (stats) as sensors don't strictly require it if raw Z is used
         s_dummy = np.zeros((len(z_cond), 4))
-        
-        # Diagnostics dict to capture sensor values
         diag = {}
-        signals = rlcs_control(z_cond, s_dummy, diagnostics=diag, mu=ref_mu, sigma=scalar_sigma)
+        # Use calibrator
+        signals = rlcs_control(z_cond, s_dummy, diagnostics=diag, calibrator=calibrator, mu=ref_mu, sigma=scalar_sigma)
         
-        # Collect summaries
-        d_scores = diag['population_consistency']
-        t_scores = diag['temporal_consistency'] # Not meaningful for set, but computed
+        # Collect summaries (Calibrated D)
+        # Calibrate batch D scores
+        raw_d = diag['population_consistency']
+        cal_d = calibrator.calibrate_batch('population_consistency', raw_d)
         
         results[name] = {
             "signals": signals,
-            "d_mean": np.mean(d_scores),
-            "d_std": np.std(d_scores),
-            "t_mean": np.mean(t_scores)
+            "d_mean": np.mean(cal_d),
+            "d_std": np.std(cal_d)
         }
 
-    # 3. Figure 1: Sensor Response
+    # 4. Figure 4a: Sensor Response
     fig1, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     
     names = [c[0] for c in conditions]
@@ -113,21 +120,21 @@ def evaluate():
     d_stds = [results[n]["d_std"] for n in names]
     
     x_pos = np.arange(len(names))
-    ax1.bar(x_pos, d_means, yerr=d_stds, capsize=5, color='steelblue', alpha=0.8, label='ResLik Score')
+    ax1.bar(x_pos, d_means, yerr=d_stds, capsize=5, color='steelblue', alpha=0.8, label='Calibrated ResLik (Z-Score)')
     ax1.axhline(3.0, color='red', linestyle='--', label='Threshold (3.0)')
     
     ax1.set_xticks(x_pos)
     ax1.set_xticklabels(names, rotation=45, ha='right')
-    ax1.set_ylabel("Population Consistency (D)")
-    ax1.set_title("RLCS Sensor Response to Biological Perturbations")
+    ax1.set_ylabel("Calibrated Risk Score (Z)")
+    ax1.set_title("Figure 4a: Calibrated Sensor Response (Biological)", fontsize=14)
     ax1.legend()
     ax1.grid(axis='y', alpha=0.3)
     
-    path1 = os.path.join(OUTPUT_DIR, "figure_bioteque_sensor_response.pdf")
+    path1 = os.path.join(OUTPUT_DIR, "figure4a_bioteque_calibrated_sensor_response.pdf")
     plt.savefig(path1)
     print(f"Saved {path1}")
     
-    # 4. Figure 2: Control Distribution
+    # 5. Figure 4b: Control Distribution
     fig2, ax2 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     
     signal_types = [RlcsSignal.PROCEED, RlcsSignal.DOWNWEIGHT, RlcsSignal.DEFER, RlcsSignal.ABSTAIN]
@@ -148,11 +155,11 @@ def evaluate():
     ax2.set_xticks(x_pos)
     ax2.set_xticklabels(names, rotation=45, ha='right')
     ax2.set_ylabel("Sample Count")
-    ax2.set_title("RLCS Control Signal Distribution")
+    ax2.set_title("Figure 4b: Control Signal Distribution (Biological)", fontsize=14)
     ax2.legend(title="Signal", bbox_to_anchor=(1.05, 1), loc='upper left')
     ax2.grid(axis='y', alpha=0.3)
     
-    path2 = os.path.join(OUTPUT_DIR, "figure_bioteque_control_distribution.pdf")
+    path2 = os.path.join(OUTPUT_DIR, "figure4b_bioteque_calibrated_control_distribution.pdf")
     plt.savefig(path2)
     print(f"Saved {path2}")
 

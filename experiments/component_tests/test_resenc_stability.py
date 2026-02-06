@@ -145,7 +145,7 @@ def run_test():
     ax.plot(subset["Intensity"], subset["L2_Dist"], marker='o', label="L2 Distortion")
     ax.set_xlabel("Noise Sigma")
     ax.set_ylabel("Latent Distortion (L2)")
-    ax.set_title("resENC Stability: Distortion vs Noise")
+    ax.set_title("Figure 5: resENC Stability: Distortion vs Noise")
     ax.grid(alpha=0.3)
     ax2 = ax.twinx()
     ax2.plot(subset["Intensity"], subset["RLCS_D"], marker='s', color='orange', label="RLCS D-Score")
