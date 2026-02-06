@@ -28,12 +28,29 @@ This result confirms that reliability is a deterministic function of the control
 \end{figure*}
 
 \subsection{Baseline Comparison}
-To contextualize the performance of RLCS, we benchmarked it against a standard Mahalanobis distance detector using full covariance estimation. Under high-magnitude perturbations (Noise $\sigma \ge 0.1$, Shock, Drift), RLCS achieved parity with the baseline (AUROC $\approx 1.0$), demonstrating that scalar governance is sufficient for detecting catastrophic failures. However, under subtle noise conditions ($\sigma=0.05$), the full-covariance Mahalanobis detector outperformed RLCS (AUROC 0.98 vs 0.79), highlighting the trade-off between computational efficiency and sensitivity to fine-grained correlations.
+To contextualize the performance of RLCS, we benchmarked it against a standard Mahalanobis distance detector using full covariance estimation (Table \ref{tab:auroc}). Under high-magnitude perturbations (Noise $\sigma \ge 0.1$, Shock, Drift), RLCS achieved parity with the baseline (AUROC $\approx 1.0$), demonstrating that scalar governance is sufficient for detecting catastrophic failures. However, under subtle noise conditions ($\sigma=0.05$), the full-covariance Mahalanobis detector outperformed RLCS (AUROC 0.98 vs 0.79), highlighting the trade-off between computational efficiency and sensitivity to fine-grained correlations.
+
+\begin{table}[t!]
+\centering
+\caption{Empirical AUROC Comparison (CIFAR-10 Embeddings)}
+\label{tab:auroc}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Perturbation} & \textbf{Mahalanobis} & \textbf{RLCS (Ours)} & \textbf{Difference} \\
+\midrule
+Noise ($\\sigma=0.05$) & 0.980 & 0.791 & -0.189 \\
+Noise ($\\sigma=0.10$) & 1.000 & 0.998 & -0.002 \\
+Shock ($1.5\times$) & 0.958 & 0.998 & +0.040 \\
+Shock ($5.0\times$) & 1.000 & 1.000 & 0.000 \\
+Drift ($+2.0$) & 1.000 & 1.000 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Dimensionality Scaling and Calibration}
-A key finding is the impact of dimensionality on uncalibrated distance metrics. As shown in \textbf{Table \ref{tab:gov_outcomes}}, raw distance thresholds tuned for synthetic data (64D) failed catastrophically on high-dimensional benchmarks, rejecting 100% of valid data for Vision (2048D) and Biology (128D) due to the curse of dimensionality ($\mathbb{E}[\|z\|] \propto \sqrt{d}$). 
+A key finding is the impact of dimensionality on uncalibrated distance metrics. As shown in \textbf{Table \ref{tab:gov_outcomes}}, raw distance thresholds tuned for synthetic data (64D) failed catastrophically on high-dimensional benchmarks, rejecting 100% of valid data for Vision (2048D) and Biology (128D) due to the curse of dimensionality ($\\mathbb{E}[\|z\|] \propto \sqrt{d}$). 
 
-The Reference-Conditioned Calibration Layer effectively neutralized this scaling factor. By mapping raw distances to a reference-relative Z-score, the clean acceptance rate was restored to $>99\%$ across all domains, without manual threshold retuning.
+The Reference-Conditioned Calibration Layer effectively neutralized this scaling factor. By mapping raw distances to a reference-relative Z-score, the clean acceptance rate was restored to >99% across all domains, without manual threshold retuning.
 
 \begin{table*}[t!]
 \centering
@@ -45,12 +62,12 @@ The Reference-Conditioned Calibration Layer effectively neutralized this scaling
 \midrule
 Clean (Uncalibrated) & 99.8\% & 0.0\%* & 0.0\%* \\
 Clean (Calibrated)   & 99.8\% & 99.7\% & 99.6\% \\
-Noise ($\sigma=0.6$) & 0.0\%  & 0.0\%  & 0.0\% \\
+Noise ($\\sigma=0.6$) & 0.0\%  & 0.0\%  & 0.0\% \\
 Shock (5\%)          & 95.0\% & 95.0\% & 95.0\% \\
 \bottomrule
 \end{tabular}
 \par\smallskip
-{\footnotesize *Rejection due to dimensionality scaling mismatch.}
+{\\footnotesize *Rejection due to dimensionality scaling mismatch.}
 \end{table*}
 
 \begin{figure*}[t!]
@@ -58,13 +75,13 @@ Shock (5\%)          & 95.0\% & 95.0\% & 95.0\% \\
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{figures/figure4a_bioteque_calibrated_sensor_response.pdf}
-        \ \ (a) Calibrated Sensor Response
+        \\ (a) Calibrated Sensor Response
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{figures/figure4b_bioteque_calibrated_control_distribution.pdf}
-        \ \ (b) Control Distribution
+        \\ (b) Control Distribution
     \end{minipage}
     \caption{Biological Validation. Calibration restores utility on high-dimensional data without compromising safety.}
     \label{fig:bio_calib}
@@ -75,7 +92,7 @@ To test the "Reference Dependency" limitation, we performed a circularity test b
 
 Figure \ref{fig:histograms} visualizes this behavior: Shifted Valid data (Orange) overlaps the Reference tail (Green) but is distinct, whereas OOD Noise (Red) is completely separated.
 
-\begin{figure*}[t!]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=\columnwidth]{figures/figure_d_score_histograms.pdf}
     \caption{Distribution of Risk Scores. Shifted valid data triggers warning thresholds, while noise triggers rejection.}
@@ -85,7 +102,7 @@ Figure \ref{fig:histograms} visualizes this behavior: Shifted Valid data (Orange
 \subsection{Empirical Failure Envelopes}
 Component stress testing revealed the intrinsic limits of the modules. As summarized in \textbf{Table \ref{tab:failure_envelopes}}, all components lack internal stability mechanisms. The encoder amplifies input noise linearly. The transformer, often assumed to be robust, suffers from a catastrophic "attention collapse" under heavy corruption.
 
-\begin{table*}[t!]
+\begin{table}[t!]
 \centering
 \caption{Summary of Component Failure Envelopes}
 \label{tab:failure_envelopes}
@@ -98,16 +115,16 @@ resTR  & Attention Collapse & Noise Fixation \\
 resDEC & Linear Error Prop. & Hallucination \\
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{table}
 
-\begin{figure*}[t!]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=\columnwidth]{figures/figure_component_resenc_stability.pdf}
     \caption{Encoder Stability. Latent distortion scales linearly with input noise.}
     \label{fig:enc_stab}
 \end{figure*}
 
-\begin{figure*}[t!]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=\columnwidth]{figures/figure_component_restr_sensitivity.pdf}
     \caption{Transformer Sensitivity. Attention entropy collapses under heavy corruption.}
