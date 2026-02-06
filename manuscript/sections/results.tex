@@ -38,8 +38,8 @@ To contextualize the performance of RLCS, we benchmarked it against a standard M
 \toprule
 \textbf{Perturbation} & \textbf{Mahalanobis} & \textbf{RLCS (Ours)} & \textbf{Difference} \\
 \midrule
-Noise ($\\sigma=0.05$) & 0.980 & 0.791 & -0.189 \\
-Noise ($\\sigma=0.10$) & 1.000 & 0.998 & -0.002 \\
+Noise ($\sigma=0.05$) & 0.980 & 0.791 & -0.189 \\
+Noise ($\sigma=0.10$) & 1.000 & 0.998 & -0.002 \\
 Shock ($1.5\times$) & 0.958 & 0.998 & +0.040 \\
 Shock ($5.0\times$) & 1.000 & 1.000 & 0.000 \\
 Drift ($+2.0$) & 1.000 & 1.000 & 0.000 \\
@@ -48,7 +48,7 @@ Drift ($+2.0$) & 1.000 & 1.000 & 0.000 \\
 \end{table}
 
 \subsection{Dimensionality Scaling and Calibration}
-A key finding is the impact of dimensionality on uncalibrated distance metrics. As shown in \textbf{Table \ref{tab:gov_outcomes}}, raw distance thresholds tuned for synthetic data (64D) failed catastrophically on high-dimensional benchmarks, rejecting 100% of valid data for Vision (2048D) and Biology (128D) due to the curse of dimensionality ($\\mathbb{E}[\|z\|] \propto \sqrt{d}$). 
+A key finding is the impact of dimensionality on uncalibrated distance metrics. As shown in \textbf{Table \ref{tab:gov_outcomes}}, raw distance thresholds tuned for synthetic data (64D) failed catastrophically on high-dimensional benchmarks, rejecting 100% of valid data for Vision (2048D) and Biology (128D) due to the curse of dimensionality ($\mathbb{E}[\|z\|] \propto \sqrt{d}$). 
 
 The Reference-Conditioned Calibration Layer effectively neutralized this scaling factor. By mapping raw distances to a reference-relative Z-score, the clean acceptance rate was restored to >99% across all domains, without manual threshold retuning.
 
@@ -62,12 +62,13 @@ The Reference-Conditioned Calibration Layer effectively neutralized this scaling
 \midrule
 Clean (Uncalibrated) & 99.8\% & 0.0\%* & 0.0\%* \\
 Clean (Calibrated)   & 99.8\% & 99.7\% & 99.6\% \\
-Noise ($\\sigma=0.6$) & 0.0\%  & 0.0\%  & 0.0\% \\
+Noise ($\sigma=0.6$) & 0.0\%  & 0.0\%  & 0.0\% \\
 Shock (5\%)          & 95.0\% & 95.0\% & 95.0\% \\
 \bottomrule
 \end{tabular}
-\par\smallskip
-{\\footnotesize *Rejection due to dimensionality scaling mismatch.}
+
+\medskip
+{\footnotesize *Rejection due to dimensionality scaling mismatch.}
 \end{table*}
 
 \begin{figure*}[t!]
@@ -97,7 +98,7 @@ Figure \ref{fig:histograms} visualizes this behavior: Shifted Valid data (Orange
     \includegraphics[width=\columnwidth]{figures/figure_d_score_histograms.pdf}
     \caption{Distribution of Risk Scores. Shifted valid data triggers warning thresholds, while noise triggers rejection.}
     \label{fig:histograms}
-\end{figure*}
+\end{figure}
 
 \subsection{Empirical Failure Envelopes}
 Component stress testing revealed the intrinsic limits of the modules. As summarized in \textbf{Table \ref{tab:failure_envelopes}}, all components lack internal stability mechanisms. The encoder amplifies input noise linearly. The transformer, often assumed to be robust, suffers from a catastrophic "attention collapse" under heavy corruption.
@@ -122,11 +123,11 @@ resDEC & Linear Error Prop. & Hallucination \\
     \includegraphics[width=\columnwidth]{figures/figure_component_resenc_stability.pdf}
     \caption{Encoder Stability. Latent distortion scales linearly with input noise.}
     \label{fig:enc_stab}
-\end{figure*}
+\end{figure}
 
 \begin{figure}[t!]
     \centering
     \includegraphics[width=\columnwidth]{figures/figure_component_restr_sensitivity.pdf}
     \caption{Transformer Sensitivity. Attention entropy collapses under heavy corruption.}
     \label{fig:tr_sens}
-\end{figure*}
+\end{figure}

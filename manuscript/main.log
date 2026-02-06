@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.11)  6 FEB 2026 20:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.11)  6 FEB 2026 20:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -520,109 +520,79 @@ File: figures/figure2_resed_on_off.png Graphic file (type png)
 Package pdftex.def Info: figures/figure2_resed_on_off.png  used on input line 25.
 (pdftex.def)             Requested size: 516.0pt x 378.50465pt.
 
-Underfull \hbox (badness 2351) in paragraph at lines 31--32
-\T1/lmr/m/n/10 tec-tor us-ing full co-vari-ance es-ti-ma-tion. Un-der high-
+Overfull \hbox (11.53915pt too wide) in paragraph at lines 37--48
+ [][] 
  []
 
 
-Underfull \hbox (badness 1783) in paragraph at lines 36--37
+Underfull \hbox (badness 1783) in paragraph at lines 53--54
 []\T1/lmr/m/n/10 The Reference-Conditioned Cal-i-bra-tion Layer ef-fec-
  []
 
-<figures/figure4a_bioteque_calibrated_sensor_response.pdf, id=375, 722.7pt x 433.62pt>
+<figures/figure4a_bioteque_calibrated_sensor_response.pdf, id=376, 722.7pt x 433.62pt>
 File: figures/figure4a_bioteque_calibrated_sensor_response.pdf Graphic file (type pdf)
 <use figures/figure4a_bioteque_calibrated_sensor_response.pdf>
-Package pdftex.def Info: figures/figure4a_bioteque_calibrated_sensor_response.pdf  used on input line 60.
+Package pdftex.def Info: figures/figure4a_bioteque_calibrated_sensor_response.pdf  used on input line 78.
 (pdftex.def)             Requested size: 247.6778pt x 148.60658pt.
-<figures/figure4b_bioteque_calibrated_control_distribution.pdf, id=376, 722.7pt x 433.62pt>
+<figures/figure4b_bioteque_calibrated_control_distribution.pdf, id=377, 722.7pt x 433.62pt>
 File: figures/figure4b_bioteque_calibrated_control_distribution.pdf Graphic file (type pdf)
 <use figures/figure4b_bioteque_calibrated_control_distribution.pdf>
-Package pdftex.def Info: figures/figure4b_bioteque_calibrated_control_distribution.pdf  used on input line 66.
+Package pdftex.def Info: figures/figure4b_bioteque_calibrated_control_distribution.pdf  used on input line 84.
 (pdftex.def)             Requested size: 247.6778pt x 148.60658pt.
-<figures/figure_d_score_histograms.pdf, id=378, 722.7pt x 433.62pt>
+<figures/figure_d_score_histograms.pdf, id=379, 722.7pt x 433.62pt>
 File: figures/figure_d_score_histograms.pdf Graphic file (type pdf)
 <use figures/figure_d_score_histograms.pdf>
-Package pdftex.def Info: figures/figure_d_score_histograms.pdf  used on input line 80.
+Package pdftex.def Info: figures/figure_d_score_histograms.pdf  used on input line 98.
 (pdftex.def)             Requested size: 252.0pt x 151.20026pt.
-<figures/figure_component_resenc_stability.pdf, id=380, 578.16pt x 433.62pt>
+
+Overfull \hbox (11.50067pt too wide) in paragraph at lines 110--119
+ [][] 
+ []
+
+<figures/figure_component_resenc_stability.pdf, id=381, 578.16pt x 433.62pt>
 File: figures/figure_component_resenc_stability.pdf Graphic file (type pdf)
 <use figures/figure_component_resenc_stability.pdf>
-Package pdftex.def Info: figures/figure_component_resenc_stability.pdf  used on input line 105.
+Package pdftex.def Info: figures/figure_component_resenc_stability.pdf  used on input line 123.
 (pdftex.def)             Requested size: 252.0pt x 189.00032pt.
-<figures/figure_component_restr_sensitivity.pdf, id=381, 578.16pt x 433.62pt>
+<figures/figure_component_restr_sensitivity.pdf, id=382, 578.16pt x 433.62pt>
 File: figures/figure_component_restr_sensitivity.pdf Graphic file (type pdf)
 <use figures/figure_component_restr_sensitivity.pdf>
-Package pdftex.def Info: figures/figure_component_restr_sensitivity.pdf  used on input line 112.
+Package pdftex.def Info: figures/figure_component_restr_sensitivity.pdf  used on input line 130.
 (pdftex.def)             Requested size: 252.0pt x 189.00032pt.
-) (./sections/discussion.tex [5]
-
-LaTeX Warning: Text page 6 contains only floats.
-
-
-Overfull \vbox (1.67113pt too high) has occurred while \output is active []
-
-
-
-LaTeX Warning: Text page 6 contains only floats.
-
-
-Overfull \vbox (1.67113pt too high) has occurred while \output is active []
-
- [6
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.14 \end{itemize}
-                  
+) (./sections/discussion.tex [5
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.14 \end{itemize}
-                  
-pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.14 \end{itemize}
-                   <./figures/figure1_stress_observability.png>]
+l.11     \item
+               This domain is governed by metrics such as accuracy, F1-score...]
 Underfull \hbox (badness 1953) in paragraph at lines 17--19
  \T1/lmr/m/it/10 2) Ques-tion 2: AI Com-plete-ness: [][][] \T1/lmr/m/n/10 The sec-ond, of-
  []
 
-
+[6
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.19     \item A
+                n end-to-end neural network is an incomplete system descript...
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.19     \item A
+                n end-to-end neural network is an incomplete system descript... <./figures/figure1_stress_observability.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [7
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.20     \item I
-                nternal failures (e.g., latent collapse, attention fixation)...
+l.22 \end{itemize}
+                  
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.20     \item I
-                nternal failures (e.g., latent collapse, attention fixation)... <./figures/figure2_resed_on_off.png> <./figures/figure4a_bioteque_calibrated_sensor_response.pdf> <./figures/figure4b_bioteque_calibrated_control_distribution.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8
-pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
 l.22 \end{itemize}
-                  
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.22 \end{itemize}
-                  
-pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.22 \end{itemize}
-                   <./figures/figure_d_score_histograms.pdf> <./figures/figure_component_resenc_stability.pdf> <./figures/figure_component_restr_sensitivity.pdf>]
+                   <./figures/figure2_resed_on_off.png> <./figures/figure4a_bioteque_calibrated_sensor_response.pdf> <./figures/figure4b_bioteque_calibrated_control_distribution.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 27--28
 []\T1/lmr/m/n/10 The \T1/lmr/bx/n/10 Representation-Level Con-trol Sur-face
  []
@@ -642,12 +612,32 @@ Underfull \hbox (badness 1590) in paragraph at lines 34--35
 []\T1/lmr/bx/n/10 Volatility is In-evitable\T1/lmr/m/n/10 : As di-men-sion-al-ity in-
  []
 
-) (./sections/limitations.tex
+[8
+pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.43 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.43 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.43 
+     
+pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.43 
+      <./figures/figure_d_score_histograms.pdf> <./figures/figure_component_resenc_stability.pdf> <./figures/figure_component_restr_sensitivity.pdf>]) (./sections/limitations.tex
 Underfull \hbox (badness 3525) in paragraph at lines 9--10
 \T1/lmr/m/n/10 ad-ver-sar-ial com-plete-ness. The distance-based sen-sors
  []
 
-) (./sections/conclusion.tex [9]) (./main.bbl
+) (./sections/conclusion.tex) (./main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 14--17
 []\T1/lmr/m/n/8 Albert Fernandez-Torras, Miquel Duran-Frigola, Mar-tino
  []
@@ -657,7 +647,9 @@ Underfull \hbox (badness 1721) in paragraph at lines 14--17
 \T1/lmr/m/n/8 Bertoni, Mat-tia Lo-catelli, and Patrick Aloy.  In-te-grat-ing
  []
 
-) [10] (./main.aux)
+[9]) [10
+
+] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-11-14>
@@ -666,18 +658,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 45F5DD69A72E199E893B3D1AAD2A29BC;9781.
  ) 
 Here is how much of TeX's memory you used:
- 11093 strings out of 469519
- 176186 string characters out of 5469170
- 591452 words of memory out of 5000000
- 39446 multiletter control sequences out of 15000+600000
+ 11099 strings out of 469519
+ 176314 string characters out of 5469170
+ 591522 words of memory out of 5000000
+ 39451 multiletter control sequences out of 15000+600000
  822232 words of font info for 151 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,9n,79p,1862b,531s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (10 pages, 710455 bytes).
+ 75i,9n,79p,1862b,575s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (10 pages, 715773 bytes).
 PDF statistics:
- 791 PDF objects out of 1000 (max. 8388607)
- 433 compressed objects within 5 object streams
- 97 named destinations out of 1000 (max. 500000)
+ 797 PDF objects out of 1000 (max. 8388607)
+ 438 compressed objects within 5 object streams
+ 98 named destinations out of 1000 (max. 500000)
  449 words of extra memory for PDF output out of 10000 (max. 10000000)
 
