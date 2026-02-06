@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.11)  6 FEB 2026 13:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.12.11)  6 FEB 2026 13:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -466,7 +466,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--33
  []
 
 [2{/Users/sulky/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/Users/sulky/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/sulky/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/sulky/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]) (./sections/system_architecture.tex
-<figures/architecture_diagram.pdf, id=261, 910.602pt x 459.6372pt>
+<figures/architecture_diagram.pdf, id=263, 910.602pt x 459.6372pt>
 File: figures/architecture_diagram.pdf Graphic file (type pdf)
 <use figures/architecture_diagram.pdf>
 Package pdftex.def Info: figures/architecture_diagram.pdf  used on input line 7.
@@ -504,12 +504,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has
                                                   \__shipout_drop_firstpage_...
 l.30 \subsection
                 {Scope and Exclusions} <./figures/architecture_diagram.pdf>]) (./sections/results.tex
-<figures/figure1_stress_observability.png, id=363, 873.0216pt x 730.6497pt>
+<figures/figure1_stress_observability.png, id=366, 873.0216pt x 730.6497pt>
 File: figures/figure1_stress_observability.png Graphic file (type png)
 <use figures/figure1_stress_observability.png>
 Package pdftex.def Info: figures/figure1_stress_observability.png  used on input line 10.
 (pdftex.def)             Requested size: 516.0pt x 431.86pt.
-<figures/figure2_resed_on_off.png, id=366, 875.1897pt x 747.9945pt>
+<figures/figure2_resed_on_off.png, id=369, 875.1897pt x 747.9945pt>
 File: figures/figure2_resed_on_off.png Graphic file (type png)
 <use figures/figure2_resed_on_off.png>
 Package pdftex.def Info: figures/figure2_resed_on_off.png  used on input line 25.
@@ -519,12 +519,12 @@ Underfull \hbox (badness 1783) in paragraph at lines 33--34
 []\T1/lmr/m/n/10 The Reference-Conditioned Cal-i-bra-tion Layer ef-fec-
  []
 
-<figures/figure4a_bioteque_calibrated_sensor_response.pdf, id=368, 722.7pt x 433.62pt>
+<figures/figure4a_bioteque_calibrated_sensor_response.pdf, id=371, 722.7pt x 433.62pt>
 File: figures/figure4a_bioteque_calibrated_sensor_response.pdf Graphic file (type pdf)
 <use figures/figure4a_bioteque_calibrated_sensor_response.pdf>
 Package pdftex.def Info: figures/figure4a_bioteque_calibrated_sensor_response.pdf  used on input line 57.
 (pdftex.def)             Requested size: 247.6778pt x 148.60658pt.
-<figures/figure4b_bioteque_calibrated_control_distribution.pdf, id=369, 722.7pt x 433.62pt>
+<figures/figure4b_bioteque_calibrated_control_distribution.pdf, id=372, 722.7pt x 433.62pt>
 File: figures/figure4b_bioteque_calibrated_control_distribution.pdf Graphic file (type pdf)
 <use figures/figure4b_bioteque_calibrated_control_distribution.pdf>
 Package pdftex.def Info: figures/figure4b_bioteque_calibrated_control_distribution.pdf  used on input line 63.
@@ -534,12 +534,12 @@ Overfull \hbox (11.50067pt too wide) in paragraph at lines 80--89
  [][] 
  []
 
-<figures/figure_component_resenc_stability.pdf, id=371, 578.16pt x 433.62pt>
+<figures/figure_component_resenc_stability.pdf, id=374, 578.16pt x 433.62pt>
 File: figures/figure_component_resenc_stability.pdf Graphic file (type pdf)
 <use figures/figure_component_resenc_stability.pdf>
 Package pdftex.def Info: figures/figure_component_resenc_stability.pdf  used on input line 93.
 (pdftex.def)             Requested size: 252.0pt x 189.00032pt.
-<figures/figure_component_restr_sensitivity.pdf, id=372, 578.16pt x 433.62pt>
+<figures/figure_component_restr_sensitivity.pdf, id=375, 578.16pt x 433.62pt>
 File: figures/figure_component_restr_sensitivity.pdf Graphic file (type pdf)
 <use figures/figure_component_restr_sensitivity.pdf>
 Package pdftex.def Info: figures/figure_component_restr_sensitivity.pdf  used on input line 100.
@@ -649,18 +649,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 13A4971A20AA13EE9D7F8B5B47BD9F2F;9590.
  ) 
 Here is how much of TeX's memory you used:
- 11083 strings out of 469519
- 175841 string characters out of 5469170
- 591270 words of memory out of 5000000
- 39440 multiletter control sequences out of 15000+600000
+ 11085 strings out of 469519
+ 175904 string characters out of 5469170
+ 591321 words of memory out of 5000000
+ 39441 multiletter control sequences out of 15000+600000
  822232 words of font info for 151 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,9n,79p,1862b,527s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/sulky/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (9 pages, 697175 bytes).
+Output written on main.pdf (9 pages, 697781 bytes).
 PDF statistics:
- 726 PDF objects out of 1000 (max. 8388607)
- 415 compressed objects within 5 object streams
- 93 named destinations out of 1000 (max. 500000)
+ 729 PDF objects out of 1000 (max. 8388607)
+ 418 compressed objects within 5 object streams
+ 94 named destinations out of 1000 (max. 500000)
  436 words of extra memory for PDF output out of 10000 (max. 10000000)
 
