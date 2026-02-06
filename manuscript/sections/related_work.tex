@@ -11,6 +11,25 @@ Bayesian Neural Networks \cite{gal2016dropout} and Deep Ensembles \cite{lakshmin
 \subsection{Robust Training}
 Adversarial training \cite{madry2018towards} and distributionally robust optimization attempt to harden the model against specific classes of perturbations. While this improves worst-case performance within a defined perturbation ball, it does not guarantee behavior on unforeseen failure modes. This approach essentially engages in an "arms race" with the perturbation space. In contrast, our framework accepts that components will fail and focuses on containing that failure through external governance.
 
+\subsection{Comparative Analysis}
+Table \ref{tab:comparison} conceptually contrasts RLCS with established reliability methods. The key distinction is that RLCS provides active, deterministic governance at the representation level, whereas other methods primarily offer passive estimation or probabilistic robustness.
+
+\begin{table*}[t]
+\caption{Conceptual Comparison of Reliability Approaches}
+\label{tab:comparison}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Method} & \textbf{Operation} & \textbf{Scope} & \textbf{Governance} & \textbf{Requires Retraining} \\
+\midrule
+Deep Ensembles \cite{lakshminarayanan2017ensembles} & Test-Time & Prediction & Passive (Estimate) & Yes (High Cost) \\
+Mahalanobis OOD \cite{lee2018mahalanobis} & Test-Time & Feature/Logit & Passive (Detect) & No \\
+Adversarial Training \cite{madry2018towards} & Training & Model Weights & Internal (Resist) & Yes \\
+\textbf{RLCS (Ours)} & \textbf{Test-Time} & \textbf{Representation} & \textbf{Active (Gate)} & \textbf{No} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
 \subsection{Architectural Normalization}
 Transformer architectures \cite{vaswani2017attention} utilize mechanisms like Layer Normalization \cite{ba2016layernorm} to stabilize training. While beneficial for optimization, we show that this normalization can inadvertently mask magnitude-based failure signals in the latent space, complicating OOD detection.
 

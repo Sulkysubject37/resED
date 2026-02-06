@@ -2,22 +2,23 @@
 
 The resED architecture is composed of distinct generative components gated by a transparent governance layer. This separation of concerns allows us to treat the generative modules as opaque, potentially unreliable engines, while the governance layer provides a verifiable safety guarantee.
 
-\begin{figure}[H]
+\begin{figure*}[t!]
     \centering
     \includegraphics[width=\textwidth]{figures/architecture_diagram.pdf}
     \caption{Architectural overview of the resED system. The primary generative pipeline (top) is governed by a parallel RLCS loop (bottom). The system transitions from high-dimensional inputs to latent representations, which are statistically validated before being refined and decoded. Governance signals modulate the transformer's refinement strength and gate the decoder's execution, implementing a deterministic circuit-breaker mechanism.}
     \label{fig:arch_main}
-\end{figure}
+\end{figure*}
 
 \subsection{Opaque Generative Components}
 The generative pathway consists of three modules designed to be high-performance but potentially volatile.
 
 \subsubsection{Deterministic Encoder (resENC)}
-The \texttt{resENC} module serves as the primary interface for feature extraction. Unlike Variational Autoencoders (VAEs) that sample from a learned distribution, \texttt{resENC} performs a strict deterministic projection $f_\theta: \mathcal{X} \to \mathcal{Z}$:
+The \texttt{resENC} module serves as the primary interface for feature extraction. It acts as an abstraction layer over diverse deep architectures (e.g., deep MLPs, CNNs, or Pretrained Transformers). Equation (\ref{eq:enc_proj}) defines the final projection interface into the governed latent space $\mathcal{Z}$, not the depth of the encoder itself:
 \begin{equation}
 z = \phi(XW + b)
+\label{eq:enc_proj}
 \end{equation}
-where $\phi$ is a bounded activation (e.g., \texttt{tanh}). This determinism is crucial for the governance layer to establish a stable reference manifold. By avoiding stochastic sampling, we ensure that any variance in $\mathcal{Z}$ is attributable to input properties rather than sampling noise. To aid observability, \texttt{resENC} exposes a statistical side-channel $S$:
+where $\phi$ is a bounded activation (e.g., \texttt{tanh}) and $X$ represents the high-level features extracted by the preceding deep network layers. This final deterministic projection is crucial for the governance layer to establish a stable reference manifold. By avoiding stochastic sampling, we ensure that any variance in $\mathcal{Z}$ is attributable to input properties rather than sampling noise. To aid observability, \texttt{resENC} exposes a statistical side-channel $S$:
 \begin{equation}
 S_i = [\|z_i\|_2, \text{var}(z_i), \text{entropy}(z_i), \text{sparsity}(z_i)]
 \end{equation}

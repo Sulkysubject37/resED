@@ -3,14 +3,14 @@
 Our findings demonstrate that representation-level observability provides a reliable substrate for system-level governance. We present evidence across synthetic, vision, and biological domains.
 
 \subsection{Detection and Observability}
-The RLCS sensors successfully convert latent perturbations into observable signals. As shown in \textbf{Figure \ref{fig:stress_obs}}, both ResLik and TCS sensors track latent drift with high monotonicity. The ResLik score provides an early-warning signal, crossing the $\tau_D=3.0$ safety threshold well before the representation is completely corrupted. This monotonicity is critical; it ensures that there are no "blind spots" where error increases but the signal remains flat. The TCS sensor complements this by detecting the rate of change, providing redundant coverage for temporal instabilities that might remain within the population manifold but violate trajectory constraints.
+The RLCS sensors successfully convert latent perturbations into observable signals. As shown in \textbf{Figure \ref{fig:stress_obs}}, both ResLik and TCS sensors track latent drift with high monotonicity. The ResLik score provides an early-warning signal, crossing the $\tau_D=3.0$ safety threshold well before the representation is completely corrupted. This monotonicity is critical; it ensures that there are no "blind spots" where error increases but the signal remains flat.
 
-\begin{figure}[H]
+\begin{figure*}[t!]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/figure1_stress_observability.png}
+    \includegraphics[width=\textwidth]{figures/figure1_stress_observability.png}
     \caption{RLCS Sensor Observability. ResLik and TCS scores track latent drift, triggering ABSTAIN and DEFER signals respectively.}
     \label{fig:stress_obs}
-\end{figure}
+\end{figure*}
 
 \subsection{Efficacy of Gated Decoding}
 \textbf{Figure \ref{fig:on_off}} contrasts the behavior of the governed (\textit{resED ON}) and ungoverned (\textit{resED OFF}) systems. During a sudden shock event:
@@ -20,19 +20,19 @@ The RLCS sensors successfully convert latent perturbations into observable signa
 \end{itemize}
 This result confirms that reliability is a function of the control surface, not the decoder's robustness. The system successfully prioritized safety over continuity.
 
-\begin{figure}[H]
+\begin{figure*}[t!]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/figure2_resed_on_off.png}
+    \includegraphics[width=\textwidth]{figures/figure2_resed_on_off.png}
     \caption{System Response. Governance prevents hallucination by suppressing output during shock events.}
     \label{fig:on_off}
-\end{figure}
+\end{figure*}
 
-\subsection{Generalization via Calibration}
-The biological validation experiments highlighted the dimensionality scaling issue. Initial runs on 128-dimensional embeddings resulted in universal rejection (100\% \texttt{ABSTAIN}). \textbf{Figure \ref{fig:bio_calib}} shows how the Reference-Conditioned Calibration Layer restored utility. By mapping raw distances to reference-relative Z-scores, the clean acceptance rate increased to 99.6\%, while maintaining 100\% detection of high-magnitude noise.
+\subsection{Dimensionality Scaling and Calibration}
+A key finding is the impact of dimensionality on uncalibrated distance metrics. As shown in \textbf{Table \ref{tab:gov_outcomes}}, raw distance thresholds tuned for synthetic data (64D) failed catastrophically on high-dimensional benchmarks, rejecting 100\% of valid data for Vision (2048D) and Biology (128D) due to the curse of dimensionality ($\mathbb{E}[\|z\|] \propto \sqrt{d}$). 
 
-\textbf{Table \ref{tab:gov_outcomes}} quantifies this gain. Without calibration, the system is unusable on high-dimensional data. With calibration, it achieves parity with the synthetic baseline. This proves that the core governance logic is sound, provided the input metric is normalized to the intrinsic geometry of the data.
+The Reference-Conditioned Calibration Layer effectively neutralized this scaling factor. By mapping raw distances to a reference-relative Z-score, the clean acceptance rate was restored to >99\% across all domains, without manual threshold retuning.
 
-\begin{table}[H]
+\begin{table*}[t!]
 \centering
 \caption{Governance Outcomes Across Domains (Acceptance Rate \%)}
 \label{tab:gov_outcomes}
@@ -45,31 +45,35 @@ Clean (Calibrated)   & 99.8\% & 99.7\% & 99.6\% \\
 Noise ($\sigma=0.6$) & 0.0\%  & 0.0\%  & 0.0\% \\
 Shock (5\%)          & 95.0\% & 95.0\% & 95.0\% \\
 \bottomrule
-\multicolumn{4}{l}{\footnotesize *Rejection due to dimensionality scaling mismatch.}
 \end{tabular}
-\end{table}
+\par\smallskip
+{\footnotesize *Rejection due to dimensionality scaling mismatch.}
+\end{table*}
 
-\begin{figure}[H]
+\begin{figure*}[t!]
     \centering
     \begin{minipage}{0.48\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/figure5_bioteque_calibrated_sensor_response.pdf}
+        \includegraphics[width=\linewidth]{figures/figure4a_bioteque_calibrated_sensor_response.pdf}
         \\ (a) Calibrated Sensor Response
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{figures/figure5_bioteque_calibrated_control_distribution.pdf}
+        \includegraphics[width=\linewidth]{figures/figure4b_bioteque_calibrated_control_distribution.pdf}
         \\ (b) Control Distribution
     \end{minipage}
     \caption{Biological Validation. Calibration restores utility on high-dimensional data without compromising safety.}
     \label{fig:bio_calib}
-\end{figure}
+\end{figure*}
+
+\subsection{Analysis of Governance States}
+While \texttt{ABSTAIN} handles catastrophic failure, the intermediate \texttt{DOWNWEIGHT} state ($3.0 < \hat{D} \le 4.0$) was observed during the onset of gradual drift. In this regime, the system continued to provide output but with reduced amplitude, effectively signaling "marginal confidence" to the user. This graded response prevents binary flickering between trust and distrust.
 
 \subsection{Empirical Failure Envelopes}
-Component stress testing revealed the intrinsic limits of the modules. As summarized in \textbf{Table \ref{tab:failure_envelopes}}, all components lack internal stability mechanisms. The encoder amplifies input noise linearly. The transformer, often assumed to be robust, suffers from a catastrophic "attention collapse" under heavy corruption, where the entropy of the attention distribution drops precipitously as the model over-attends to the noisy tokens.
+Component stress testing revealed the intrinsic limits of the modules. As summarized in \textbf{Table \ref{tab:failure_envelopes}}, all components lack internal stability mechanisms. The encoder amplifies input noise linearly. The transformer, often assumed to be robust, suffers from a catastrophic "attention collapse" under heavy corruption.
 
-\begin{table}[H]
+\begin{table}[t!]
 \centering
 \caption{Summary of Component Failure Envelopes}
 \label{tab:failure_envelopes}
@@ -77,25 +81,23 @@ Component stress testing revealed the intrinsic limits of the modules. As summar
 \toprule
 \textbf{Component} & \textbf{Observed Failure Mode} & \textbf{Impact on Output} \\
 \midrule
-resENC & Variance Inflation ($\Delta \text{Var} \le 1.35$) & Radial Drift \\
-resTR  & Attention Collapse ($\text{Entropy} \to 2.02$) & Noise Fixation \\
-resDEC & Linear Error Propagation ($S \approx 0.18$) & Direct Hallucination \\
+resENC & Variance Inflation & Radial Drift \\
+resTR  & Attention Collapse & Noise Fixation \\
+resDEC & Linear Error Prop. & Hallucination \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-These results establish that while individual models are volatile, their failure modes are monotonic and observable, enabling deterministic system control.
-
-\begin{figure}[H]
+\begin{figure}[t!]
     \centering
-    \includegraphics[width=0.6\textwidth]{figures/figure_component_resenc_stability.pdf}
+    \includegraphics[width=\columnwidth]{figures/figure_component_resenc_stability.pdf}
     \caption{Encoder Stability. Latent distortion scales linearly with input noise.}
     \label{fig:enc_stab}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[t!]
     \centering
-    \includegraphics[width=0.6\textwidth]{figures/figure_component_restr_sensitivity.pdf}
+    \includegraphics[width=\columnwidth]{figures/figure_component_restr_sensitivity.pdf}
     \caption{Transformer Sensitivity. Attention entropy collapses under heavy corruption.}
     \label{fig:tr_sens}
 \end{figure}

@@ -17,7 +17,14 @@ For sequential data, the system enforces trajectory smoothness. The TCS monitors
 \begin{equation}
 T(z_t, z_{t-1}) = \exp(-\|z_t - z_{t-1}\|_2)
 \end{equation}
-A sudden collapse in $T$ indicates a "Jitter" failure—an unphysical discontinuity in the latent trajectory that often precedes semantic collapse. This sensor acts as a temporal low-pass filter for trust.
+A sudden collapse in $T$ indicates a "Jitter" failure—an unphysical discontinuity in the latent trajectory that often precedes semantic collapse.
+
+\subsubsection{Multi-View Agreement Sensor (MVA)}
+To further robustify the governance against subtle corruptions, we introduce the Multi-View Agreement sensor. This sensor enforces the invariant that valid representations should be invariant to semantics-preserving transformations of the input. For an input $x$ and a set of augmentations $\mathcal{T}$, MVA measures the divergence:
+\begin{equation}
+A(z) = \frac{1}{|\mathcal{T}|} \sum_{t \in \mathcal{T}} \|z - E(t(x))\|_2
+\end{equation}
+High divergence suggests that the encoder is unstable or that the input lies near a decision boundary cliff, warranting caution (e.g., \texttt{DOWNWEIGHT}).
 
 \subsection{Reference-Conditioned Calibration}
 A critical requirement for system-level reliability is the ability to define thresholds that generalize across domains. In high-dimensional spaces, the expected Euclidean distance scales with $\sqrt{d}$, making raw distance thresholds domain-specific and brittle.
@@ -26,10 +33,12 @@ To resolve this, we introduce a \textbf{Reference-Conditioned Calibration Layer}
 \begin{equation}
 \hat{D}(z) = \Phi^{-1}(P(D \le D_{raw} | \mathcal{P}_{ref}))
 \end{equation}
-where $\Phi^{-1}$ is the inverse cumulative distribution function of the standard normal distribution. By mapping the empirical distribution of distances to a standard normal, we ensure that a threshold of $\hat{D} > 3.0$ consistently represents a "3-sigma" statistical rarity, regardless of whether the embedding space has 10 dimensions or 1024. This allows the same governance policy to be applied to both CIFAR-10 (vision) and Bioteque (biology) without manual retuning.
+where $\Phi^{-1}$ is the inverse cumulative distribution function of the standard normal distribution. 
+
+\textbf{Assumption Clarification:} This process does \textit{not} assume that the underlying data or raw distances follow a Gaussian distribution. Instead, it employs non-parametric quantile mapping to \textit{force} the calibrated risk scores of the reference population to follow a standard normal distribution $\mathcal{N}(0, 1)$. This normalization allows us to define universal thresholds (e.g., $\hat{D} > 3.0$ implies a "3-sigma" rarity relative to the reference) regardless of the intrinsic geometry or modality of the embedding space.
 
 \subsection{Control Policy}
-The signals from ResLik and TCS are aggregated to form a discrete control signal $\pi$. The policy enforces a conservative "circuit-breaker" logic:
+The signals from ResLik, TCS, and MVA are aggregated to form a discrete control signal $\pi$. The policy enforces a conservative "circuit-breaker" logic:
 \begin{itemize}
     \item If $\hat{D}(z) > \tau_{critical}$: Signal \texttt{ABSTAIN}.
     \item If $\tau_{warning} < \hat{D}(z) \le \tau_{critical}$: Signal \texttt{DOWNWEIGHT}.

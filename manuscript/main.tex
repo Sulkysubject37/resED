@@ -1,36 +1,41 @@
-\documentclass[11pt, a4paper]{article}
+\documentclass[journal]{IEEEtran}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath, amssymb, amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\renewcommand{\ttdefault}{lmtt} % Fix for missing Courier metrics in IEEEtran
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{geometry}
 \usepackage{booktabs}
 \usepackage{float}
 
-\geometry{margin=1in}
+\title{Reliability is a System Property}
 
-\title{\textbf{Reliability is a System Property}}
+\author{MD.~Arshad,
+        Department~of~Computer~Science,
+        Jamia~Millia~Islamia% <-this % stops a space
+\thanks{M. Arshad is with the Department of Computer Science, Jamia Millia Islamia (e-mail: arshad10867c@gmail.com). ORCID: 0009-0005-7142-039X}% <-this % stops a space
+}
 
-\author{\textbf{MD. Arshad} \\ 
-Department of Computer Science, Jamia Millia Islamia \\ 
-ORCID: 0009-0005-7142-039X}
-
-\date{}
+\markboth{IEEE Transactions on Neural Networks and Learning Systems,~Vol.~XX, No.~X, February~2026}%
+{Arshad: Reliability is a System Property}
 
 \begin{document}
 
 \maketitle
-\thispagestyle{empty}
-\newpage
 
-\setcounter{page}{2}
 \begin{abstract}
-The deployment of deep generative models in high-stakes domains is constrained by their intrinsic volatility and lack of failure observability. Conventional reliability approaches typically treat safety as a parameter optimization problem, attempting to enforce robustness through adversarial training or post-hoc uncertainty estimation. However, these methods fail to prevent "silent hallucinations" when models encounter out-of-distribution inputs that lie within their decision boundaries. This paper introduces \textbf{resED} (Representation-Gated Encoder--Decoder), an architecture that redefines reliability as a managed \textit{system property}. By decoupling the generation of representations from their operational validation, resED enables the integration of opaque, high-performance deep learning components into a strictly governed pipeline. The core of the architecture is the Representation-Level Control Surface (RLCS), a deterministic governance layer that monitors the latent manifold using non-parametric statistical sensors. We further introduce a Reference-Conditioned Calibration Layer that normalizes diagnostic signals into universal risk coordinates, enabling the system to generalize across domains without manual threshold tuning. Empirical validation on computer vision (CIFAR-10) and biological (Bioteque) benchmarks demonstrates that while individual components remain susceptible to noise-induced variance inflation, the governed system successfully intercepts 100% of high-magnitude perturbations while maintaining a 99.6% acceptance rate for valid data. We conclude that externalizing reliability into a transparent control surface is a necessary condition for the safe deployment of black-box generative models.
-
-\vspace{1em}
-\noindent\textbf{Keywords:} system reliability, representation learning, encoder--decoder models, out-of-distribution detection, governance, calibration
+The deployment of deep generative models in high-stakes domains is constrained by their intrinsic volatility and lack of failure observability. Conventional reliability approaches typically treat safety as a parameter optimization problem, attempting to enforce robustness through adversarial training or post-hoc uncertainty estimation. However, these methods fail to prevent "silent hallucinations" when models encounter out-of-distribution inputs that lie within their decision boundaries. This paper introduces \textbf{resED} (Representation-Gated Encoder--Decoder), an architecture that redefines reliability as a managed \textit{system property}. By decoupling the generation of representations from their operational validation, resED enables the integration of opaque, high-performance deep learning components into a strictly governed pipeline. The core of the architecture is the Representation-Level Control Surface (RLCS), a deterministic governance layer that monitors the latent manifold using non-parametric statistical sensors (Population Consistency, Temporal Stability, and Multi-View Agreement). We further introduce a Reference-Conditioned Calibration Layer that normalizes these diagnostic signals into universal risk coordinates, enabling the system to generalize across domains without manual threshold tuning. Empirical validation on computer vision (CIFAR-10) and biological (Bioteque) benchmarks demonstrates that while individual components remain susceptible to noise-induced variance inflation, the governed system successfully intercepts 100\% of high-magnitude perturbations while maintaining a 99.6\% acceptance rate for valid data. We conclude that externalizing reliability into a transparent control surface is a necessary condition for the safe deployment of black-box generative models.
 \end{abstract}
-\newpage
+
+\begin{IEEEkeywords}
+System reliability, representation learning, encoder--decoder models, out-of-distribution detection, governance, calibration.
+\end{IEEEkeywords}
+
+\IEEEpeerreviewmaketitle
 
 \input{sections/introduction}
 \input{sections/related_work}
