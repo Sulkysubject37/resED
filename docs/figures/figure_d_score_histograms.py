@@ -65,7 +65,7 @@ def generate_figure():
     plt.axvline(3.0, color='black', linestyle='--', label='Threshold (3.0)')
     plt.xlabel('Calibrated ResLik Score (Z)')
     plt.ylabel('Density')
-    plt.title('Figure 7: Distribution of Risk Scores under Shift and Corruption')
+    plt.title('Figure 5: Distribution of Risk Scores under Shift and Corruption')
     plt.legend()
     plt.grid(alpha=0.3)
     
