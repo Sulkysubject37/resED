@@ -2,15 +2,38 @@
 
 The core innovation of the resED framework is the Representation-Level Control Surface (RLCS), a deterministic mechanism for governing the behavior of opaque generative models. This section details the mathematical foundations of the RLCS sensors, the calibration logic, and the control policy.
 
+\subsection{Non-Claims and Scope}
+\begin{center}
+\fbox{\begin{minipage}{0.95\columnwidth}
+\textbf{Non-Claims and Scope}
+\begin{itemize}
+    \item \textbf{No Correctness Guarantee}: resED does not guarantee correctness, optimality, or adversarial robustness.
+    \item \textbf{Operational Reliability}: The system guarantees failure observability, containment, and suppression, not prediction accuracy.
+    \item \textbf{Reliability Definition}: Reliability is defined operationally as controlled failure behavior (e.g., safe shutdown), not as the correctness of the generated output.
+\end{itemize}
+\end{minipage}}
+\end{center}
+
 \subsection{Representation-Level Control Surface (RLCS)}
 The RLCS operates on the principle of "Trust but Verify." It does not attempt to interpret the semantic content of a latent vector but instead evaluates its statistical consistency with a known "trust manifold." This manifold is defined by the empirical distribution of valid representations from a reference population $\mathcal{P}_{ref}$.
 
+\textbf{Definition (Circuit Breaker):} A deterministic mechanism that suppresses unsafe outputs to a zero-information state (silence) rather than providing low-confidence estimates.
+
 \subsubsection{Population Consistency (ResLik)}
-The ResLik sensor measures the Mahalanobis-like distance of a new representation $z$ from the historical centroid of the reference population. To ensure scalability, we approximate this using a standardized Euclidean distance:
+The ResLik sensor serves as an isotropic, distance-based monitor. It measures the deviation of a new representation $z$ from the historical centroid of the reference population. To ensure scalability and suitability for real-time governance, we use a simplified Euclidean metric:
 \begin{equation}
 D(z) = \frac{\|z - \mu\|_2}{\sigma + \epsilon}
 \end{equation}
-where $\mu = \mathbb{E}[z]$ and $\sigma = \sqrt{\mathbb{V}[z]}$ are parameters estimated from $\mathcal{P}_{ref}$. A high $D(z)$ indicates a statistical anomaly, or "Stranger," suggesting the input lies outside the valid operational envelope of the encoder. Unlike classifier logits, which can be overconfident far from the decision boundary, this distance metric is monotonic and unbounded, preserving the magnitude of the anomaly.
+where $\mu = \mathbb{E}[z]$ and $\sigma = \sqrt{\mathbb{V}[z]}$ are parameters estimated from $\mathcal{P}_{ref}$. 
+
+\textbf{Justification:} While ResLik does not claim to outperform full Mahalanobis distance as a density estimator, its selection is justified by:
+\begin{itemize}
+    \item \textbf{Determinism}: It provides a stable, repeatable signal.
+    \item \textbf{Linear Complexity}: Its $\mathcal{O}(d)$ complexity scales to high dimensions where full covariance estimation ($\mathcal{O}(d^3)$) is prohibitive.
+    \item \textbf{Governance Suitability}: It provides a monotonic signal sufficient for "pass/fail" gating logic.
+\end{itemize}
+
+A high $D(z)$ indicates a statistical anomaly, or "Stranger," suggesting the input lies outside the valid operational envelope of the encoder. Unlike classifier logits, which can be overconfident far from the decision boundary, this distance metric is monotonic and unbounded, preserving the magnitude of the anomaly.
 
 \subsubsection{Temporal Consistency Sensor (TCS)}
 For sequential data, the system enforces trajectory smoothness. The TCS monitors the rate of change in the latent space:

@@ -2,8 +2,8 @@
 
 While the resED framework offers a robust mechanism for system-level governance, it is subject to specific operational boundaries.
 
-\subsection{Architectural Blind Spots}
-Our cross-architecture validation identified a critical limitation in Transformer-based encoders utilizing Layer Normalization. Because LayerNorm projects latent vectors onto a fixed hypersphere, pure magnitude-based perturbations (Shock) are effectively normalized away before they reach the RLCS sensors. While the system remains sensitive to directional shifts (Drift), this "Normalization Blindness" means that for certain architectures, the RLCS must be augmented with pre-normalization sensors to maintain full observability.
+\subsection{Architectural Blind Spots: Normalization Blindness}
+We explicitly retain and highlight a critical limitation: "Normalization Blindness." Transformer architectures utilizing Layer Normalization project latent vectors onto a fixed hypersphere, effectively erasing magnitude-based error signals. This means LayerNorm suppresses magnitude-based failure signals before they reach the RLCS sensors. Consequently, our claims regarding failure interception are scoped to non-normalized or pre-norm representations. For normalized architectures, the RLCS must be augmented with pre-normalization sensors to maintain full observability. Future work may explore pre-normalization residual monitoring or norm-preserving probes for normalized architectures.
 
 \subsection{Sensitivity to Optimized Perturbations}
 We explicitly acknowledge that RLCS does not claim adversarial completeness. The distance-based sensors (ResLik) rely on the assumption that failure modes manifest as statistical anomalies in the latent geometry. While effective against stochastic noise and distributional drift, these sensors can theoretically be evaded by optimized adversarial perturbations designed to minimize Mahalanobis distance while maximizing semantic error. We treat adversarial robustness as a distinct, orthogonal challenge; resED provides a baseline of "natural safety" but should be paired with adversarial training for hostile environments.

@@ -1,0 +1,52 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{letterpaper, margin=1in}
+
+\begin{document}
+\thispagestyle{empty}
+
+\noindent \today
+
+\vspace{0.5cm}
+
+\noindent \textbf{To the Editor-in-Chief,} \\
+\textbf{IEEE Transactions on Neural Networks and Learning Systems (TNNLS)}
+
+\vspace{0.5cm}
+
+\noindent \textbf{Subject: Submission of Manuscript "Reliability is a System Property"}
+
+\vspace{0.5cm}
+
+\noindent Dear Editor,
+
+I am pleased to submit the enclosed manuscript entitled "Reliability is a System Property" for consideration for publication in IEEE Transactions on Neural Networks and Learning Systems.
+
+This paper proposes a paradigm shift in AI reliability: rather than attempting to harden individual deep learning components against all possible failures, we introduce a system-level governance architecture, \textbf{resED}, which wraps opaque generative models in a deterministic "Representation-Level Control Surface" (RLCS). Our core contribution is demonstrating that reliability can be guaranteed as an architectural property—specifically, the ability to fail safely and observably—even when using volatile, black-box components.
+
+To ensure the highest standards of transparency and reproducibility, this work:
+\begin{enumerate}
+    \item Explicitly scopes its claims to exclude correctness or adversarial robustness guarantees, focusing solely on failure observability and containment.
+    \item Highlights critical architectural limitations, specifically "Normalization Blindness" in LayerNorm-based Transformers.
+    \item Provides a full reference implementation of the governance logic via the \texttt{resLIK} R package (available on CRAN) and makes the complete codebase available on GitHub.
+\end{enumerate}
+
+We believe this work addresses a critical gap in the safe deployment of generative AI by providing a practical, scalable mechanism for "circuit-breaking" model hallucinations. This work does not compete with OOD detectors; it formalizes when such detectors should be trusted.
+
+None of the authors have a conflict of interest to disclose.
+
+Thank you for your consideration.
+
+\vspace{1cm}
+
+\noindent Sincerely,
+
+\vspace{0.5cm}
+
+\noindent \textbf{MD. Arshad} \\
+Department of Computer Science \\
+Jamia Millia Islamia \\
+arshad10867c@gmail.com
+
+\end{document}

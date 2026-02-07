@@ -27,5 +27,12 @@ We evaluate the system based on two primary axes:
 \subsection{Calibration Procedure}
 For each domain, we reserve a "clean" split of the data (N=200 samples) to fit the Reference-Conditioned Calibration Layer. This process establishes the baseline $\mu$, $\sigma$, and the empirical quantile function. No task-specific fine-tuning of the encoder or decoder is performed; the governance layer adapts to the frozen model.
 
+\subsection{Transparency and Reproducibility}
+To ensure full reproducibility and transparency of the governance logic, we provide the following resources:
+\begin{itemize}
+    \item \textbf{Reference Implementation}: The core RLCS logic is available as the \texttt{resLIK} R package on CRAN \cite{resLIK2026}.
+    \item \textbf{Codebase}: The complete resED framework code is available on GitHub\footnote{\url{https://github.com/Sulkysubject37/resED}}. The repository is provided for transparency and reproducibility; it is not required to reproduce the claims of this paper.
+\end{itemize}
+
 \subsection{Scope and Exclusions}
 This study focuses on the \textit{reliability} of the representation, not the \textit{quality} of the generation. We do not evaluate the perceptual quality of decoded images (e.g., FID score) or the biological validity of generated genes, except to confirm that suppression ($\|y\|=0$) occurs when required. Our claim is that the system correctly \textit{identifies} when generation should be attempted, not that it generates perfect samples.
