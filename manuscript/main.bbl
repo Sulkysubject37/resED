@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{resLIK2026}
+MD. Arshad.
+\newblock {\em resLIK: Representation-Level Control Surfaces for Reliability Sensing}, 2026.
+\newblock R package version 0.1.2.
+
 \bibitem{ba2016layernorm}
 Jimmy~Lei Ba, Jamie~Ryan Kiros, and Geoffrey~E Hinton.
 \newblock Layer normalization.

@@ -10,6 +10,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-B}}The Necessity of External Governance}{1}{subsection.1.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {I-C}}Contributions}{1}{subsection.1.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Out-of-Distribution Detection}{1}{subsection.2.1}\protected@file@percent }
 \citation{gal2016dropout}
 \citation{lakshminarayanan2017ensembles}
 \citation{guo2017calibration}
@@ -19,89 +20,92 @@
 \citation{madry2018towards}
 \citation{vaswani2017attention}
 \citation{ba2016layernorm}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Out-of-Distribution Detection}{2}{subsection.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Uncertainty Estimation and Calibration}{2}{subsection.2.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Robust Training}{2}{subsection.2.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-D}}Comparative Analysis}{2}{subsection.2.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-E}}Architectural Normalization}{2}{subsection.2.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {III}Methodology}{2}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Representation-Level Control Surface (RLCS)}{2}{subsection.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}1}Population Consistency (ResLik)}{2}{subsubsection.3.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}2}Temporal Consistency Sensor (TCS)}{2}{subsubsection.3.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}3}Multi-View Agreement Sensor (MVA)}{2}{subsubsection.3.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Non-Claims and Scope}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Representation-Level Control Surface (RLCS)}{2}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}1}Population Consistency (ResLik)}{2}{subsubsection.3.2.1}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Conceptual Comparison of Reliability Approaches}}{3}{table.1}\protected@file@percent }
 \newlabel{tab:comparison}{{I}{3}{Conceptual Comparison of Reliability Approaches}{table.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Reference-Conditioned Calibration}{3}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Control Policy}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}2}Temporal Consistency Sensor (TCS)}{3}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}3}Multi-View Agreement Sensor (MVA)}{3}{subsubsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Reference-Conditioned Calibration}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-D}}Control Policy}{3}{subsection.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {IV}System Architecture}{3}{section.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Opaque Generative Components}{3}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}Deterministic Encoder (resENC)}{3}{subsubsection.4.1.1}\protected@file@percent }
 \newlabel{eq:enc_proj}{{5}{3}{Deterministic Encoder (resENC)}{equation.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Gated Residual Transformer (resTR)}{3}{subsubsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Controlled Decoder (resDEC)}{3}{subsubsection.4.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Transparent Governance Layer}{3}{subsection.4.2}\protected@file@percent }
 \citation{Krizhevsky09learningmultiple}
 \citation{fernandez2022bioteque}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Architectural overview of the resED system. The primary generative pipeline (top) is governed by a parallel RLCS loop (bottom). The system transitions from high-dimensional inputs to latent representations, which are statistically validated before being refined and decoded. Governance signals modulate the transformer's refinement strength and gate the decoder's execution, implementing a deterministic circuit-breaker mechanism.}}{4}{figure.1}\protected@file@percent }
 \newlabel{fig:arch_main}{{1}{4}{Architectural overview of the resED system. The primary generative pipeline (top) is governed by a parallel RLCS loop (bottom). The system transitions from high-dimensional inputs to latent representations, which are statistically validated before being refined and decoded. Governance signals modulate the transformer's refinement strength and gate the decoder's execution, implementing a deterministic circuit-breaker mechanism}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Gated Residual Transformer (resTR)}{4}{subsubsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}3}Controlled Decoder (resDEC)}{4}{subsubsection.4.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Transparent Governance Layer}{4}{subsection.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {V}Experimental Protocol}{4}{section.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Datasets and Benchmarks}{4}{subsection.5.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Perturbation Protocol}{4}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Evaluation Criteria}{4}{subsection.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Calibration Procedure}{4}{subsection.5.4}\protected@file@percent }
-\citation{epr1935}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-E}}Scope and Exclusions}{5}{subsection.5.5}\protected@file@percent }
+\citation{resLIK2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Evaluation Criteria}{5}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Calibration Procedure}{5}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-E}}Transparency and Reproducibility}{5}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-F}}Scope and Exclusions}{5}{subsection.5.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {VI}Results}{5}{section.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Empirical AUROC Comparison (CIFAR-10 Embeddings)}}{5}{table.2}\protected@file@percent }
+\newlabel{tab:auroc}{{II}{5}{Empirical AUROC Comparison (CIFAR-10 Embeddings)}{table.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Detection and Observability}{5}{subsection.6.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Efficacy of Gated Decoding}{5}{subsection.6.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Baseline Comparison}{5}{subsection.6.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Empirical AUROC Comparison (CIFAR-10 Embeddings)}}{5}{table.2}\protected@file@percent }
-\newlabel{tab:auroc}{{II}{5}{Empirical AUROC Comparison (CIFAR-10 Embeddings)}{table.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Dimensionality Scaling and Calibration}{5}{subsection.6.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}Distributional Shift and Circularity}{5}{subsection.6.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Empirical Failure Envelopes}{5}{subsection.6.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{5}{section.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-A}}Reframing the EPR Questions for AI Systems}{5}{subsection.7.1}\protected@file@percent }
+\citation{epr1935}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces RLCS Sensor Observability. ResLik and TCS scores track latent drift, triggering ABSTAIN and DEFER signals respectively.}}{6}{figure.2}\protected@file@percent }
 \newlabel{fig:stress_obs}{{2}{6}{RLCS Sensor Observability. ResLik and TCS scores track latent drift, triggering ABSTAIN and DEFER signals respectively}{figure.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Governance Outcomes Across Domains (Acceptance Rate \%)}}{6}{table.3}\protected@file@percent }
-\newlabel{tab:gov_outcomes}{{III}{6}{Governance Outcomes Across Domains (Acceptance Rate \%)}{table.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VII-A}1}Question 1: AI Correctness}{6}{subsubsection.7.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VII-A}2}Question 2: AI Completeness}{6}{subsubsection.7.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}Distributional Shift and Circularity}{6}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Empirical Failure Envelopes}{6}{subsection.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{6}{section.7}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces System Response. Governance prevents hallucination by suppressing output during shock events.}}{7}{figure.3}\protected@file@percent }
 \newlabel{fig:on_off}{{3}{7}{System Response. Governance prevents hallucination by suppressing output during shock events}{figure.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Biological Validation. Calibration restores utility on high-dimensional data without compromising safety.}}{7}{figure.4}\protected@file@percent }
-\newlabel{fig:bio_calib}{{4}{7}{Biological Validation. Calibration restores utility on high-dimensional data without compromising safety}{figure.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Governance Outcomes Across Domains (Acceptance Rate \%)}}{7}{table.3}\protected@file@percent }
+\newlabel{tab:gov_outcomes}{{III}{7}{Governance Outcomes Across Domains (Acceptance Rate \%)}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Summary of Component Failure Envelopes}}{7}{table.4}\protected@file@percent }
+\newlabel{tab:failure_envelopes}{{IV}{7}{Summary of Component Failure Envelopes}{table.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-A}}Reframing the EPR Questions for AI Systems}{7}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VII-A}1}Question 1: AI Correctness}{7}{subsubsection.7.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Biological Validation. Calibration restores utility on high-dimensional data without compromising safety.}}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:bio_calib}{{4}{8}{Biological Validation. Calibration restores utility on high-dimensional data without compromising safety}{figure.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Distribution of Risk Scores. Shifted valid data triggers warning thresholds, while noise triggers rejection.}}{8}{figure.5}\protected@file@percent }
 \newlabel{fig:histograms}{{5}{8}{Distribution of Risk Scores. Shifted valid data triggers warning thresholds, while noise triggers rejection}{figure.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Summary of Component Failure Envelopes}}{8}{table.4}\protected@file@percent }
-\newlabel{tab:failure_envelopes}{{IV}{8}{Summary of Component Failure Envelopes}{table.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Encoder Stability. Latent distortion scales linearly with input noise.}}{8}{figure.6}\protected@file@percent }
 \newlabel{fig:enc_stab}{{6}{8}{Encoder Stability. Latent distortion scales linearly with input noise}{figure.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-B}}System Completeness via Observability}{8}{subsection.7.2}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Transformer Sensitivity. Attention entropy collapses under heavy corruption.}}{8}{figure.7}\protected@file@percent }
 \newlabel{fig:tr_sens}{{7}{8}{Transformer Sensitivity. Attention entropy collapses under heavy corruption}{figure.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-C}}Transparent Systems over Robust Components}{8}{subsection.7.3}\protected@file@percent }
-\bibstyle{plain}
-\bibdata{refs}
-\bibcite{ba2016layernorm}{1}
-\bibcite{epr1935}{2}
-\bibcite{fernandez2022bioteque}{3}
-\bibcite{gal2016dropout}{4}
-\bibcite{guo2017calibration}{5}
-\bibcite{Krizhevsky09learningmultiple}{6}
-\bibcite{lakshminarayanan2017ensembles}{7}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VII-A}2}Question 2: AI Completeness}{8}{subsubsection.7.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-B}}System Completeness via Observability}{9}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-C}}Transparent Systems over Robust Components}{9}{subsection.7.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-D}}Universality and Architectural Limits}{9}{subsection.7.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-E}}Conclusion: Toward Complete AI Systems}{9}{subsection.7.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {VIII}Limitations}{9}{section.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-A}}Architectural Blind Spots}{9}{subsection.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-A}}Architectural Blind Spots: Normalization Blindness}{9}{subsection.8.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-B}}Sensitivity to Optimized Perturbations}{9}{subsection.8.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-C}}Dependency on Failure Manifestation}{9}{subsection.8.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-D}}Reference Dependency}{9}{subsection.8.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {IX}Conclusion}{9}{section.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{9}{section*.1}\protected@file@percent }
-\bibcite{lee2018mahalanobis}{8}
-\bibcite{liang2018odin}{9}
-\bibcite{madry2018towards}{10}
-\bibcite{vaswani2017attention}{11}
+\bibstyle{plain}
+\bibdata{refs}
+\bibcite{resLIK2026}{1}
+\bibcite{ba2016layernorm}{2}
+\bibcite{epr1935}{3}
+\bibcite{fernandez2022bioteque}{4}
+\bibcite{gal2016dropout}{5}
+\bibcite{guo2017calibration}{6}
+\bibcite{Krizhevsky09learningmultiple}{7}
+\bibcite{lakshminarayanan2017ensembles}{8}
+\bibcite{lee2018mahalanobis}{9}
+\bibcite{liang2018odin}{10}
+\bibcite{madry2018towards}{11}
+\bibcite{vaswani2017attention}{12}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-D}}Reference Dependency}{10}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IX}Conclusion}{10}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{10}{section*.2}\protected@file@percent }
 \gdef \@abspage@last{10}
