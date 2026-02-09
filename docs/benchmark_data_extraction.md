@@ -1,4 +1,4 @@
-# Benchmark Data Extraction (Phase 7-A)
+# Benchmark Data Extraction 
 
 This document describes the protocol used to extract standardized latent embeddings for benchmarking the resED system.
 

@@ -1,4 +1,4 @@
-# RLCS Biological Evaluation (Phase 8-B)
+# RLCS Biological Evaluation 
 
 This document details the evaluation of the RLCS governance layer on real-world biological embeddings extracted from Bioteque.
 

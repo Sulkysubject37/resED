@@ -1,9 +1,9 @@
-# RLCS Calibration Layer (Phase 9)
+# RLCS Calibration Layer 
 
 This document describes the **reference-conditioned calibration layer (quantile-estimated, Z-score mapped)** introduced to normalize raw RLCS diagnostics into actionable risk scores.
 
 ## 1. Motivation
-In Phase 8-B, the system exhibited **conservative collapse** (100% ABSTAIN) on clean biological embeddings. This was diagnosed as a **dimensionality scaling mismatch**: the Euclidean distances in 128-dim space naturally exceeded the scalar threshold TAU_D=3.0 derived from lower-dimensional contexts.
+In  This was diagnosed as a **dimensionality scaling mismatch**: the Euclidean distances in 128-dim space naturally exceeded the scalar threshold TAU_D=3.0 derived from lower-dimensional contexts.
 
 Rather than tuning thresholds (which is brittle), we introduced a **Calibration Layer** that maps raw sensor outputs to a normalized coordinate system based on a reference distribution.
 
@@ -56,7 +56,7 @@ By mapping raw Euclidean distances to Z-scores, the "Clean" data distribution is
 
 **Figure**: `docs/figures/figure5_bioteque_calibrated_control_distribution.pdf`
 
-*   **Clean Data**: 99.6% **PROCEED**. The "conservative collapse" observed in Phase 8 is resolved.
+*   **Clean Data**: 99.6% **PROCEED**. The "conservative collapse" observed in 
 
 *   **Fault Detection**: Despite the shift in baseline, safety is preserved.
 

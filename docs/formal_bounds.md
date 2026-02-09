@@ -1,17 +1,17 @@
-# Formal System Bounds (Phase 10-B)
+# Formal System Bounds 
 
 This document formalizes the relationship between component-level failure modes and system-level observability, converting empirical stress test data into bounded guarantees.
 
 ## 1. Definition: Empirical Failure Envelopes
 
-A **Failure Envelope** is the empirical boundary of a component's response to structured stress. It defines the worst-case behavior observed during Phase 10-A.
+A **Failure Envelope** is the empirical boundary of a component's response to structured stress. It defines the worst-case behavior observed during 
 
 *   **Min-Envelopes**: Lower bound on stability metrics (e.g., Cosine Similarity, Entropy).
 *   **Max-Envelopes**: Upper bound on distortion metrics (e.g., L2 Distance, Output Divergence).
 
 ## 2. Component Envelopes
 
-Based on Phase 10-A logs, we establish the following empirical bounds:
+Based on 
 
 ### 2.1. resENC (Encoder)
 *   **Stability Bound**: For input noise $\sigma \le 0.3$, latent angular semantics remain stable: $\text{CosineSimilarity}(Z, Z_{ref}) \ge 0.998$.
@@ -43,7 +43,7 @@ By lifting component envelopes into the RLCS diagnostic space, we derive the fol
 
 ### Non-Claims
 *   **No Internal Correctness**: We do not claim the encoder is "correct"; we claim its *incorrectness* is observable.
-*   **Empirical Only**: These bounds are valid within the support of the Phase 10-A stress tests. Extrapolation beyond $\sigma=0.3$ or $N=5$ is not guaranteed.
+*   **Empirical Only**: These bounds are valid within the support of the  Extrapolation beyond $\sigma=0.3$ or $N=5$ is not guaranteed.
 
 ## 5. Conclusion: Transparent System, Opaque Components
 

@@ -1,4 +1,4 @@
-# Biological Embedding Extraction (Phase 8-A)
+# Biological Embedding Extraction 
 
 This document describes the protocol for extracting biological benchmark embeddings from the **Bioteque** resource.
 
@@ -33,4 +33,4 @@ Bioteque provides pre-calculated knowledge graph embeddings across various biolo
 *   **No KG Rebuilding**: We used static precomputed vectors; no graph traversal was performed.
 
 ## 6. Limitations
-*   **Batch Size**: The selected subset (260 entities) is relatively small, optimized for rapid pipeline verification in the Phase 8-B RLCS evaluation.
+*   **Batch Size**: The selected subset (260 entities) is relatively small, optimized for rapid pipeline verification.

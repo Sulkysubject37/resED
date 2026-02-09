@@ -1,10 +1,10 @@
 # RLCS-Governed System Architecture
 
-This document describes the Phase 4 integration of the Representation-Level Control Surface (RLCS) into the resED pipeline.
+This document describes the integration of the Representation-Level Control Surface (RLCS) into the resED pipeline.
 
 ## System Overview
 
-resED is no longer just a sequence of components. It is a governed system where the flow of representations is explicitly controlled by statistical reliability checks.
+resED is a governed system where the flow of representations is explicitly controlled by statistical reliability checks.
 
 **Pipeline Flow:**
 ```

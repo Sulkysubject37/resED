@@ -1,4 +1,4 @@
-# Benchmark Validation (Phase 7-B)
+# Benchmark Validation 
 
 This document details the validation of the resED system using standardized ResNet-50 embeddings extracted from CIFAR-10.
 

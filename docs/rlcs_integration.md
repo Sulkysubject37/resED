@@ -41,7 +41,7 @@ The integration strictly follows the **Enc -> Res -> Dec** pattern:
 
 ## 3. Configuration
 
-The RLCS behavior is governed by `resed/rlcs/thresholds.py`. These constants should be tuned based on validation data distributions during a calibration phase (not implemented in Phase 2).
+The RLCS behavior is governed by `resed/rlcs/thresholds.py`. These constants should be tuned based on validation data distributions during a calibration phase (not implemented in 
 
 *   `TAU_D`: Controls outlier rejection rate.
 *   `TAU_T`: Controls sensitivity to jitter/drift.

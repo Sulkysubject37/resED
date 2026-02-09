@@ -1,6 +1,6 @@
 # RLCS Mathematics
 
-This document defines the formal mathematical specification for the RLCS sensors used in Phase 2.
+This document defines the formal mathematical specification for the RLCS sensors used in 
 
 ## 1. Population Consistency ($D_i$)
 

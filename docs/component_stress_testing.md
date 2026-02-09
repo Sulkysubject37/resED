@@ -1,4 +1,4 @@
-# Component-Level Stress Testing (Phase 10-A)
+# Component-Level Stress Testing 
 
 This document characterizes the intrinsic failure modes of the resED components (`resENC`, `resTR`, `resDEC`) under controlled stress, validating that the RLCS governance layer is observing the correct signals.
 
