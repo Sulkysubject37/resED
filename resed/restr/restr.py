@@ -1,8 +1,7 @@
 """
 Residual Transformer (resTR).
 
-An optional, controlled refinement layer governed by RLCS.
-Implements the residual-only logic:
+Controlled refinement layer governed by RLCS.
 Z_out = Z_in + alpha*Attn(Z_in) + beta*FFN(...)
 """
 
@@ -33,11 +32,8 @@ class ResTR:
         """
         Apply controlled residual refinement.
         
-        Z_1 = Z + alpha * MHSA(Z)
-        Z_2 = Z_1 + beta * FFN(Z_1)
-        
         Args:
-            z: Input latent tensor (batch, seq_len, d_model).
+            z: Input latent tensor.
             alpha: Attention scaling factor [0, 1].
             beta: FFN scaling factor [0, 1].
             
@@ -47,17 +43,14 @@ class ResTR:
         Raises:
             RuntimeError: If invariants are violated.
         """
-        # Pre-execution checks
         check_finite_invariant(z)
-        z_in = z.copy() # Keep for invariant checks
+        z_in = z.copy()
         
-        # 1. Self-Attention Refinement
         z_1 = z
         if alpha > 0.0:
             attn_out = self.attention.forward(z)
             z_1 = z + alpha * attn_out
             
-        # 2. FFN Refinement
         z_2 = z_1
         if beta > 0.0:
             ffn_out = self.ffn.forward(z_1)
@@ -65,7 +58,6 @@ class ResTR:
             
         z_out = z_2
         
-        # Post-execution Invariant Checks
         check_finite_invariant(z_out)
         check_shape_invariant(z_in, z_out)
         check_norm_inflation_invariant(z_in, z_out)

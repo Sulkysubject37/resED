@@ -1,15 +1,14 @@
 """
 resDEC: Deterministic Decoder with Control Gating.
 
-This module implements the core Reference Decoder (resDEC) for the resED system.
-It maps latent representations Z back to outputs, subject to strict
+Implements the Reference Decoder (resDEC) for the resED system.
+Maps latent representations Z back to outputs, subject to strict
 external control signals (PROCEED, DOWNWEIGHT, DEFER, ABSTAIN).
 """
 
 import numpy as np
 from resed.decoders.base import BaseDecoder
 
-# Control Signals
 PROCEED = "PROCEED"
 DOWNWEIGHT = "DOWNWEIGHT"
 DEFER = "DEFER"
@@ -90,16 +89,13 @@ class ResDEC(BaseDecoder):
         if z.shape[1] != self._d_z:
             raise ValueError(f"Latent dimension mismatch: expected {self._d_z}, got {z.shape[1]}")
 
-        # Handle suppressive signals immediately
         if control_signal in {ABSTAIN, DEFER}:
             return None
 
         # Nominal Decode
-        # Y = psi(ZU + c)
         linear = np.dot(z, self.U) + self.c
         y_hat = self.psi(linear)
         
-        # Apply Control Logic
         if control_signal == DOWNWEIGHT:
             y_hat = y_hat * self.alpha
             

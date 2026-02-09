@@ -2,7 +2,7 @@
 Sequence Decoder (Bio).
 
 Decoder for biological sequences.
-Derived from resLik/RLCS architecture.
+
 """
 
 class BioSequenceDecoder:

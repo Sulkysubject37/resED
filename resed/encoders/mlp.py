@@ -2,7 +2,7 @@
 MLP Encoder.
 
 A standard Multi-Layer Perceptron encoder implementation.
-Derived from resLik/RLCS architecture.
+
 """
 
 class MLPEncoder:

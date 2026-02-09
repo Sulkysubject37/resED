@@ -1,5 +1,5 @@
 """
-Phase 8-C: RLCS Evaluation with Recalibrated Reference.
+ RLCS Evaluation with Recalibrated Reference.
 
 Re-evaluates RLCS behavior using explicitly persisted biological reference statistics.
 """
@@ -26,7 +26,7 @@ EMBEDDING_PATH = "experiments/benchmarks/bioteque/bioteque_gen_omnipath_embeddin
 REF_STATS_PATH = "experiments/benchmarks/bioteque/bioteque_gen_reference_stats.npz"
 OUTPUT_DIR = "docs/figures"
 
-# Reuse perturbation logic from Phase 8-B (re-implementing here for self-containment as requested by "pure functions")
+
 # Actually, I can import from `figure4...`? No, that's a script.
 # I will redefine them to ensure identical behavior.
 
@@ -68,14 +68,14 @@ def evaluate():
     mu_bio = ref_data['mu']
     sigma_bio_vec = ref_data['sigma']
     
-    # RLCS Phase 2 expects scalar sigma for population_consistency (norm / sigma)
+    
     # Using mean of vector sigma
     sigma_bio = np.mean(sigma_bio_vec)
     if sigma_bio < 1e-6: sigma_bio = 1.0
     
     print(f"Loaded Reference: mu_norm={np.linalg.norm(mu_bio):.2f}, sigma={sigma_bio:.4f}")
 
-    # 3. Conditions (Identical to Phase 8-B)
+    
     conditions = [
         ("Clean", z_clean),
         ("Noise (0.1)", perturb_gaussian_noise(z_clean, 0.1)),

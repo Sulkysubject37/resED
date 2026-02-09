@@ -1,5 +1,5 @@
 """
-Bioteque Embedding Validation Script (Phase 8-A).
+Bioteque Embedding Validation Script .
 
 Performs sanity checks on the extracted biological embeddings.
 Checks:

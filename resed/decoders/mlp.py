@@ -2,7 +2,7 @@
 MLP Decoder.
 
 A standard Multi-Layer Perceptron decoder implementation.
-Derived from resLik/RLCS architecture.
+
 """
 
 class MLPDecoder:

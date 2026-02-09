@@ -1,8 +1,7 @@
 """
-Final Biological Validation (Phase 9+).
+Biological Validation of Calibrated resED.
 
-Re-runs the Phase 8-B biological evaluation with the Phase 9 Calibration 
-Layer enabled. Demonstrates that calibration restores system utility on 
+Demonstrates that calibration restores system utility on 
 high-dimensional biological embeddings while maintaining safety.
 """
 
@@ -11,7 +10,6 @@ import matplotlib.pyplot as plt
 import sys
 import os
 
-# Add project root to path
 sys.path.append(os.getcwd())
 
 from resed.rlcs.control_surface import rlcs_control
@@ -22,7 +20,7 @@ from resed.calibration.calibrator import RlcsCalibrator
 EMBEDDING_PATH = "experiments/benchmarks/bioteque/bioteque_gen_omnipath_embeddings.npz"
 OUTPUT_DIR = "docs/figures"
 
-# --- Perturbations (Reproduced from Phase 8-B) ---
+# --- Perturbations ---
 
 def perturb_gaussian_noise(z, sigma):
     rng = np.random.default_rng(42)
@@ -62,7 +60,6 @@ def run_evaluation():
     if sigma < 1e-6: sigma = 1.0
     
     # 3. Fit Calibrator using Clean Reference
-    # We need a raw diagnostic pass to fit the calibrator
     s_dummy = np.zeros((len(z_clean), 4))
     diag_ref = {}
     rlcs_control(z_clean, s_dummy, diagnostics=diag_ref, mu=mu, sigma=sigma)
@@ -85,8 +82,6 @@ def run_evaluation():
     results = {}
     
     for name, z_cond in conditions:
-        # Evaluate sample-by-sample to enforce independence (TCS bypass)
-        # This reflects the biological 'set' nature of the data
         signals = []
         d_scores_calibrated = []
         
@@ -94,12 +89,9 @@ def run_evaluation():
             zi = z_cond[i:i+1]
             si = s_dummy[i:i+1]
             diag = {}
-            # Call with calibrator
             sig = rlcs_control(zi, si, diagnostics=diag, calibrator=calibrator, mu=mu, sigma=sigma)[0]
             signals.append(sig)
             
-            # Extract calibrated D-score manually for visualization
-            # (rlcs_control populates diagnostics with RAW scores)
             raw_d = diag['population_consistency'][0]
             cal_d = calibrator.calibrate('population_consistency', raw_d)
             d_scores_calibrated.append(cal_d)
@@ -109,7 +101,7 @@ def run_evaluation():
             "d_calibrated": np.array(d_scores_calibrated)
         }
 
-    # 5. Figure 1: Calibrated Sensor Response
+    # 5. Calibrated Sensor Response
     fig1, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     
     names = [c[0] for c in conditions]
@@ -129,7 +121,7 @@ def run_evaluation():
     
     plt.savefig(os.path.join(OUTPUT_DIR, "figure5_bioteque_calibrated_sensor_response.pdf"))
     
-    # 6. Figure 2: Calibrated Control Distribution
+    # 6. Calibrated Control Distribution
     fig2, ax2 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     
     signal_types = [RlcsSignal.PROCEED, RlcsSignal.DOWNWEIGHT, RlcsSignal.DEFER, RlcsSignal.ABSTAIN]

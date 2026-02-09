@@ -2,7 +2,7 @@
 Structure Decoder (Bio).
 
 Decoder for biological structures.
-Derived from resLik/RLCS architecture.
+
 """
 
 class BioStructureDecoder:

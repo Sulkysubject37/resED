@@ -1,9 +1,9 @@
 """
 resENC: Deterministic Encoder with Statistical Channel.
 
-This module implements the core Reference Encoder (resENC) for the resED system.
-It strictly enforces a deterministic projection X -> Z and calculates
-a side-channel statistical summary S used by the RLCS layer.
+Implements the Reference Encoder (resENC) for the resED system.
+Enforces a deterministic projection X -> Z and calculates a side-channel 
+statistical summary S for the RLCS layer.
 """
 
 import numpy as np
@@ -33,9 +33,6 @@ class ResENC(BaseEncoder):
             phi: Activation function (default: np.tanh).
         """
         super().__init__()
-        # Initialize with deterministic fixed values for reproducibility if not loaded
-        # In a real scenario, these would be loaded. Here we initialize with zeros/ones
-        # or require them to be set. For Phase 1, we allow setting them.
         self.W = np.zeros((d_in, d_z))
         self.b = np.zeros(d_z)
         self.phi = phi
@@ -79,24 +76,16 @@ class ResENC(BaseEncoder):
         for i in range(batch_size):
             zi = z[i]
             
-            # 1. L2 Norm
             norm_val = l2_norm(zi)
-            
-            # 2. Variance
             var_val = float(np.var(zi))
             
-            # 3. Entropy Proxy (Shannon entropy of softmax)
-            # stable softmax
+            # Shannon entropy of softmax
             exps = np.exp(zi - np.max(zi))
             probs = exps / np.sum(exps)
-            # handle 0 log 0
             log_probs = np.log(probs + 1e-12) 
             entropy_val = -np.sum(probs * log_probs)
             
-            # 4. Sparsity (L1 norm / sqrt(d) - simplified scale-aware proxy)
-            # A lower L1 for fixed L2 implies higher sparsity (fewer active components).
-            # Here we just use L1 norm as requested by general "sparsity" requirement,
-            # but normalized by dimension to be scale-aware.
+            # Sparsity proxy (L1 norm / sqrt(d))
             sparsity_val = float(np.sum(np.abs(zi))) / np.sqrt(self._d_z)
 
             stats[i] = [norm_val, var_val, entropy_val, sparsity_val]
@@ -122,12 +111,8 @@ class ResENC(BaseEncoder):
         if x.shape[1] != self._d_in:
             raise ValueError(f"Input dimension mismatch: expected {self._d_in}, got {x.shape[1]}")
 
-        # Deterministic Projection
-        # Z = phi(XW + b)
         linear = np.dot(x, self.W) + self.b
         z = self.phi(linear)
-        
-        # Statistical Channel
         s = self._compute_statistics(z)
         
         return z, s

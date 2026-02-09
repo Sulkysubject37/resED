@@ -1,5 +1,5 @@
 """
-Component Test 2: resTR Sensitivity (Phase 10-A).
+Component Test 2: resTR Sensitivity .
 
 Detects attention collapse and noise amplification.
 Replicates attention mechanism locally to inspect weights without modifying core code.
@@ -118,7 +118,7 @@ def run_test():
         # Temporal Consistency (on output)
         # Note: TCS is for (Batch, Dim). Z is (Batch, Seq, Dim).
         # We treat Batch*Seq as large batch? Or TCS along sequence?
-        # Phase 2 `temporal_consistency` logic: `exp(-||z_t - z_{t-1}||)`.
+        #  `exp(-||z_t - z_{t-1}||)`.
         # It expects `(Time, Dim)`.
         # So we reshape `(Batch*Seq, Dim)`? No, that mixes samples.
         # We compute per sample.

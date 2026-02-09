@@ -1,5 +1,5 @@
 """
-Reference Recalibration Script (Phase 8-C).
+Reference Recalibration Script .
 
 Computes and persists reference statistics (mu, sigma) from the biological embedding population.
 This isolates reference calibration as a variable for RLCS evaluation.
@@ -30,21 +30,21 @@ def recalibrate():
     mu = np.mean(z, axis=0)
     
     # Standard deviation
-    # RLCS Phase 2 defined scalar sigma in `population_consistency`:
+    # RLCS 
     # D = ||z - mu|| / (sigma + eps)
     # To be consistent with "recalibrated reference", we should compute the
     # sigma that reflects the typical variation.
     # If we use scalar sigma (average std), we assume isotropy.
-    # However, Phase 8-B analysis showed dimensionality scaling issue.
+    # However, 
     # If we want to test "reference recalibration", we should calculate
     # the sigma that creates a "Z-score like" distribution for D?
-    # No, Phase 8-C prompt says "Only change source of reference statistics".
+    # No, 
     # It does NOT say "Change formula".
-    # Phase 2 `population_consistency` signature: `(z, mu, sigma)`.
-    # Phase 8-B used `mean(std(z, axis=0))`.
+    #  `(z, mu, sigma)`.
+
     # I will calculate `std` vector and take mean for scalar compatibility,
     # OR save vector std if supported?
-    # Phase 2 implementation `dist / (sigma + epsilon)`. If sigma is vector, it broadcasts.
+    #  If sigma is vector, it broadcasts.
     # If I save vector sigma, I get Mahalanobis-like scaling (per dimension).
     # This is a stronger calibration.
     # Prompt says "Compute Mean (mu_bio), Standard deviation (sigma_bio)".

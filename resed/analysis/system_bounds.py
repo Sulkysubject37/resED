@@ -1,5 +1,5 @@
 """
-System Bound Lifting (Phase 10-B).
+System Bound Lifting.
 
 Formalizes the relationship between component failure modes and RLCS governance.
 Expresses system-level guarantees as inequalities derived from empirical envelopes.
@@ -16,14 +16,9 @@ class SystemBounds:
         """
         Derive system-level bounds from component envelopes.
         """
-        # 1. Encoder Observability Bound
-        # Guarantee: Radial Inflation (Noise) <= Inverse_Envelope(RLCS_D)
-        # We want to show that if Noise increases, RLCS_D increases.
-        # Bound: RLCS_D >= f(Noise)
+        # Encoder Observability Bound
         if "resENC_Noise_vs_RLCS_D" in self.envelopes:
             env = self.envelopes["resENC_Noise_vs_RLCS_D"]
-            # To claim observability, we need monotonic increase.
-            # Check monotonicity of the envelope points.
             ys = [p[1] for p in env.points]
             is_monotonic = all(y2 >= y1 for y1, y2 in zip(ys, ys[1:]))
             
@@ -31,7 +26,7 @@ class SystemBounds:
                 "metric": "RLCS ResLik Score",
                 "stress": "Input Noise",
                 "relation": "Monotonic Positive" if is_monotonic else "Non-Monotonic",
-                "min_detection_threshold": 3.0, # Standard TAU
+                "min_detection_threshold": 3.0,
                 "implied_noise_limit": self._inverse_lookup(env, 3.0)
             }
 

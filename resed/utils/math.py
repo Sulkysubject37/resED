@@ -1,7 +1,7 @@
 """
 Math Utilities.
 
-Pure, deterministic mathematical helpers derived from resLik architecture.
+Pure, deterministic mathematical helpers .
 Provides foundational operations for the RLCS layer.
 """
 

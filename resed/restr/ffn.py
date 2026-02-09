@@ -21,7 +21,6 @@ class FFN:
         if d_ff is None:
             d_ff = 4 * d_model
             
-        # Initialize deterministic weights
         rng = np.random.default_rng(42)
         scale1 = 1.0 / np.sqrt(d_model)
         scale2 = 1.0 / np.sqrt(d_ff)
@@ -42,13 +41,8 @@ class FFN:
         Returns:
             Output tensor (batch, seq_len, d_model).
         """
-        # Layer 1
         h = np.dot(z, self.W1) + self.b1
-        
-        # ReLU
         h = np.maximum(h, 0)
-        
-        # Layer 2
         out = np.dot(h, self.W2) + self.b2
         
         return out

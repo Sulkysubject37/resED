@@ -2,7 +2,7 @@
 Graph Encoder (Bio).
 
 Encoder for biological graph structures (e.g., molecules, PPIs).
-Derived from resLik/RLCS architecture.
+
 """
 
 class BioGraphEncoder:

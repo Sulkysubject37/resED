@@ -1,5 +1,5 @@
 """
-Benchmark Embedding Validation Script (Phase 7-A).
+Benchmark Embedding Validation Script .
 
 Validates the integrity and reproducibility of extracted embeddings.
 

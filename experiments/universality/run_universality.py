@@ -1,5 +1,5 @@
 """
-Universality Validation Run (Phase 12).
+Universality Validation.
 
 Executes RLCS governance across heterogeneous architectures (resENC, VAE, Transformer)
 to demonstrate representation-level invariance.
@@ -24,7 +24,6 @@ D_IN = 128
 D_Z = 64
 BATCH_SIZE = 200
 
-# --- Perturbations (Input Space) ---
 def perturb_input_noise(x, sigma):
     rng = np.random.default_rng(42)
     return x + rng.normal(0, sigma, x.shape)
@@ -47,18 +46,15 @@ def perturb_input_dropout(x, prob=0.2):
 def run_experiment():
     print("Starting Universality Validation...")
     
-    # 1. Setup Models
     models = {
         "resENC": WrapperResENC(D_IN, D_Z),
         "VAE": WrapperVAE(D_IN, D_Z),
         "Transformer": WrapperTransformer(D_IN, D_Z)
     }
     
-    # 2. Data
     rng = np.random.default_rng(42)
     X_clean = rng.normal(0, 1, (BATCH_SIZE, D_IN))
     
-    # 3. Scenarios
     scenarios = [
         ("Clean", lambda x: x),
         ("Noise (0.1)", lambda x: perturb_input_noise(x, 0.1)),
@@ -70,20 +66,15 @@ def run_experiment():
     
     results = []
     
-    # 4. Execution Loop
     for model_name, model in models.items():
         print(f"Testing {model_name}...")
         
-        # Calibration Phase (Per Model)
-        # We assume clean data is the reference
         Z_ref = model.encode(X_clean)
         mu_ref = np.mean(Z_ref, axis=0)
         sigma_ref = np.std(Z_ref, axis=0)
-        # Use mean sigma for scalar RLCS compatibility
         sigma_scalar = np.mean(sigma_ref)
         if sigma_scalar < 1e-6: sigma_scalar = 1.0
         
-        # Fit Calibrator
         s_dummy = np.zeros((BATCH_SIZE, 4))
         diag_ref = {}
         rlcs_control(Z_ref, s_dummy, diagnostics=diag_ref, mu=mu_ref, sigma=sigma_scalar)
@@ -94,17 +85,13 @@ def run_experiment():
             X_pert = pert_func(X_clean)
             Z_pert = model.encode(X_pert)
             
-            # RLCS Diagnosis
             diag = {}
             signals = rlcs_control(Z_pert, s_dummy, diagnostics=diag, calibrator=calibrator, mu=mu_ref, sigma=sigma_scalar)
             
-            # Metrics
-            # Calibrated D-score
             raw_d = diag['population_consistency']
             cal_d = calibrator.calibrate_batch('population_consistency', raw_d)
             mean_cal_d = np.mean(cal_d)
             
-            # Signal Counts
             n_proceed = signals.count(RlcsSignal.PROCEED)
             n_abstain = signals.count(RlcsSignal.ABSTAIN)
             
@@ -119,11 +106,9 @@ def run_experiment():
     df = pd.DataFrame(results)
     print(df)
     
-    # 5. Figures
-    # Figure 1: Cross-Model Sensor Response
     fig1, ax1 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     pivot_d = df.pivot(index="Scenario", columns="Model", values="Mean_Z_Score")
-    pivot_d = pivot_d.reindex([s[0] for s in scenarios]) # Keep order
+    pivot_d = pivot_d.reindex([s[0] for s in scenarios])
     pivot_d.plot(kind='bar', ax=ax1, width=0.8)
     
     ax1.axhline(3.0, color='red', linestyle='--', label='Threshold (3.0)')
@@ -134,8 +119,6 @@ def run_experiment():
     
     plt.savefig(os.path.join(OUTPUT_DIR, "figure_universality_sensor_response.pdf"))
     
-    # Figure 2: Governance Distribution (Stacked or Grouped)
-    # We plot Pct_ABSTAIN as proxy for "Rejection"
     fig2, ax2 = plt.subplots(figsize=(10, 6), constrained_layout=True)
     pivot_abs = df.pivot(index="Scenario", columns="Model", values="Pct_ABSTAIN")
     pivot_abs = pivot_abs.reindex([s[0] for s in scenarios])

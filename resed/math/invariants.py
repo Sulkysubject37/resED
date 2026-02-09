@@ -50,18 +50,6 @@ def check_norm_inflation_invariant(z_in: np.ndarray, z_out: np.ndarray, epsilon:
     Raises:
         RuntimeError: If norm inflation bound is violated.
     """
-    # Calculate norms per sample (assuming batch is dim 0)
-    # We use numpy's norm along the last axis to check per-vector inflation,
-    # or the whole tensor norm?
-    # The prompt formula ||Z_out|| <= (1+eps)||Z_in|| usually implies Frobenius norm
-    # or per-vector check. Given safety context, per-vector is stricter/better,
-    # but the prompt notation implies a general bound.
-    # Let's assume per-sample to be safe, as latent operations are row-wise.
-    
-    # Actually, the prompt formula is likely global or per-sample. 
-    # Let's check l2_norm utility from Phase 0.
-    # resed.utils.math.l2_norm computes global norm.
-    
     norm_in = l2_norm(z_in)
     norm_out = l2_norm(z_out)
     

@@ -1,5 +1,5 @@
 """
-Component Test 3: resDEC Volatility (Phase 10-A).
+Component Test 3: resDEC Volatility .
 
 Quantifies output instability relative to latent corruption.
 """

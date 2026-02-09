@@ -2,7 +2,7 @@
 Transformer Encoder.
 
 A Transformer-based encoder implementation.
-Derived from resLik/RLCS architecture.
+
 """
 
 class TransformerEncoder:

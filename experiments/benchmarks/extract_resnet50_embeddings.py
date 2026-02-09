@@ -1,5 +1,5 @@
 """
-Benchmark Embedding Extraction Script (Phase 7-A).
+Benchmark Embedding Extraction Script .
 
 Extracts fixed-length embeddings from the CIFAR-10 validation set using
 a specific pre-trained ResNet-50 checkpoint.

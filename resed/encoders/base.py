@@ -2,7 +2,7 @@
 Base Encoder Interface.
 
 Defines the contract for all encoders in the resED system.
-Derived from resLik/RLCS architecture.
+
 """
 
 class BaseEncoder:

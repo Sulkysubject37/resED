@@ -2,7 +2,7 @@
 Transformer Decoder.
 
 A Transformer-based decoder implementation.
-Derived from resLik/RLCS architecture.
+
 """
 
 class TransformerDecoder:

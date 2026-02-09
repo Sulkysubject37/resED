@@ -1,5 +1,5 @@
 """
-Component Test 1: resENC Stability (Phase 10-A).
+Component Test 1: resENC Stability .
 
 Measures latent representation stability under structured input perturbations.
 """

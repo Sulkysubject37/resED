@@ -1,5 +1,5 @@
 """
-Bioteque Embedding Extraction Script (Phase 8-A).
+Bioteque Embedding Extraction Script .
 
 Extracts precomputed gene embeddings from the Bioteque resource for the 
 GEN-_dph-GEN metapath (Omnipath dataset).

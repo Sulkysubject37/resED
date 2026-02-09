@@ -2,7 +2,7 @@
 Base Decoder Interface.
 
 Defines the contract for all decoders in the resED system.
-Derived from resLik/RLCS architecture.
+
 """
 
 class BaseDecoder:
